@@ -1,2234 +1,2234 @@
-[
-  {
-    "nom": "Administration & Droit",
-    "stats": "Éducation / Charisme",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de comprendre, d'exploiter et de falsifier des documents administratifs et juridiques.",
-        "bonus": 0.0,
-        "malus": -40.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
+{
+    "Administration & Droit": {
+        "nom": "Administration & Droit",
+        "stats": "Éducation / Charisme",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de comprendre, d'exploiter et de falsifier des documents administratifs et juridiques.",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Agriculture & Élevage": {
+        "nom": "Agriculture & Élevage",
+        "stats": "Dextérité / Éducation / Perception / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de cultiver un potager simple et récolter des légumes courants à partir de graines ou plants fournis.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet d’élever des animaux de petite taille (poules, lapins) et de cultiver plusieurs plantes agricoles simples sur une surface modeste.",
+                "bonus": 0,
+                "malus": -35
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet d’élever des animaux de taille moyenne (chèvres, moutons) et d’exploiter une petite parcelle variée (graines, tubercules, céréales).",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de cultiver une grande parcelle, d’élever des animaux de grande taille, de gérer un troupeau et d’identifier les maladies courantes des plantes et des animaux.",
+                "bonus": 0,
+                "malus": -45
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de cultiver des grandes parcelles, d’élever des animaux de grande taille, de gérer des troupeaux et de traiter les maladies courantes des plantes et des animaux.",
+                "bonus": 0,
+                "malus": -50
+            }
+        }
+    },
+    "Archéologie": {
+        "nom": "Archéologie",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’identifier, étudier, dater... des vestiges, objets anciens, artefacts, matériaux, rites, rituels, textes anciens, inscriptions, anomalies etc... ",
+                "bonus": 0,
+                "malus": -50
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Armes tranchantes : Courtes et moyennes": {
+        "nom": "Armes tranchantes : Courtes et moyennes",
+        "stats": "Force / Dextérité / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de savoir manier des armes de mêlées tranchantes de courtes et moyennes longueurs. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Armes contondantes : Courtes et moyennes": {
+        "nom": "Armes contondantes : Courtes et moyennes",
+        "stats": "Force / Dextérité / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de savoir manier des armes de mêlées contondantes de courtes et moyennes longueurs. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Armes de mêlées longues": {
+        "nom": "Armes de mêlées longues",
+        "stats": "Force / Dextérité / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de savoir manier des armes de mêlées contondantes ou tranchantes de grandes longueurs. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Armes de jet : Légères": {
+        "nom": "Armes de jet : Légères",
+        "stats": "Dextérité / Perception / Force / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de lancer avec précision des objets ou armes de jets légères à courte distance (couteaux, dards, shuriken, haches légères, galets etc...),",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Armes de jet : Lourdes": {
+        "nom": "Armes de jet : Lourdes",
+        "stats": "Dextérité / Perception / Force / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de lancer avec précision des armes de jets lourdes à moyenne distance (lances, javelots, haches de guerre, boomerang militaire, marteaux, poids etc...),",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Armurage & Couture": {
+        "nom": "Armurage & Couture",
+        "stats": "Dextérité / Éducation / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de réparer, rapiécer et ajuster des vêtements, de remplacer coutures, boutons et fermetures, et d’adapter un vêtement au corps ou à l’usage.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de fabriquer des vêtements complets en textile ou cuir fin, ainsi que des accessoires utilitaires tels que sacs, gants, étuis, holsters simples, poches et sangles.",
+                "bonus": 0,
+                "malus": -35
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de fabriquer des vêtements renforcés et équipements techniques en textile, cuir épais, mousse ou polymères simples, offrant une légère protection.",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de fabriquer des protections artisanales en cuir épais, métal léger ou matériaux composites simples, incluant casques légers, plastrons, protège-membres et gilets renforcés offrant une bonne protection",
+                "bonus": 0,
+                "malus": -45
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de fabriquer des armures complètes en cuir, métal, textile technique ou plaques improvisées, incluant casques articulés et gilets pare-balles artisanaux, très efficaces et conçus sur mesure pour le porteur.",
+                "bonus": 0,
+                "malus": -50
+            }
+        }
+    },
+    "Arts & Interprétation": {
+        "nom": "Arts & Interprétation",
+        "stats": "Charisme / Éducation / Dextérité / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de réaliser une prestation simple (chant, musique, jeu ou mise en scène) sans finesse mais capable de retenir l’attention quelques secondes.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de réaliser une prestation correcte et expressive, capable d’émouvoir et de retenir l’attention pendant quelques dizaines de secondes.",
+                "bonus": 0,
+                "malus": -35
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de réaliser une prestation maîtrisée capable d’émouvoir, de distraire pendant 1 minute max ou d'appliquer un changement comportemental (amical, hostile...).",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de réaliser une prestation de haut niveau capable d’influencer ou de distraire une foule ou un public hostile pendant 1 à 3 minutes max.",
+                "bonus": 0,
+                "malus": -45
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de réaliser des performances exceptionnelles capables de distraire une foule, manipuler émotions, jugement ou mémoire collective pendant 3 à 5 minutes max. ",
+                "bonus": 0,
+                "malus": -50
+            }
+        }
+    },
+    "Bagou": {
+        "nom": "Bagou",
+        "stats": "Charisme / Éducation",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’attirer la sympathie d’un individu ou d’obtenir son attention par la parole, la répartie ou la démonstration (individu non hostile, agressif ou violent).",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet d’attirer la sympathie d’un groupe individu ou d’obtenir leur attention par la parole, la répartie ou la démonstration  (individus non hostiles, agressifs ou violents).",
+                "bonus": 15,
+                "malus": -40
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Biologie": {
+        "nom": "Biologie",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’identifier, analyser et exploiter des organismes vivants, tissus biologiques, fluides organiques, parasites, bactéries, spores et agents infectieux, ainsi que de comprendre l’anatomie et la morphologie des êtres vivants.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Botanique": {
+        "nom": "Botanique",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’identifier, d'étudier, d'exploiter et de créer (par croisement ou autre) des plantes ou des racines pour les utiliser comme ressource stratégique. ",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Bricolage": {
+        "nom": "Bricolage",
+        "stats": "Dextérité / Éducation / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de monter, démonter, modifier, adapter ou réparer des objets simples du quotidien, mobilier ou des éléments de construction et de rénovation. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Cartographie & Croquis": {
+        "nom": "Cartographie & Croquis",
+        "stats": "Dextérité / Éducation",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de réaliser à la main une carte ou un schéma ou un portrait robot exploitable et identifiable. Temps de production  : Réussite = 15 à 30min | Échec = 30min à 1h.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Chimie": {
+        "nom": "Chimie",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de manipuler des produits chimiques simples et de réaliser des réactions élémentaires (solvants, nettoyants, décapants légers), d’identifier grossièrement des liquides ou poudres et d’utiliser des révélateurs basiques pour faire ressortir des traces ou fluides.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de fabriquer et d’utiliser des produits corrosifs légers, des solvants puissants, des adhésifs simples, des gels rudimentaires et des produits pétrochimiques mineurs (lubrifiants, épaississants), ainsi que d’identifier des substances courantes.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de fabriquer, modifier et analyser des produits corrosifs puissants, des pétrochimiques exploitables (gels, carburants épaissis), des révèlent d’enquête complexes, ainsi que des toxiques, drogues ou incapacitants légers (somnifères, irritants, stimulants).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de concevoir et d’utiliser des produits corrosifs spécialisés (découpe organique ou métal léger), des polymères avancés (mousses, résines, scellants), des pétrochimiques spécialisés, des solvants de découpe et des incapacitants plus efficaces, ainsi que d’analyser des procédés ou installations chimiques complexes.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de créer, synthétiser, optimiser ou détourner des composés chimiques nouveaux, de combiner plusieurs familles pour obtenir des effets sur mesure, et de comprendre, exploiter ou perturber des procédés chimiques élaborés, qu’ils soient industriels, médicaux ou clandestins.",
+                "bonus": 0,
+                "malus": 0
+            }
+        }
+    },
+    "Collection": {
+        "nom": "Collection",
+        "stats": "Éducation / Perception / Dextérité",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’authentifier, d'expertiser, de restaurer et de créer des contrefaçons d'objets atypiques ou uniques.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Combat à mains nues": {
+        "nom": "Combat à mains nues",
+        "stats": "Force / Dextérité / Résistance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de combattre un individu humain (attaquer, se défendre, repousser etc...)",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Comptabilité & Audit": {
+        "nom": "Comptabilité & Audit",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de comprendre, d'exploiter et de falsifier des documents comptables, financiers ou bancaires.",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Conduite": {
+        "nom": "Conduite",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de conduire une voiture standard sur route en conditions normales.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de conduire une voiture dans des conditions difficiles et des motos / scooters.",
+                "bonus": 0,
+                "malus": -35
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de conduire des 3 roues, side-cars et camionnettes utilitaires même hors-route.",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de conduire des camions et effectuer des manœuvres techniques ou en poursuite.",
+                "bonus": 0,
+                "malus": -45
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de conduire tous véhicules terrestres motorisés, y compris poids lourds en situation extrême.",
+                "bonus": 0,
+                "malus": -50
+            }
+        }
+    },
+    "Confection": {
+        "nom": "Confection",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de fabriquer des mélanges simples à usage direct (infusions, décoctions, baumes légers).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de préparer des solutions plus précises (onguents, huiles médicinales, fortifiants légers).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de fabriquer des médicaments artisanaux, stimulants ou sédatifs à dosage fiable.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de produire des toxines, antidotes ou composés actifs nécessitant un dosage fin.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de concevoir des préparations complexes à effets multiples ou sur-mesure selon un besoin.",
+                "bonus": 0,
+                "malus": 0
+            }
+        }
+    },
+    "Crochetage": {
+        "nom": "Crochetage",
+        "stats": "Dextérité / Perception / Éducation",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’utiliser des outils pour ouvrir des cadenas, serrures, coffres etc... (Échec = -1 crochet),",
+                "bonus": 0,
+                "malus": -50
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Cryptographie": {
+        "nom": "Cryptographie",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de déchiffrer des codes ou des schémas cryptés.  ",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Cuisine": {
+        "nom": "Cuisine",
+        "stats": "Éducation / Dextérité",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de préparer des plats simples permettant de récupérer 1 point de Courage ou de Résistance (limité à 1/jour).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de cuisiner des plats plus élaborés permettant de récupérer 2 point de Courage ou de Résistance (limité à 1/jour).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de préparer des plats complexes permettant de récupérer 3 point de Courage ou de Résistance (limité à 1/jour).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de préparer des plats spécialisés permettant de récupérer 4 points de Courage ou de Résistance (limité à 1/jour).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de concevoir des menus sophistiqués permettant de récupérer 5 points de Courage ou de Résistance (limité à 1/jour).",
+                "bonus": 0,
+                "malus": 0
+            }
+        }
+    },
+    "Diplomatie": {
+        "nom": "Diplomatie",
+        "stats": "Charisme / Courage",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de calmer ou de faire coopérer un individu contrarié, fermé, hostile ou aggresif mais non-violent.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de calmer ou de faire coopérer un groupe d'individus contrariés, fermés, hostiles ou aggressifs mais non-violents.",
+                "bonus": 15,
+                "malus": -40
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Documentation & Recherche": {
+        "nom": "Documentation & Recherche",
+        "stats": "Éducation / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de chercher, trouver, écrire, et consulter rapidement des documents variées et d’en extraire les informations utiles.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Électricité": {
+        "nom": "Électricité",
+        "stats": "Éducation / Dextérité",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de comprendre, diagnostiquer, réparer ou d'installer des systèmes électriques. ",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Électronique": {
+        "nom": "Électronique",
+        "stats": "Éducation / Dextérité",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de comprendre, diagnostiquer, réparer ou d'installer des systèmes électroniques. ",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Escamotage": {
+        "nom": "Escamotage",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de manipuler, cacher, transférer, substituer ou dérober de petits objets et d’exécuter des petits tours visuels ou détournements d’attention.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Esquive": {
+        "nom": "Esquive",
+        "stats": "Dextérité / Perception / Chance / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’éviter un contact ou un impact en anticipant un mouvement. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Espionnage": {
+        "nom": "Espionnage",
+        "stats": "Perception / Dextérité / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de suivre et/ou d'écouter une cible unique à distance sans attirer l’attention.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de suivre et/ou d'écouter un groupe à distance sans attirer l’attention.",
+                "bonus": 15,
+                "malus": -40
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Fabrication d’objets": {
+        "nom": "Fabrication d’objets",
+        "stats": "Dextérité / Éducation",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de fabriquer des outils simples (crochet, levier, pince simple, tige, cales, bâton, entrave).",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de fabriquer des outils avancés (crochets multi-usage, grappin sommaire, serrures improvisées) et des armes simples (matraque, masse, bâton, lance courte).",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de fabriquer des armes avancées (lance longue, masses lourdes, frondes, sarbacane) et des pièges simples (alarme, blocage, collet, chute d’objet).",
+                "bonus": 0,
+                "malus": -50
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de fabriquer des pièges avancés (pression, tension, gravité, trappe) et des mécanismes simples (levier + tension + bruit).",
+                "bonus": 0,
+                "malus": -60
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de fabriquer des systèmes mécaniques ingénieux, multi-déclencheurs ou adaptés à une cible précise, en exploitant efficacement les matériaux.",
+                "bonus": 0,
+                "malus": -70
+            }
+        }
+    },
+    "Fouille Technique": {
+        "nom": "Fouille Technique",
+        "stats": "Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de trouver rapidement des objets, indices, armes, outils ou effets personnels en fouillant efficacement un individu, un conteneur, un meuble, une zone limitée etc... Sans indiquer précisément ou explictement l'endroit de la recherche.",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Furtivité": {
+        "nom": "Furtivité",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de se déplacer lentement et/ou de se dissimuler dans une zone non-éclairé sans attirer l’attention.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de se déplacer normalement et/ou de se dissimuler dans une zone non-éclairé sans attirer l’attention.",
+                "bonus": 10,
+                "malus": -35
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de se déplacer rapidement et/ou de se dissimuler dans une zone non-éclairé sans attirer l’attention.",
+                "bonus": 15,
+                "malus": -40
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Géologie": {
+        "nom": "Géologie",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’identifier, analyser et exploiter roches, minerais, métaux naturels, cristaux, sols, formations géologiques etc...",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Hypnose": {
+        "nom": "Hypnose",
+        "stats": "Charisme / Éducation / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de détendre, renforcer la concentration, modifier un état émotionnel ou sensoriel, atténuer le stress ou la douleur, accéder à des souvenirs refoulés ou à l'inconscient etc... sur un individu calme, amical ou neutre et consentant (non-aggressif, non-contrarié, non-hostile et non-violent). ",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Imposture & Déguisement": {
+        "nom": "Imposture & Déguisement",
+        "stats": "Charisme / Éducation / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de tenir un rôle d’imposteur (avec déguisement) auprès d'un individu non-méfiant qui ne connait pas la cible.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de tenir un rôle d’imposteur (avec ou sans déguisement) auprès d'un d'individu non-méfiant qui ne connait pas la cible.",
+                "bonus": 10,
+                "malus": -35
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de tenir un rôle d’imposteur (avec ou sans déguisement) auprès d'un groupe d'individus non-méfiants qui ne connaissent pas la cible.",
+                "bonus": 15,
+                "malus": -40
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Informatique": {
+        "nom": "Informatique",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’utiliser un ordinateur ou terminal, installer des logiciels simples, configurer périphériques, gérer fichiers/dossiers et diagnostiquer des erreurs mineures.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet d’installer/configurer systèmes et drivers, diagnostiquer pannes logicielles et contourner des restrictions de base (comptes limités, verrouillages légers).",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de récupérer/réparer données, explorer systèmes complexes et contourner protections usuelles (mots de passe faibles, sécurité standard).",
+                "bonus": 0,
+                "malus": -50
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet d’analyser journaux, identifier failles, automatiser tâches et contourner sécurités robustes au sein de réseaux ou serveurs.",
+                "bonus": 0,
+                "malus": -60
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de pénétrer des infrastructures critiques, supprimer, modifier, extraire des données ou saboter une action au sein d’un système et altérer les traces laissées.",
+                "bonus": 0,
+                "malus": -70
+            }
+        }
+    },
+    "Interrogatoire": {
+        "nom": "Interrogatoire",
+        "stats": "Charisme / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’obtenir des informations auprès d’un individu perplexe, stressé, embrouillé ou dans l'incertitude, mais non hostile et non-violent.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Intimidation": {
+        "nom": "Intimidation",
+        "stats": "Charisme / Force / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de soumettre un individu amical pour obtenir une information (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de soumettre un individu neutre ou désintéréssé pour obtenir une information (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
+                "bonus": 0,
+                "malus": -35
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de soumettre un individu hostile pour obtenir une information (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de soumettre un individu hostile pour obtenir son obeïssance ou sa coopération (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
+                "bonus": 0,
+                "malus": -45
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de soumettre jusqu'à trois individus hostiles pour obtenir leur obeïssance ou leur coopération (Réussite : individus deviennent hostiles | Échec : individus deviennent aggressifs ou violents).",
+                "bonus": 0,
+                "malus": -50
+            }
+        }
+    },
+    "Langues étrangères": {
+        "nom": "Langues étrangères",
+        "stats": "Éducation / Charisme / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de comprendre, traduire et communiquer dans 1 langue supplémentaire au choix.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de comprendre, traduire et communiquer dans 2 langues supplémentaires au choix.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de comprendre, traduire et communiquer dans 2 langues supplémentaires au choix dont les langues mortes et hieroglyphiques (hors langues inconnues).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de comprendre, traduire et communiquer dans 3 langues supplémentaires au choix, dont les langues mortes et hieroglyphiques (hors langues inconnues).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de comprendre, traduire et communiquer dans 5 langues supplémentaires au choix, dont les langues mortes et hieroglyphiques (hors langues inconnues).",
+                "bonus": 0,
+                "malus": 0
+            }
+        }
+    },
+    "Lecture comportementale": {
+        "nom": "Lecture comportementale",
+        "stats": "Perception / Charisme / Éducation",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'observer les changements de comportement d'un individu (nerveux, contrarié, mal à l’aise, confiant etc...).",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Mécanique": {
+        "nom": "Mécanique",
+        "stats": "Éducation / Dextérité / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’entretenir, diagnostiquer, modifier et de réparer des systèmes complexes incluant des composants mécaniques, motorisés, hydrauliques, pneumatiques, transmetteurs d'énergie, engrenages, machines, systèmes techniques divers etc...",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Médecine": {
+        "nom": "Médecine",
+        "stats": "Éducation / Perception / Dextérité",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’appliquer les premiers secours : stabiliser une blessure, stopper une hémorragie légère, désinfecter, bander, poser un garrot, soutenir respiration.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de réaliser des soins avancés : sutures légères, pansements complexes, gestion de fièvre/choc/brûlures, pose de perfusion ou traitement support simple.",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet d’établir des diagnostics cliniques, gérer fractures simples, intoxications, infections modérées, et effectuer un triage complet.",
+                "bonus": 0,
+                "malus": -50
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de traiter des cas complexes non chirurgicaux : infections sévères, polytraumas stabilisés, complications, syndrome de choc, lecture de symptômes atypiques.",
+                "bonus": 0,
+                "malus": -60
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet d’effectuer des interventions chirurgicales : extraction de corps étrangers, sutures profondes, gestion hémorragies graves, chirurgie de terrain.",
+                "bonus": 0,
+                "malus": -70
+            }
+        }
+    },
+    "Négociation": {
+        "nom": "Négociation",
+        "stats": "Charisme / Éducation",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’obtenir un compromis auprès d’un individu jusqu'à hostile et/ou agressif mais non-violent. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Océanologie": {
+        "nom": "Océanologie",
+        "stats": "Éducation / Perception",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d’identifier faune/flore marines, dangers immédiats ainsi que d'interpréter les mouvements marins et les terrains océaniques. ",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Parkour": {
+        "nom": "Parkour",
+        "stats": "Dextérité / Force / Résistance / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'effectuer des accrobaties et des déplacements rapides / fluides en milieu naturel ou urbain  (roulades, sauts longs, équilibre, chutes amorties, sprint etc...).",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Pilotage": {
+        "nom": "Pilotage",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de piloter des petites embarcations : canot, barque, voilier léger, zodiac.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de piloter des bateaux à moteur légers ou voiliers standards (pêche, loisir, transport léger).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de piloter des bateaux lourds (vedette, chalutier, navire côtier) et des avions légers (monomoteur).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de piloter des navires plus complexes (navire fluvial, drague, petit cargo) ou des avions multiréacteurs légers.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de piloter des navires spécialisés ou militaires (patrouilleur, brise-glace, corvette) et des appareils spécialisés (hydravion, avion de reconnaissance).",
+                "bonus": 0,
+                "malus": 0
+            }
+        }
+    },
+    "Pistage": {
+        "nom": "Pistage",
+        "stats": "Perception / Éducation / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de suivre une piste humaine ou animale sur une courte distance",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de suivre une piste humaine ou animale sur une longue distance.",
+                "bonus": 15,
+                "malus": -50
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Radiocommunications": {
+        "nom": "Radiocommunications",
+        "stats": "Dextérité / Perception / Éducation",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de configurer un récepteur radio, rechercher des fréquences, régler une antenne simple et capter des communications locales.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet d’installer et de régler un émetteur/récepteur, communiquer à moyenne distance et contourner les interférences courantes.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet d’exploiter plusieurs bandes/fréquences, améliorer la portée d’un signal, capter des communications lointaines et enregistrer ou re-router des transmissions.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de brouiller ou filtrer des signaux, détecter des émissions discrètes, déchiffrer une modulation simple et intervenir sur des réseaux analogiques locaux (radio/TV).",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de pirater des ondes radio ou vidéo, diffuser des émissions pirates, brouiller un réseau local complet et masquer l’origine du signal.",
+                "bonus": 0,
+                "malus": 0
+            }
+        }
+    },
+    "Sabotage": {
+        "nom": "Sabotage",
+        "stats": "Éducation / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de fabriquer et d’utiliser des charges explosives légères comme des pétards puissants, ainsi que des charges fumigènes légères",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "Permet de fabriquer et d’utiliser des charges explosives moyennes telles que de la dynamite artisanale ou des charges de bris léger, des charges fumigènes améliorées offrant une fumée plus dense et persistante, ainsi que des charges incendiaires légères",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "Permet de fabriquer et de manipuler des charges explosives puissantes comme des charges de brèche moyenne, des charges incendiaires moyennes, des charges incapacitantes telles que flash ou lacrymogène léger, ainsi que des charges thermiques rudimentaires permettant une fusion ou une découpe élémentaire.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "Permet de fabriquer, de manipuler et de configurer des charges explosives lourdes telles que des charges plastiques ou dirigées, des charges incendiaires avancées à propagation contrôlée, des charges incapacitantes avancées, des charges thermiques permettant une découpe nette, ainsi que des charges de propulsion simples.",
+                "bonus": 0,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "Permet de manipuler, de concevoir, de combiner et de synchroniser des systèmes de charges complexes, incluant charges de brèche lourdes, charges thermiques de découpe structurelle, charges incapacitantes spécialisées, charges incendiaires spécialisées ou charges de propulsion avancées.",
+                "bonus": 0,
+                "malus": 0
+            }
+        }
+    },
+    "Survie": {
+        "nom": "Survie",
+        "stats": "Éducation / Perception / Dextérité / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de savoir s'orienter, anticiper la météo et survivre en milieu naturel hostile en utilisant les ressources du terrain.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir à l’arbalète": {
+        "nom": "Tir à l’arbalète",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer à l'arbalète (tout type) sur une distance moyenne. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir à l’arc": {
+        "nom": "Tir à l’arc",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer à l'arc (tout type) sur une distance moyenne. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir à l’arme à feu - Pistolets": {
+        "nom": "Tir à l’arme à feu - Pistolets",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer avec des pistolets et des révolvers (tout type coup par coup). ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir à l’arme à feu - Mitraillettes": {
+        "nom": "Tir à l’arme à feu - Mitraillettes",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer avec des pistolets mitrailleurs ou fusils d'assaut (tout type). ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir à l’arme à feu - Fusils": {
+        "nom": "Tir à l’arme à feu - Fusils",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer avec des fusils (précision, chasse, pompe etc...). ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir à l’arme à feu - Armes Lourdes": {
+        "nom": "Tir à l’arme à feu - Armes Lourdes",
+        "stats": "Dextérité / Perception / Chance / Force",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer avec des armes lourdes type minigun, lance-roquette etc... ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir à la sarbacane": {
+        "nom": "Tir à la sarbacane",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer avec une sarbacane sur une courte distance. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tir au lance-pierre": {
+        "nom": "Tir au lance-pierre",
+        "stats": "Dextérité / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'obtenir la capacité de tirer avec un lance-pierre sur une courte distance. ",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Tromperie": {
+        "nom": "Tromperie",
+        "stats": "Charisme / Éducation / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet de mentir ou de manipuler de manière crédible une cible amicale, neutre ou désintéréssée non méfiante.",
+                "bonus": 0,
+                "malus": -30
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
+    },
+    "Zoologie": {
+        "nom": "Zoologie",
+        "stats": "Éducation / Perception / Chance",
+        "niveaux": {
+            "Basique": {
+                "cout": 1,
+                "description": "Permet d'identifier des espèces animales, comprendre les comportements, prévoir les réactions / déplacements etc... ",
+                "bonus": 0,
+                "malus": -40
+            },
+            "Confirmé": {
+                "cout": 3,
+                "description": "",
+                "bonus": 5,
+                "malus": 0
+            },
+            "Avancé": {
+                "cout": 6,
+                "description": "",
+                "bonus": 10,
+                "malus": 0
+            },
+            "Expert": {
+                "cout": 10,
+                "description": "",
+                "bonus": 15,
+                "malus": 0
+            },
+            "Maître": {
+                "cout": 15,
+                "description": "",
+                "bonus": 25,
+                "malus": 0
+            }
+        }
     }
-  },
-  {
-    "nom": "Agriculture & Élevage",
-    "stats": "Dextérité / Éducation / Perception / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de cultiver un potager simple et récolter des légumes courants à partir de graines ou plants fournis.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet d’élever des animaux de petite taille (poules, lapins) et de cultiver plusieurs plantes agricoles simples sur une surface modeste.",
-        "bonus": 0,
-        "malus": -35.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet d’élever des animaux de taille moyenne (chèvres, moutons) et d’exploiter une petite parcelle variée (graines, tubercules, céréales).",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de cultiver une grande parcelle, d’élever des animaux de grande taille, de gérer un troupeau et d’identifier les maladies courantes des plantes et des animaux.",
-        "bonus": 0,
-        "malus": -45.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de cultiver des grandes parcelles, d’élever des animaux de grande taille, de gérer des troupeaux et de traiter les maladies courantes des plantes et des animaux.",
-        "bonus": 0,
-        "malus": -50.0
-      }
-    }
-  },
-  {
-    "nom": "Archéologie",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’identifier, étudier, dater... des vestiges, objets anciens, artefacts, matériaux, rites, rituels, textes anciens, inscriptions, anomalies etc... ",
-        "bonus": 0.0,
-        "malus": -50.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Armes tranchantes : Courtes et moyennes",
-    "stats": "Force / Dextérité / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de savoir manier des armes de mêlées tranchantes de courtes et moyennes longueurs. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Armes contondantes : Courtes et moyennes",
-    "stats": "Force / Dextérité / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de savoir manier des armes de mêlées contondantes de courtes et moyennes longueurs. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Armes de mêlées longues",
-    "stats": "Force / Dextérité / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de savoir manier des armes de mêlées contondantes ou tranchantes de grandes longueurs. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Armes de jet : Légères",
-    "stats": "Dextérité / Perception / Force / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de lancer avec précision des objets ou armes de jets légères à courte distance (couteaux, dards, shuriken, haches légères, galets etc...),",
-        "bonus": 0.0,
-        "malus": -40.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Armes de jet : Lourdes",
-    "stats": "Dextérité / Perception / Force / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de lancer avec précision des armes de jets lourdes à moyenne distance (lances, javelots, haches de guerre, boomerang militaire, marteaux, poids etc...),",
-        "bonus": 0.0,
-        "malus": -40.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Armurage & Couture",
-    "stats": "Dextérité / Éducation / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de réparer, rapiécer et ajuster des vêtements, de remplacer coutures, boutons et fermetures, et d’adapter un vêtement au corps ou à l’usage.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de fabriquer des vêtements complets en textile ou cuir fin, ainsi que des accessoires utilitaires tels que sacs, gants, étuis, holsters simples, poches et sangles.",
-        "bonus": 0,
-        "malus": -35.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de fabriquer des vêtements renforcés et équipements techniques en textile, cuir épais, mousse ou polymères simples, offrant une légère protection.",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de fabriquer des protections artisanales en cuir épais, métal léger ou matériaux composites simples, incluant casques légers, plastrons, protège-membres et gilets renforcés offrant une bonne protection",
-        "bonus": 0,
-        "malus": -45.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de fabriquer des armures complètes en cuir, métal, textile technique ou plaques improvisées, incluant casques articulés et gilets pare-balles artisanaux, très efficaces et conçus sur mesure pour le porteur.",
-        "bonus": 0,
-        "malus": -50.0
-      }
-    }
-  },
-  {
-    "nom": "Arts & Interprétation",
-    "stats": "Charisme / Éducation / Dextérité / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de réaliser une prestation simple (chant, musique, jeu ou mise en scène) sans finesse mais capable de retenir l’attention quelques secondes.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de réaliser une prestation correcte et expressive, capable d’émouvoir et de retenir l’attention pendant quelques dizaines de secondes.",
-        "bonus": 0,
-        "malus": -35.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de réaliser une prestation maîtrisée capable d’émouvoir, de distraire pendant 1 minute max ou d'appliquer un changement comportemental (amical, hostile...).",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de réaliser une prestation de haut niveau capable d’influencer ou de distraire une foule ou un public hostile pendant 1 à 3 minutes max.",
-        "bonus": 0,
-        "malus": -45.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de réaliser des performances exceptionnelles capables de distraire une foule, manipuler émotions, jugement ou mémoire collective pendant 3 à 5 minutes max. ",
-        "bonus": 0,
-        "malus": -50.0
-      }
-    }
-  },
-  {
-    "nom": "Bagou",
-    "stats": "Charisme / Éducation",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’attirer la sympathie d’un individu ou d’obtenir son attention par la parole, la répartie ou la démonstration (individu non hostile, agressif ou violent).",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet d’attirer la sympathie d’un groupe individu ou d’obtenir leur attention par la parole, la répartie ou la démonstration  (individus non hostiles, agressifs ou violents).",
-        "bonus": 15.0,
-        "malus": -40.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Biologie",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’identifier, analyser et exploiter des organismes vivants, tissus biologiques, fluides organiques, parasites, bactéries, spores et agents infectieux, ainsi que de comprendre l’anatomie et la morphologie des êtres vivants.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Botanique",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’identifier, d'étudier, d'exploiter et de créer (par croisement ou autre) des plantes ou des racines pour les utiliser comme ressource stratégique. ",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Bricolage",
-    "stats": "Dextérité / Éducation / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de monter, démonter, modifier, adapter ou réparer des objets simples du quotidien, mobilier ou des éléments de construction et de rénovation. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Cartographie & Croquis",
-    "stats": "Dextérité / Éducation",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de réaliser à la main une carte ou un schéma ou un portrait robot exploitable et identifiable. Temps de production  : Réussite = 15 à 30min | Échec = 30min à 1h.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Chimie",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de manipuler des produits chimiques simples et de réaliser des réactions élémentaires (solvants, nettoyants, décapants légers), d’identifier grossièrement des liquides ou poudres et d’utiliser des révélateurs basiques pour faire ressortir des traces ou fluides.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de fabriquer et d’utiliser des produits corrosifs légers, des solvants puissants, des adhésifs simples, des gels rudimentaires et des produits pétrochimiques mineurs (lubrifiants, épaississants), ainsi que d’identifier des substances courantes.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de fabriquer, modifier et analyser des produits corrosifs puissants, des pétrochimiques exploitables (gels, carburants épaissis), des révèlent d’enquête complexes, ainsi que des toxiques, drogues ou incapacitants légers (somnifères, irritants, stimulants).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de concevoir et d’utiliser des produits corrosifs spécialisés (découpe organique ou métal léger), des polymères avancés (mousses, résines, scellants), des pétrochimiques spécialisés, des solvants de découpe et des incapacitants plus efficaces, ainsi que d’analyser des procédés ou installations chimiques complexes.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de créer, synthétiser, optimiser ou détourner des composés chimiques nouveaux, de combiner plusieurs familles pour obtenir des effets sur mesure, et de comprendre, exploiter ou perturber des procédés chimiques élaborés, qu’ils soient industriels, médicaux ou clandestins.",
-        "bonus": 0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Collection",
-    "stats": "Éducation / Perception / Dextérité",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’authentifier, d'expertiser, de restaurer et de créer des contrefaçons d'objets atypiques ou uniques.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Combat à mains nues",
-    "stats": "Force / Dextérité / Résistance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de combattre un individu humain (attaquer, se défendre, repousser etc...)",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Comptabilité & Audit",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de comprendre, d'exploiter et de falsifier des documents comptables, financiers ou bancaires.",
-        "bonus": 0.0,
-        "malus": -40.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Conduite",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de conduire une voiture standard sur route en conditions normales.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de conduire une voiture dans des conditions difficiles et des motos / scooters.",
-        "bonus": 0,
-        "malus": -35.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de conduire des 3 roues, side-cars et camionnettes utilitaires même hors-route.",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de conduire des camions et effectuer des manœuvres techniques ou en poursuite.",
-        "bonus": 0,
-        "malus": -45.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de conduire tous véhicules terrestres motorisés, y compris poids lourds en situation extrême.",
-        "bonus": 0,
-        "malus": -50.0
-      }
-    }
-  },
-  {
-    "nom": "Confection",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de fabriquer des mélanges simples à usage direct (infusions, décoctions, baumes légers).",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de préparer des solutions plus précises (onguents, huiles médicinales, fortifiants légers).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de fabriquer des médicaments artisanaux, stimulants ou sédatifs à dosage fiable.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de produire des toxines, antidotes ou composés actifs nécessitant un dosage fin.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de concevoir des préparations complexes à effets multiples ou sur-mesure selon un besoin.",
-        "bonus": 0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Crochetage",
-    "stats": "Dextérité / Perception / Éducation",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’utiliser des outils pour ouvrir des cadenas, serrures, coffres etc... (Échec = -1 crochet),",
-        "bonus": 0.0,
-        "malus": -50.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Cryptographie",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de déchiffrer des codes ou des schémas cryptés.  ",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Cuisine",
-    "stats": "Éducation / Dextérité",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de préparer des plats simples permettant de récupérer 1 point de Courage ou de Résistance (limité à 1/jour).",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de cuisiner des plats plus élaborés permettant de récupérer 2 point de Courage ou de Résistance (limité à 1/jour).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de préparer des plats complexes permettant de récupérer 3 point de Courage ou de Résistance (limité à 1/jour).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de préparer des plats spécialisés permettant de récupérer 4 points de Courage ou de Résistance (limité à 1/jour).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de concevoir des menus sophistiqués permettant de récupérer 5 points de Courage ou de Résistance (limité à 1/jour).",
-        "bonus": 0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Diplomatie",
-    "stats": "Charisme / Courage",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de calmer ou de faire coopérer un individu contrarié, fermé, hostile ou aggresif mais non-violent.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de calmer ou de faire coopérer un groupe d'individus contrariés, fermés, hostiles ou aggressifs mais non-violents.",
-        "bonus": 15.0,
-        "malus": -40.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Documentation & Recherche",
-    "stats": "Éducation / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de chercher, trouver, écrire, et consulter rapidement des documents variées et d’en extraire les informations utiles.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Électricité",
-    "stats": "Éducation / Dextérité",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de comprendre, diagnostiquer, réparer ou d'installer des systèmes électriques. ",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Électronique",
-    "stats": "Éducation / Dextérité",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de comprendre, diagnostiquer, réparer ou d'installer des systèmes électroniques. ",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Escamotage",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de manipuler, cacher, transférer, substituer ou dérober de petits objets et d’exécuter des petits tours visuels ou détournements d’attention.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Esquive",
-    "stats": "Dextérité / Perception / Chance / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’éviter un contact ou un impact en anticipant un mouvement. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Espionnage",
-    "stats": "Perception / Dextérité / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de suivre et/ou d'écouter une cible unique à distance sans attirer l’attention.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de suivre et/ou d'écouter un groupe à distance sans attirer l’attention.",
-        "bonus": 15.0,
-        "malus": -40.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Fabrication d’objets",
-    "stats": "Dextérité / Éducation",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de fabriquer des outils simples (crochet, levier, pince simple, tige, cales, bâton, entrave).",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de fabriquer des outils avancés (crochets multi-usage, grappin sommaire, serrures improvisées) et des armes simples (matraque, masse, bâton, lance courte).",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de fabriquer des armes avancées (lance longue, masses lourdes, frondes, sarbacane) et des pièges simples (alarme, blocage, collet, chute d’objet).",
-        "bonus": 0,
-        "malus": -50.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de fabriquer des pièges avancés (pression, tension, gravité, trappe) et des mécanismes simples (levier + tension + bruit).",
-        "bonus": 0,
-        "malus": -60.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de fabriquer des systèmes mécaniques ingénieux, multi-déclencheurs ou adaptés à une cible précise, en exploitant efficacement les matériaux.",
-        "bonus": 0,
-        "malus": -70.0
-      }
-    }
-  },
-  {
-    "nom": "Fouille Technique",
-    "stats": "Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de trouver rapidement des objets, indices, armes, outils ou effets personnels en fouillant efficacement un individu, un conteneur, un meuble, une zone limitée etc... Sans indiquer précisément ou explictement l'endroit de la recherche.",
-        "bonus": 0.0,
-        "malus": -40.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Furtivité",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de se déplacer lentement et/ou de se dissimuler dans une zone non-éclairé sans attirer l’attention.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de se déplacer normalement et/ou de se dissimuler dans une zone non-éclairé sans attirer l’attention.",
-        "bonus": 10.0,
-        "malus": -35.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de se déplacer rapidement et/ou de se dissimuler dans une zone non-éclairé sans attirer l’attention.",
-        "bonus": 15.0,
-        "malus": -40.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Géologie",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’identifier, analyser et exploiter roches, minerais, métaux naturels, cristaux, sols, formations géologiques etc...",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Hypnose",
-    "stats": "Charisme / Éducation / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de détendre, renforcer la concentration, modifier un état émotionnel ou sensoriel, atténuer le stress ou la douleur, accéder à des souvenirs refoulés ou à l'inconscient etc... sur un individu calme, amical ou neutre et consentant (non-aggressif, non-contrarié, non-hostile et non-violent). ",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Imposture & Déguisement",
-    "stats": "Charisme / Éducation / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de tenir un rôle d’imposteur (avec déguisement) auprès d'un individu non-méfiant qui ne connait pas la cible.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de tenir un rôle d’imposteur (avec ou sans déguisement) auprès d'un d'individu non-méfiant qui ne connait pas la cible.",
-        "bonus": 10.0,
-        "malus": -35.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de tenir un rôle d’imposteur (avec ou sans déguisement) auprès d'un groupe d'individus non-méfiants qui ne connaissent pas la cible.",
-        "bonus": 15.0,
-        "malus": -40.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Informatique",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’utiliser un ordinateur ou terminal, installer des logiciels simples, configurer périphériques, gérer fichiers/dossiers et diagnostiquer des erreurs mineures.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet d’installer/configurer systèmes et drivers, diagnostiquer pannes logicielles et contourner des restrictions de base (comptes limités, verrouillages légers).",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de récupérer/réparer données, explorer systèmes complexes et contourner protections usuelles (mots de passe faibles, sécurité standard).",
-        "bonus": 0,
-        "malus": -50.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet d’analyser journaux, identifier failles, automatiser tâches et contourner sécurités robustes au sein de réseaux ou serveurs.",
-        "bonus": 0,
-        "malus": -60.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de pénétrer des infrastructures critiques, supprimer, modifier, extraire des données ou saboter une action au sein d’un système et altérer les traces laissées.",
-        "bonus": 0,
-        "malus": -70.0
-      }
-    }
-  },
-  {
-    "nom": "Interrogatoire",
-    "stats": "Charisme / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’obtenir des informations auprès d’un individu perplexe, stressé, embrouillé ou dans l'incertitude, mais non hostile et non-violent.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Intimidation",
-    "stats": "Charisme / Force / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de soumettre un individu amical pour obtenir une information (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de soumettre un individu neutre ou désintéréssé pour obtenir une information (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
-        "bonus": 0,
-        "malus": -35.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de soumettre un individu hostile pour obtenir une information (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de soumettre un individu hostile pour obtenir son obeïssance ou sa coopération (Réussite : individu devient hostile | Échec : individu devient aggressif ou violent).",
-        "bonus": 0,
-        "malus": -45.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de soumettre jusqu'à trois individus hostiles pour obtenir leur obeïssance ou leur coopération (Réussite : individus deviennent hostiles | Échec : individus deviennent aggressifs ou violents).",
-        "bonus": 0,
-        "malus": -50.0
-      }
-    }
-  },
-  {
-    "nom": "Langues étrangères",
-    "stats": "Éducation / Charisme / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de comprendre, traduire et communiquer dans 1 langue supplémentaire au choix.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de comprendre, traduire et communiquer dans 2 langues supplémentaires au choix.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de comprendre, traduire et communiquer dans 2 langues supplémentaires au choix dont les langues mortes et hieroglyphiques (hors langues inconnues).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de comprendre, traduire et communiquer dans 3 langues supplémentaires au choix, dont les langues mortes et hieroglyphiques (hors langues inconnues).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de comprendre, traduire et communiquer dans 5 langues supplémentaires au choix, dont les langues mortes et hieroglyphiques (hors langues inconnues).",
-        "bonus": 0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Lecture comportementale",
-    "stats": "Perception / Charisme / Éducation",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'observer les changements de comportement d'un individu (nerveux, contrarié, mal à l’aise, confiant etc...).",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Mécanique",
-    "stats": "Éducation / Dextérité / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’entretenir, diagnostiquer, modifier et de réparer des systèmes complexes incluant des composants mécaniques, motorisés, hydrauliques, pneumatiques, transmetteurs d'énergie, engrenages, machines, systèmes techniques divers etc...",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Médecine",
-    "stats": "Éducation / Perception / Dextérité",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’appliquer les premiers secours : stabiliser une blessure, stopper une hémorragie légère, désinfecter, bander, poser un garrot, soutenir respiration.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de réaliser des soins avancés : sutures légères, pansements complexes, gestion de fièvre/choc/brûlures, pose de perfusion ou traitement support simple.",
-        "bonus": 0,
-        "malus": -40.0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet d’établir des diagnostics cliniques, gérer fractures simples, intoxications, infections modérées, et effectuer un triage complet.",
-        "bonus": 0,
-        "malus": -50.0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de traiter des cas complexes non chirurgicaux : infections sévères, polytraumas stabilisés, complications, syndrome de choc, lecture de symptômes atypiques.",
-        "bonus": 0,
-        "malus": -60.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet d’effectuer des interventions chirurgicales : extraction de corps étrangers, sutures profondes, gestion hémorragies graves, chirurgie de terrain.",
-        "bonus": 0,
-        "malus": -70.0
-      }
-    }
-  },
-  {
-    "nom": "Négociation",
-    "stats": "Charisme / Éducation",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’obtenir un compromis auprès d’un individu jusqu'à hostile et/ou agressif mais non-violent. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Océanologie",
-    "stats": "Éducation / Perception",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d’identifier faune/flore marines, dangers immédiats ainsi que d'interpréter les mouvements marins et les terrains océaniques. ",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Parkour",
-    "stats": "Dextérité / Force / Résistance / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'effectuer des accrobaties et des déplacements rapides / fluides en milieu naturel ou urbain  (roulades, sauts longs, équilibre, chutes amorties, sprint etc...).",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Pilotage",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de piloter des petites embarcations : canot, barque, voilier léger, zodiac.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de piloter des bateaux à moteur légers ou voiliers standards (pêche, loisir, transport léger).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de piloter des bateaux lourds (vedette, chalutier, navire côtier) et des avions légers (monomoteur).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de piloter des navires plus complexes (navire fluvial, drague, petit cargo) ou des avions multiréacteurs légers.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de piloter des navires spécialisés ou militaires (patrouilleur, brise-glace, corvette) et des appareils spécialisés (hydravion, avion de reconnaissance).",
-        "bonus": 0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Pistage",
-    "stats": "Perception / Éducation / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de suivre une piste humaine ou animale sur une courte distance",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de suivre une piste humaine ou animale sur une longue distance.",
-        "bonus": 15.0,
-        "malus": -50.0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Radiocommunications",
-    "stats": "Dextérité / Perception / Éducation",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de configurer un récepteur radio, rechercher des fréquences, régler une antenne simple et capter des communications locales.",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet d’installer et de régler un émetteur/récepteur, communiquer à moyenne distance et contourner les interférences courantes.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet d’exploiter plusieurs bandes/fréquences, améliorer la portée d’un signal, capter des communications lointaines et enregistrer ou re-router des transmissions.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de brouiller ou filtrer des signaux, détecter des émissions discrètes, déchiffrer une modulation simple et intervenir sur des réseaux analogiques locaux (radio/TV).",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de pirater des ondes radio ou vidéo, diffuser des émissions pirates, brouiller un réseau local complet et masquer l’origine du signal.",
-        "bonus": 0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Sabotage",
-    "stats": "Éducation / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de fabriquer et d’utiliser des charges explosives légères comme des pétards puissants, ainsi que des charges fumigènes légères",
-        "bonus": 0.0,
-        "malus": 0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "Permet de fabriquer et d’utiliser des charges explosives moyennes telles que de la dynamite artisanale ou des charges de bris léger, des charges fumigènes améliorées offrant une fumée plus dense et persistante, ainsi que des charges incendiaires légères",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "Permet de fabriquer et de manipuler des charges explosives puissantes comme des charges de brèche moyenne, des charges incendiaires moyennes, des charges incapacitantes telles que flash ou lacrymogène léger, ainsi que des charges thermiques rudimentaires permettant une fusion ou une découpe élémentaire.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "Permet de fabriquer, de manipuler et de configurer des charges explosives lourdes telles que des charges plastiques ou dirigées, des charges incendiaires avancées à propagation contrôlée, des charges incapacitantes avancées, des charges thermiques permettant une découpe nette, ainsi que des charges de propulsion simples.",
-        "bonus": 0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "Permet de manipuler, de concevoir, de combiner et de synchroniser des systèmes de charges complexes, incluant charges de brèche lourdes, charges thermiques de découpe structurelle, charges incapacitantes spécialisées, charges incendiaires spécialisées ou charges de propulsion avancées.",
-        "bonus": 0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Survie",
-    "stats": "Éducation / Perception / Dextérité / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de savoir s'orienter, anticiper la météo et survivre en milieu naturel hostile en utilisant les ressources du terrain.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir à l’arbalète",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer à l'arbalète (tout type) sur une distance moyenne. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir à l’arc",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer à l'arc (tout type) sur une distance moyenne. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir à l’arme à feu - Pistolets",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer avec des pistolets et des révolvers (tout type coup par coup). ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir à l’arme à feu - Mitraillettes",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer avec des pistolets mitrailleurs ou fusils d'assaut (tout type). ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir à l’arme à feu - Fusils",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer avec des fusils (précision, chasse, pompe etc...). ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir à l’arme à feu - Armes Lourdes",
-    "stats": "Dextérité / Perception / Chance / Force",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer avec des armes lourdes type minigun, lance-roquette etc... ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir à la sarbacane",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer avec une sarbacane sur une courte distance. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tir au lance-pierre",
-    "stats": "Dextérité / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'obtenir la capacité de tirer avec un lance-pierre sur une courte distance. ",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Tromperie",
-    "stats": "Charisme / Éducation / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet de mentir ou de manipuler de manière crédible une cible amicale, neutre ou désintéréssée non méfiante.",
-        "bonus": 0.0,
-        "malus": -30.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  },
-  {
-    "nom": "Zoologie",
-    "stats": "Éducation / Perception / Chance",
-    "niveaux": {
-      "Basique": {
-        "cout": 1,
-        "description": "Permet d'identifier des espèces animales, comprendre les comportements, prévoir les réactions / déplacements etc... ",
-        "bonus": 0.0,
-        "malus": -40.0
-      },
-      "Confirmé": {
-        "cout": 3,
-        "description": "",
-        "bonus": 5.0,
-        "malus": 0
-      },
-      "Avancé": {
-        "cout": 6,
-        "description": "",
-        "bonus": 10.0,
-        "malus": 0
-      },
-      "Expert": {
-        "cout": 10,
-        "description": "",
-        "bonus": 15.0,
-        "malus": 0
-      },
-      "Maître": {
-        "cout": 15,
-        "description": "",
-        "bonus": 25.0,
-        "malus": 0
-      }
-    }
-  }
-]
+}

@@ -1,0 +1,1484 @@
+{
+    "Addict aux médicaments": {
+        "nom": "Addict aux médicaments",
+        "definition": "Dépendance physique et/ou psychologique à un médicament prescrit ou détourné. Nécessite une prise régulière pour que le personnage puisse vivre normalement",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Alcoolique": {
+        "nom": "Alcoolique",
+        "definition": "Dépendance chronique à l’alcool. Nécessite une prise régulière pour que le personnage puisse vivre normalement",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Allergique": {
+        "nom": "Allergique",
+        "definition": "Réaction immunitaire anormale et permanente à une ou plusieurs substances spécifiques à déterminer selon le stade choisi. ",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Amputé": {
+        "nom": "Amputé",
+        "definition": "Perte permanente d’un membre entraînant une diminution significative des capacités physiques associées.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Anorexique": {
+        "nom": "Anorexique",
+        "definition": "Trouble alimentaire caractérisé par une restriction volontaire et persistante de l’alimentation, entraînant un affaiblissement physique.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Anxieux": {
+        "nom": "Anxieux",
+        "definition": "État permanent de tension et d’inquiétude excessive, entraînant une difficulté à gérer le stress et l’incertitude.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Arthritique": {
+        "nom": "Arthritique",
+        "definition": "Affection articulaire chronique provoquant raideur et douleurs persistantes, limitant durablement la force et les mouvements.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Asmatique": {
+        "nom": "Asmatique",
+        "definition": "Affection respiratoire chronique provoquant des difficultés respiratoires récurrentes et une sensibilité accrue à l’effort ou aux irritants.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Asocial": {
+        "nom": "Asocial",
+        "definition": "Tendance durable à éviter les interactions sociales et à éprouver des difficultés à créer ou maintenir des relations.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Autiste": {
+        "nom": "Autiste",
+        "definition": "Trouble du neurodéveloppement affectant durablement les interactions sociales, la communication et la flexibilité comportementale.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 50",
+                "cout_ps": 25,
+                "gain_pc": 10,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 30",
+                "cout_ps": 50,
+                "gain_pc": 20,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 10",
+                "cout_ps": 100,
+                "gain_pc": 40,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Auto-destructeur": {
+        "nom": "Auto-destructeur",
+        "definition": "Tendance persistante à adopter des comportements nuisibles ou dangereux pour soi-même, consciemment ou non.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Bipolaire": {
+        "nom": "Bipolaire",
+        "definition": "Trouble de l’humeur caractérisé par l’alternance d’épisodes dépressifs et d’épisodes maniaques.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Borgne": {
+        "nom": "Borgne",
+        "definition": "Perte totale et permanente de la vision d’un œil.",
+        "niveaux": {
+            "Sévère": {
+                "condition": "Dextérité < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "nan": {
+                "condition": "",
+                "cout_ps": 0,
+                "gain_pc": 0,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Boulimique": {
+        "nom": "Boulimique",
+        "definition": "Trouble alimentaire marqué par des épisodes récurrents de surconsommation alimentaire incontrôlée.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Brutal": {
+        "nom": "Brutal",
+        "definition": "Tendance durable à recourir facilement à la violence physique pour résoudre un conflit ou imposer sa volonté.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Chétif": {
+        "nom": "Chétif",
+        "definition": "Constitution physique fragile entraînant une faible résistance aux blessures, à la fatigue ou aux maladies.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Complexé": {
+        "nom": "Complexé",
+        "definition": "Sentiment durable d’infériorité ou de honte lié à un aspect physique, social ou personnel.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Défiguré": {
+        "nom": "Défiguré",
+        "definition": "Altération visible et permanente du visage affectant l’apparence et les interactions sociales.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Dépressif": {
+        "nom": "Dépressif",
+        "definition": "Trouble de l’humeur durable marqué par une tristesse profonde, une perte d’élan et une diminution significative de l’intérêt ou du plaisir.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Désordonné": {
+        "nom": "Désordonné",
+        "definition": "Tendance durable à manquer d’organisation, à accumuler le désordre et à gérer inefficacement son matériel ou ses affaires.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Dévot": {
+        "nom": "Dévot",
+        "definition": "Adhésion religieuse intense et structurante, guidant durablement les convictions et les décisions du personnage.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Douleurs chroniques": {
+        "nom": "Douleurs chroniques",
+        "definition": "Présence persistante et régulière de douleurs physiques indépendantes d’une blessure ponctuelle ou rémanente.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Épileptique": {
+        "nom": "Épileptique",
+        "definition": "Trouble neurologique chronique caractérisé par des crises convulsives ou des pertes de contrôle intermittentes.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Faible": {
+        "nom": "Faible",
+        "definition": "Force physique naturellement inférieure à la moyenne, limitant les capacités d’effort et de puissance.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Fatigue chronique": {
+        "nom": "Fatigue chronique",
+        "definition": "État permanent d’épuisement réduisant la capacité de récupération physique et mentale.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Fermé d'esprit": {
+        "nom": "Fermé d'esprit",
+        "definition": "Rigidité intellectuelle durable empêchant d’accepter ou de considérer des idées nouvelles ou opposées.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Fumeur": {
+        "nom": "Fumeur",
+        "definition": "Dépendance chronique au tabac fumé entraînant un besoin régulier de consommation et une altération progressive des capacités respiratoires.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Géant": {
+        "nom": "Géant",
+        "definition": "Taille anormalement grande entraînant une difficulté accrue dans les mouvements fins et la discrétion.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Hallucinations": {
+        "nom": "Hallucinations",
+        "definition": "Trouble perceptif durable provoquant la perception récurrente de stimuli inexistants (visuels, auditifs ou autres).",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Hypochondriaque": {
+        "nom": "Hypochondriaque",
+        "definition": "Préoccupation excessive et persistante concernant sa santé, avec interprétation alarmiste de symptômes bénins.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Handicap moteur": {
+        "nom": "Handicap moteur",
+        "definition": "Altération permanente d’une fonction motrice limitant les déplacements ou l’usage d’un membre.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Ignare": {
+        "nom": "Ignare",
+        "definition": "Manque profond et persistant d’instruction ou de connaissances générales.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Immunodéficient": {
+        "nom": "Immunodéficient",
+        "definition": "Affaiblissement chronique du système immunitaire rendant le personnage plus vulnérable aux infections.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Impulsif": {
+        "nom": "Impulsif",
+        "definition": "Tendance durable à réagir de manière excessive, rapide et agressive face aux contrariétés ou aux tensions.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Insomniaque": {
+        "nom": "Insomniaque",
+        "definition": "Trouble chronique du sommeil caractérisé par des difficultés persistantes à s’endormir ou à maintenir un sommeil réparateur.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Intolérant": {
+        "nom": "Intolérant",
+        "definition": "Tendance durable à rejeter ou condamner les opinions, croyances, ethnies ou modes de vie différents des siens.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Joueur compulsif": {
+        "nom": "Joueur compulsif",
+        "definition": "Dépendance persistante aux jeux d’argent ou de hasard, marquée par une difficulté à résister à l’envie de parier.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Lâche": {
+        "nom": "Lâche",
+        "definition": "Tendance durable à éviter le danger ou la confrontation au détriment du devoir ou des autres.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Lent": {
+        "nom": "Lent",
+        "definition": "Ralentissement physique durable affectant la vitesse de déplacement, les réflexes et l’exécution des actions.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Maniaque": {
+        "nom": "Maniaque",
+        "definition": "Trouble caractérisé par des phases d’excitation excessive, d’énergie débordante et de prise de décision imprudente.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Maladie chronique": {
+        "nom": "Maladie chronique",
+        "definition": "Affection médicale persistante et durable affectant le fonctionnement normal du corps.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Maladroit": {
+        "nom": "Maladroit",
+        "definition": "Difficulté structurelle à coordonner ses mouvements, entraînant des erreurs ou accidents fréquents.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Malchanceux": {
+        "nom": "Malchanceux",
+        "definition": "Tendance persistante à subir des événements défavorables indépendamment des compétences ou des décisions du personnage.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 50",
+                "cout_ps": 25,
+                "gain_pc": 10,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 30",
+                "cout_ps": 50,
+                "gain_pc": 20,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 10",
+                "cout_ps": 100,
+                "gain_pc": 40,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Malodorant": {
+        "nom": "Malodorant",
+        "definition": "Émanation corporelle ou buccale persistante et difficile à masquer, entraînant un inconfort notable dans les interactions sociales.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Masochiste": {
+        "nom": "Masochiste",
+        "definition": "Tendance durable à rechercher ou accepter la douleur et la souffrance comme source de satisfaction ou de valorisation.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Migraineux": {
+        "nom": "Migraineux",
+        "definition": "Trouble neurologique chronique caractérisé par des crises récurrentes de migraines intenses.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Mythomane": {
+        "nom": "Mythomane",
+        "definition": "Tendance persistante à mentir de manière compulsive, même en l’absence de nécessité ou de bénéfice évident.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Nihiliste": {
+        "nom": "Nihiliste",
+        "definition": "Conviction durable que rien n’a de sens ni de valeur intrinsèque, influençant profondément la vision du monde du personnage.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Charisme < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Charisme < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Charisme < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Paranoïaque": {
+        "nom": "Paranoïaque",
+        "definition": "Trouble marqué par une méfiance excessive et persistante envers autrui, avec tendance à interpréter les intentions comme hostiles.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Paresseux": {
+        "nom": "Paresseux",
+        "definition": "Tendance durable à éviter l’effort et à reporter les tâches malgré leur nécessité.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Petit": {
+        "nom": "Petit",
+        "definition": "Taille anormalement petite entraînant des limitations physiques liées à la portée, à la force d’impact et aux déplacements.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Prématuré": {
+        "nom": "Prématuré",
+        "definition": "Naissance survenue avant terme ayant entraîné une fragilité constitutionnelle durable.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Sadique": {
+        "nom": "Sadique",
+        "definition": "Tendance durable à éprouver du plaisir ou de la satisfaction en infligeant de la souffrance physique ou psychologique à autrui.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Sédentaire": {
+        "nom": "Sédentaire",
+        "definition": "Mode de vie durablement inactif ayant entraîné une faiblesse physique structurelle.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Force < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Force < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Force < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Sociopathe": {
+        "nom": "Sociopathe",
+        "definition": "Trouble de la personnalité caractérisé par un mépris persistant des normes sociales et une absence d’empathie marquée.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 50",
+                "cout_ps": 25,
+                "gain_pc": 10,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 30",
+                "cout_ps": 50,
+                "gain_pc": 20,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 10",
+                "cout_ps": 100,
+                "gain_pc": 40,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Superstitieux": {
+        "nom": "Superstitieux",
+        "definition": "Croyance durable en des présages, signes ou forces irrationnelles influençant les décisions et le comportement.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Éducation < 70",
+                "cout_ps": 5,
+                "gain_pc": 2,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Éducation < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Éducation < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Surdité": {
+        "nom": "Surdité",
+        "definition": "Perte partielle ou totale, permanente, de la capacité auditive.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Surpoid": {
+        "nom": "Surpoid",
+        "definition": "Excès permanent de masse corporelle entraînant une diminution des capacités physiques proportionnelle au stade choisi.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 35",
+                "cout_ps": 60,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Tête Brulée": {
+        "nom": "Tête Brulée",
+        "definition": "Tendance durable à s’engager dans des situations dangereuses ou risquées sans évaluer correctement les conséquences.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Chance < 65",
+                "cout_ps": 10,
+                "gain_pc": 4,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Chance < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Chance < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            }
+        }
+    },
+    "Toxicomane": {
+        "nom": "Toxicomane",
+        "definition": "Dépendance chronique à une substance psychoactive entraînant un besoin régulier de consommation.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Perception < 50",
+                "cout_ps": 25,
+                "gain_pc": 10,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Perception < 30",
+                "cout_ps": 50,
+                "gain_pc": 20,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Perception < 10",
+                "cout_ps": 100,
+                "gain_pc": 40,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Vieillard": {
+        "nom": "Vieillard",
+        "definition": "Âge avancé entraînant un déclin naturel et durable des capacités physiques et de récupération.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 60",
+                "cout_ps": 15,
+                "gain_pc": 6,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 45",
+                "cout_ps": 30,
+                "gain_pc": 12,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 30",
+                "cout_ps": 60,
+                "gain_pc": 24,
+                "bonus_comp": 1
+            }
+        }
+    },
+    "Vision altérée": {
+        "nom": "Vision altérée",
+        "definition": "Déficience visuelle permanente réduisant la qualité ou la précision de la perception visuelle.",
+        "niveaux": {
+            "Léger": {
+                "condition": "Dextérité < 55",
+                "cout_ps": 20,
+                "gain_pc": 8,
+                "bonus_comp": 0
+            },
+            "Moyen": {
+                "condition": "Dextérité < 35",
+                "cout_ps": 40,
+                "gain_pc": 16,
+                "bonus_comp": 0
+            },
+            "Sévère": {
+                "condition": "Dextérité < 15",
+                "cout_ps": 80,
+                "gain_pc": 32,
+                "bonus_comp": 1
+            }
+        }
+    }
+}

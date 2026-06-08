@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-# Le nom exact de ton fichier avec l'extension .xlsx
+# Nom exact de ton fichier
 fichier_excel = 'Liste compétences - JDR.xlsx'
 
 # Lecture du fichier Excel
@@ -17,6 +17,7 @@ for _, row in df.iterrows():
     nom = row['Compétence']
     niveau = str(row['Niveaux'])
     
+    # Création de la structure sous forme de dictionnaire
     if nom not in competences:
         competences[nom] = {
             "nom": nom,
@@ -24,16 +25,16 @@ for _, row in df.iterrows():
             "niveaux": {}
         }
     
-    # On gère les cellules vides avec fillna pour éviter les erreurs
+    # On gère les cellules vides avec pd.notna() pour éviter les erreurs
     competences[nom]["niveaux"][niveau] = {
-        "cout": row['Coûts'],
+        "cout": int(row['Coûts']) if pd.notna(row['Coûts']) else 0,
         "description": row['Actions'] if pd.notna(row['Actions']) else "",
-        "bonus": row['Bonus'] if pd.notna(row['Bonus']) else 0,
-        "malus": row['Malus'] if pd.notna(row['Malus']) else 0
+        "bonus": int(row['Bonus']) if pd.notna(row['Bonus']) else 0,
+        "malus": int(row['Malus']) if pd.notna(row['Malus']) else 0
     }
 
-# Sauvegarde en JSON
+# Sauvegarde en JSON (commencera par '{')
 with open('competences.json', 'w', encoding='utf-8') as f:
-    json.dump(list(competences.values()), f, ensure_ascii=False, indent=2)
+    json.dump(competences, f, ensure_ascii=False, indent=4)
 
-print("Succès ! 'competences.json' a été généré depuis ton fichier Excel.")
+print("Fichier 'competences.json' généré avec succès en format dictionnaire.")
