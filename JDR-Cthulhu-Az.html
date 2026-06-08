@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créateur de Personnage Cthulhu - Azpartam</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
     <style>
         /* Force la conservation des couleurs et structures sombres à l'impression / export PDF */
         @media print {
@@ -248,9 +249,61 @@
                 grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
             }
         }
+
+        /* --- Notifications (toasts) --- */
+        #toastZone {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+            max-width: min(92vw, 360px);
+        }
+        .toast {
+            pointer-events: auto;
+            font-family: ui-monospace, monospace;
+            font-size: 0.78rem;
+            line-height: 1.3;
+            padding: 0.7rem 0.95rem;
+            border-radius: 0.6rem;
+            color: #eafff7;
+            background: linear-gradient(135deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98));
+            border: 1px solid rgba(53, 196, 165, 0.45);
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(214, 178, 94, 0.08);
+            transform: translateX(120%);
+            opacity: 0;
+            transition: transform 280ms cubic-bezier(.2,.8,.2,1), opacity 280ms ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+        }
+        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast.toast-success { border-color: rgba(53, 196, 165, 0.6); }
+        .toast.toast-error { border-color: rgba(218, 72, 72, 0.7); color: #ffe3e3; }
+        .toast.toast-info { border-color: rgba(159, 106, 216, 0.6); }
+        .toast .toast-ico { font-size: 0.95rem; line-height: 1; margin-top: 0.05rem; }
+
+        /* --- Aperçu avatar --- */
+        #avatarPreviewWrap { margin-top: 0.6rem; }
+        #avatarPreview {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(53, 196, 165, 0.35);
+            box-shadow: inset 0 0 16px rgba(0,0,0,0.5);
+        }
+
+        @media print {
+            #toastZone, #avatarPreviewWrap { display: none !important; }
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 p-4 md:p-8 font-sans">
+    <div id="toastZone" aria-live="polite"></div>
     <div class="max-w-6xl mx-auto space-y-8">
         
         <div class="border-b border-emerald-950 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center">
@@ -271,12 +324,21 @@
                 IMPORTER UNE SAUVEGARDE
                 <input type="file" id="importFile" onchange="importerFiche(event)" class="hidden" accept=".json">
             </label>
+            <button onclick="partagerParURL()" class="btn-share-url font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl" style="background:linear-gradient(135deg,#3a2a6e,#6d4bb8);border:1px solid rgba(159,106,216,0.45);">
+                PARTAGER PAR URL
+            </button>
+            <button onclick="reinitialiserFiche()" class="btn-reset-fiche font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl" style="background:linear-gradient(135deg,#3a1414,#7c2222);border:1px solid rgba(218,72,72,0.5);">
+                RÉINITIALISER
+            </button>
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
                 <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Avatar (Lien Photo)</label>
-                <input type="text" id="char_avatar" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+                <input type="text" id="char_avatar" placeholder="https://..." oninput="rafraichirApercuAvatar()" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+                <div id="avatarPreviewWrap" class="hidden">
+                    <img id="avatarPreview" alt="Aperçu de l'avatar" onerror="this.parentElement.classList.add('hidden')">
+                </div>
             </div>
             <div>
                 <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Nom & Prénom de l'Enquêteur</label>
@@ -558,6 +620,10 @@
         </div>
 
         <div id="outputContainer" class="hidden text-left bg-slate-900 p-4 rounded-xl border border-emerald-950 space-y-2">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">Fiche générée</h3>
+                <button onclick="copierPrompt()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1 rounded text-xs font-mono uppercase tracking-wide">Copier</button>
+            </div>
             <textarea id="promptOutput" rows="14" class="w-full bg-slate-950 p-3 rounded text-xs text-slate-300 font-mono focus:outline-none" readonly></textarea>
         </div>
     </div>
@@ -587,24 +653,36 @@
         document.getElementById('pc_max').addEventListener('input', travaillerCalculsEtRendu);
         document.getElementById('comp_max_limit').addEventListener('input', travaillerCalculsEtRendu);
 
-        // Chargement JSON Compétences
-        fetch('competences.json').then(res => res.json()).then(data => {
-            indexCompetencesData = data;
-            const select = document.getElementById('selectCompetence');
-            Object.keys(data).forEach(key => {
-                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; select.appendChild(opt);
-            });
-            select.addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
-        });
+        const LS_KEY = 'azpartam_fiche_v1';
 
-        // Chargement JSON Afflictions
-        fetch('afflictions.json').then(res => res.json()).then(data => {
-            indexAfflictionsData = data;
-            const select = document.getElementById('selectAffliction');
-            Object.keys(data).forEach(key => {
-                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; select.appendChild(opt);
+        // Chargement des deux bases JSON, PUIS initialisation de la fiche
+        // (l'init a besoin des bases pour reconstruire compétences/afflictions depuis une URL ou le localStorage)
+        Promise.all([
+            fetch('competences.json').then(res => res.json()),
+            fetch('afflictions.json').then(res => res.json())
+        ]).then(([dataComp, dataAff]) => {
+            indexCompetencesData = dataComp;
+            const selectComp = document.getElementById('selectCompetence');
+            Object.keys(dataComp).forEach(key => {
+                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; selectComp.appendChild(opt);
             });
-            select.addEventListener('change', (e) => chargerDetailsAffliction(e.target.value));
+            selectComp.addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
+
+            indexAfflictionsData = dataAff;
+            const selectAff = document.getElementById('selectAffliction');
+            Object.keys(dataAff).forEach(key => {
+                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; selectAff.appendChild(opt);
+            });
+            selectAff.addEventListener('change', (e) => chargerDetailsAffliction(e.target.value));
+
+            initialiserFiche();
+        }).catch(err => {
+            console.error(err);
+            toast("Impossible de charger les bases (competences.json / afflictions.json). Ouvrez la page via un serveur local.", "error", 8000);
+            // Mode dégradé : on permet quand même de remplir les stats et le lore
+            ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
+            ajouterLigneInventaire('container_global', 'Objet global 1...');
+            travaillerCalculsEtRendu();
         });
 
         function chargerDetailsCompetence(nomComp) {
@@ -682,11 +760,11 @@
             let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
             let pcInitialMax = parseInt(document.getElementById('pc_max').value) || 25;
             if (competencesChoisies.filter(i => i.nom !== nom).reduce((s, i) => s + i.cout, 0) + cout > (pcInitialMax + totalGainPC)) {
-                alert("Erreur : Budget de PC insuffisant !"); return;
+                toast("Budget de PC insuffisant !", "error"); return;
             }
             let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
             if (!competencesChoisies.some(i => i.nom === nom) && competencesChoisies.length >= ((parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp)) {
-                alert("Erreur MJ : Nombre de compétences actives max atteint !"); return;
+                toast("Nombre de compétences actives max atteint (règle MJ).", "error"); return;
             }
             competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
             
@@ -711,7 +789,7 @@
 
         function ajouterAffliction(nom, stade, cout_ps, gain_pc, bonus_comp, condition, definition) {
             if (!afflictionsChoisies.some(i => i.nom === nom) && afflictionsChoisies.length >= 3) {
-                alert("Erreur : Maximum de 3 afflictions atteint !"); return;
+                toast("Maximum de 3 afflictions atteint.", "error"); return;
             }
             
             let repartition = { "Force": 0, "Dextérité": 0, "Charisme": 0, "Perception": 0, "Éducation": 0, "Chance": 0 };
@@ -940,6 +1018,8 @@
                            '<div class="font-mono ' + (totalScore > 70 ? 'text-fuchsia-400 font-black' : 'text-emerald-400') + '">Total = ' + totalScore + '</div></div></div>';
                 }).join('');
             }
+
+            persisterLocalDebounce();
         }
 
         // Ajout d'une ligne d'inventaire avec écouteur de touche pour "Entrée"
@@ -1034,66 +1114,16 @@
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    
-                    document.getElementById('char_avatar').value = data.avatar || "";
-                    document.getElementById('char_name').value = data.nom || "";
-                    document.getElementById('char_profession').value = data.profession || "";
-                    
-                    if (data.stats) {
-                        document.getElementById('stat_force').value = data.stats.force || 50;
-                        document.getElementById('stat_dex').value = data.stats.dex || 50;
-                        document.getElementById('stat_cha').value = data.stats.cha || 50;
-                        document.getElementById('stat_per').value = data.stats.per || 50;
-                        document.getElementById('stat_edu').value = data.stats.edu || 50;
-                        document.getElementById('stat_chance').value = data.stats.chance || 50;
-                    }
-                    
-                    if (data.regles) {
-                        document.getElementById('pc_max').value = data.regles.pc_max || 25;
-                        document.getElementById('comp_max_limit').value = data.regles.comp_max_limit || 2;
-                        document.getElementById('pts_deduction').value = data.regles.pts_deduction || 0;
-                    }
-
-                    if (data.lore) {
-                        document.getElementById('lore_peurs').value = data.lore.peurs || "";
-                        document.getElementById('lore_vaillance').value = data.lore.vaillance || "";
-                        document.getElementById('lore_background').value = data.lore.background || "";
-                    }
-
-                    if (data.inventaires) {
-                        document.getElementById('inv_money').value = data.inventaires.monnaie || "";
-                        
-                        const containerPerso = document.getElementById('container_perso');
-                        containerPerso.innerHTML = "";
-                        (data.inventaires.personnel || []).forEach(item => {
-                            ajouterLigneInventaire('container_perso', 'Objet sur soi...', item);
-                        });
-
-                        const containerGlobal = document.getElementById('container_global');
-                        containerGlobal.innerHTML = "";
-                        (data.inventaires.global || []).forEach(item => {
-                            ajouterLigneInventaire('container_global', 'Objet global...', item);
-                        });
-                    }
-
-                    if (data.etats) {
-                        const radsM = document.getElementsByName('san_mentale');
-                        radsM.forEach(r => { r.checked = (r.value === data.etats.mentale); });
-                        const radsP = document.getElementsByName('san_physique');
-                        radsP.forEach(r => { r.checked = (r.value === data.etats.physique); });
-                    }
-
-                    competencesChoisies = data.competences || [];
-                    afflictionsChoisies = data.afflictions || [];
-                    
-                    travaillerCalculsEtRendu();
-                    alert("Fiche d'enquêteur restaurée avec succès !");
+                    appliquerEtatFiche(data);
+                    persisterLocal();
+                    toast("Fiche d'enquêteur restaurée avec succès.", "success");
                 } catch (err) {
-                    alert("Erreur lors de l'importation. Format de fichier non reconnu.");
+                    toast("Erreur d'importation : format de fichier non reconnu.", "error");
                     console.error(err);
                 }
             };
             reader.readAsText(file);
+            event.target.value = ""; // permet de ré-importer le même fichier ensuite
         }
 
         document.getElementById('btnGenererPrompt').addEventListener('click', () => {
@@ -1161,18 +1191,255 @@
                 document.getElementById('promptOutput').value = superPrompt;
                 document.getElementById('outputContainer').classList.remove('hidden');
                 navigator.clipboard.writeText(superPrompt);
-                alert("Fiche générée et copiée avec succès !");
+                toast("Fiche générée et copiée dans le presse-papier.", "success");
             } catch (err) {
-                alert("Erreur technique lors de la génération. Inspectez la console."); 
+                toast("Erreur technique lors de la génération (voir console).", "error");
                 console.error(err);
             }
         });
 
-        // Initialisation de lignes vides par défaut si l'utilisateur n'importe rien au début
-        ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
-        ajouterLigneInventaire('container_global', 'Objet global 1...');
+        // ============================================================
+        //  NOTIFICATIONS (toasts)
+        // ============================================================
+        function toast(message, type = 'success', duree = 3200) {
+            const zone = document.getElementById('toastZone');
+            if (!zone) return;
+            const el = document.createElement('div');
+            el.className = 'toast toast-' + type;
+            const icones = { success: '✓', error: '⚠', info: 'ℹ' };
+            const ico = document.createElement('span');
+            ico.className = 'toast-ico';
+            ico.textContent = icones[type] || '•';
+            const txt = document.createElement('span');
+            txt.textContent = message;
+            el.appendChild(ico); el.appendChild(txt);
+            zone.appendChild(el);
+            requestAnimationFrame(() => el.classList.add('show'));
+            setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 320); }, duree);
+        }
 
-        travaillerCalculsEtRendu();
+        // ============================================================
+        //  PETITS UTILITAIRES
+        // ============================================================
+        function val(id) { const e = document.getElementById(id); return e ? e.value : ''; }
+
+        function rafraichirApercuAvatar() {
+            const url = val('char_avatar').trim();
+            const wrap = document.getElementById('avatarPreviewWrap');
+            const img = document.getElementById('avatarPreview');
+            if (url) { img.src = url; wrap.classList.remove('hidden'); }
+            else { img.removeAttribute('src'); wrap.classList.add('hidden'); }
+        }
+
+        function copierPrompt() {
+            const txt = document.getElementById('promptOutput').value;
+            if (!txt) return;
+            navigator.clipboard.writeText(txt)
+                .then(() => toast("Fiche copiée dans le presse-papier.", "success"))
+                .catch(() => toast("Copie impossible (presse-papier non autorisé).", "error"));
+        }
+
+        // ============================================================
+        //  SÉRIALISATION DE L'ÉTAT (format compact)
+        //  Les compétences/afflictions ne stockent que l'essentiel ;
+        //  le reste (coûts, bonus, définitions) est reconstruit via les JSON.
+        // ============================================================
+        function collecterEtatFiche(inclureBackground) {
+            return {
+                avatar: val('char_avatar'),
+                nom: val('char_name'),
+                profession: val('char_profession'),
+                stats: {
+                    force: val('stat_force'), dex: val('stat_dex'), cha: val('stat_cha'),
+                    per: val('stat_per'), edu: val('stat_edu'), chance: val('stat_chance')
+                },
+                competences: competencesChoisies.map(c => ({ nom: c.nom, niveau: c.niveau, statChoisie: c.statChoisie })),
+                afflictions: afflictionsChoisies.map(a => ({ nom: a.nom, stade: a.stade, repartition: a.repartition })),
+                inventaires: {
+                    monnaie: val('inv_money'),
+                    personnel: stockerInventaireTableau('container_perso'),
+                    global: stockerInventaireTableau('container_global')
+                },
+                lore: {
+                    peurs: val('lore_peurs'),
+                    vaillance: val('lore_vaillance'),
+                    background: inclureBackground ? val('lore_background') : ''
+                },
+                etats: { mentale: mt_getRadioValue('san_mentale'), physique: mt_getRadioValue('san_physique') },
+                regles: { pc_max: val('pc_max'), comp_max_limit: val('comp_max_limit'), pts_deduction: val('pts_deduction') }
+            };
+        }
+
+        // Reconstruit une compétence complète à partir de {nom, niveau, statChoisie}
+        function reconstruireCompetence(item) {
+            const comp = indexCompetencesData[item.nom];
+            if (!comp || !comp.niveaux) return null;
+            const ordre = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"];
+            let desc = "", niveauData = null;
+            for (const n of ordre) {
+                if (comp.niveaux[n]) {
+                    if (comp.niveaux[n].description) desc = comp.niveaux[n].description;
+                    if (n === item.niveau) { niveauData = comp.niveaux[n]; break; }
+                }
+            }
+            if (!niveauData) return null;
+            let stat = item.statChoisie;
+            if (!stat || !comp.stats.includes(stat)) {
+                stat = Object.keys(statMapping).find(k => comp.stats.includes(k)) || "Force";
+            }
+            return { nom: comp.nom, niveau: item.niveau, bonus: niveauData.bonus || 0, cout: niveauData.cout,
+                     stringStats: comp.stats, statChoisie: stat, description: desc };
+        }
+
+        // Reconstruit une affliction complète à partir de {nom, stade, repartition}
+        function reconstruireAffliction(item) {
+            const aff = indexAfflictionsData[item.nom];
+            if (!aff || !aff.niveaux || !aff.niveaux[item.stade]) return null;
+            const d = aff.niveaux[item.stade];
+            const repVide = { "Force": 0, "Dextérité": 0, "Charisme": 0, "Perception": 0, "Éducation": 0, "Chance": 0 };
+            return { nom: aff.nom, stade: item.stade, cout_ps: d.cout_ps, gain_pc: d.gain_pc,
+                     bonus_comp: d.bonus_comp || 0, condition: d.condition, definition: aff.definition,
+                     repartition: Object.assign({}, repVide, item.repartition || {}) };
+        }
+
+        // Applique un état (issu d'une URL, du localStorage ou d'un import JSON) à la fiche.
+        // Gère le format minimal (URL) ET le format complet (ancienne sauvegarde JSON).
+        function appliquerEtatFiche(data) {
+            if (!data) return;
+            document.getElementById('char_avatar').value = data.avatar || "";
+            document.getElementById('char_name').value = data.nom || "";
+            document.getElementById('char_profession').value = data.profession || "";
+            if (data.stats) {
+                document.getElementById('stat_force').value = data.stats.force || 50;
+                document.getElementById('stat_dex').value = data.stats.dex || 50;
+                document.getElementById('stat_cha').value = data.stats.cha || 50;
+                document.getElementById('stat_per').value = data.stats.per || 50;
+                document.getElementById('stat_edu').value = data.stats.edu || 50;
+                document.getElementById('stat_chance').value = data.stats.chance || 50;
+            }
+            if (data.regles) {
+                document.getElementById('pc_max').value = data.regles.pc_max || 25;
+                document.getElementById('comp_max_limit').value = data.regles.comp_max_limit || 2;
+                document.getElementById('pts_deduction').value = data.regles.pts_deduction || 0;
+            }
+            if (data.lore) {
+                document.getElementById('lore_peurs').value = data.lore.peurs || "";
+                document.getElementById('lore_vaillance').value = data.lore.vaillance || "";
+                document.getElementById('lore_background').value = data.lore.background || "";
+            }
+            document.getElementById('inv_money').value = (data.inventaires && data.inventaires.monnaie) || "";
+            const cPerso = document.getElementById('container_perso'); cPerso.innerHTML = "";
+            const itemsPerso = (data.inventaires && data.inventaires.personnel) || [];
+            itemsPerso.forEach(it => ajouterLigneInventaire('container_perso', 'Objet sur soi...', it));
+            if (itemsPerso.length === 0) ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
+            const cGlobal = document.getElementById('container_global'); cGlobal.innerHTML = "";
+            const itemsGlobal = (data.inventaires && data.inventaires.global) || [];
+            itemsGlobal.forEach(it => ajouterLigneInventaire('container_global', 'Objet global...', it));
+            if (itemsGlobal.length === 0) ajouterLigneInventaire('container_global', 'Objet global 1...');
+            if (data.etats) {
+                document.getElementsByName('san_mentale').forEach(r => r.checked = (r.value === data.etats.mentale));
+                document.getElementsByName('san_physique').forEach(r => r.checked = (r.value === data.etats.physique));
+            }
+            // stringStats présent => format complet ; sinon format minimal à reconstruire
+            competencesChoisies = (data.competences || []).map(c => c.stringStats ? c : reconstruireCompetence(c)).filter(Boolean);
+            afflictionsChoisies = (data.afflictions || []).map(a => a.definition ? a : reconstruireAffliction(a)).filter(Boolean);
+            rafraichirApercuAvatar();
+            travaillerCalculsEtRendu();
+        }
+
+        // ============================================================
+        //  PERSISTANCE LOCALE AUTOMATIQUE (localStorage)
+        // ============================================================
+        let _persistTimer = null;
+        function persisterLocal() {
+            try { localStorage.setItem(LS_KEY, JSON.stringify(collecterEtatFiche(true))); } catch (e) { /* quota / indisponible */ }
+        }
+        function persisterLocalDebounce() {
+            clearTimeout(_persistTimer);
+            _persistTimer = setTimeout(persisterLocal, 400);
+        }
+        // Couvre les champs texte/radio qui ne déclenchent pas travaillerCalculsEtRendu()
+        document.addEventListener('input', persisterLocalDebounce);
+        document.addEventListener('change', persisterLocalDebounce);
+
+        // ============================================================
+        //  PARTAGE PAR URL (compression LZ-String, sans le background)
+        // ============================================================
+        function encoderEtat(data) {
+            const json = JSON.stringify(data);
+            if (window.LZString) return 'c=' + LZString.compressToEncodedURIComponent(json);
+            return 'b=' + btoa(unescape(encodeURIComponent(json)));
+        }
+        function decoderHash(hash) {
+            try {
+                const h = hash.replace(/^#/, '');
+                if (h.startsWith('c=') && window.LZString) {
+                    const json = LZString.decompressFromEncodedURIComponent(h.slice(2));
+                    return json ? JSON.parse(json) : null;
+                }
+                if (h.startsWith('b=')) return JSON.parse(decodeURIComponent(escape(atob(h.slice(2)))));
+                return null;
+            } catch (e) { console.error(e); return null; }
+        }
+        function partagerParURL() {
+            const frag = encoderEtat(collecterEtatFiche(false)); // tout sauf le background
+            const base = location.href.split('#')[0];
+            const url = base + '#' + frag;
+            history.replaceState(null, '', '#' + frag);
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url)
+                    .then(() => toast("Lien de partage copié ! (le background n'est pas inclus)", "info", 4500))
+                    .catch(() => toast("Lien généré dans la barre d'adresse (copie auto impossible).", "info", 4500));
+            } else {
+                toast("Lien généré dans la barre d'adresse.", "info", 4500);
+            }
+        }
+
+        // ============================================================
+        //  RÉINITIALISATION (efface localStorage + repart à zéro)
+        // ============================================================
+        function reinitialiserFiche() {
+            if (!confirm("Réinitialiser la fiche ?\n\nLe personnage en cours (y compris la sauvegarde automatique) sera effacé et vous repartirez d'une feuille vierge.\n\nCette action est irréversible.")) return;
+            try { localStorage.removeItem(LS_KEY); } catch (e) {}
+            history.replaceState(null, '', location.pathname);
+            location.reload();
+        }
+
+        // ============================================================
+        //  INITIALISATION  —  priorité : URL  >  localStorage  >  vierge
+        // ============================================================
+        function initialiserFiche() {
+            const hash = location.hash || "";
+            const etatURL = hash.length > 3 ? decoderHash(hash) : null;
+            if (hash.length > 3 && !etatURL) toast("Lien de partage illisible ou corrompu.", "error", 5000);
+
+            let etatLocal = null;
+            try { const brut = localStorage.getItem(LS_KEY); if (brut) etatLocal = JSON.parse(brut); } catch (e) { etatLocal = null; }
+
+            if (etatURL) {
+                if (etatLocal && !confirm("Un personnage partagé a été détecté dans le lien.\n\nLe charger remplacera votre fiche en cours (sauvegardée automatiquement). Continuer ?")) {
+                    appliquerEtatFiche(etatLocal);
+                    toast("Fiche locale conservée.", "success");
+                } else {
+                    appliquerEtatFiche(etatURL);
+                    toast("Personnage partagé chargé.", "info");
+                }
+                // On nettoie le hash : au prochain rafraîchissement, c'est la fiche locale qui reprend la main
+                history.replaceState(null, '', location.href.split('#')[0]);
+                return;
+            }
+
+            if (etatLocal) {
+                appliquerEtatFiche(etatLocal);
+                toast("Fiche restaurée automatiquement.", "info", 2200);
+                return;
+            }
+
+            // Fiche vierge : lignes d'inventaire par défaut
+            ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
+            ajouterLigneInventaire('container_global', 'Objet global 1...');
+            travaillerCalculsEtRendu();
+        }
     </script>
 </body>
 </html>
