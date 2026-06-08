@@ -300,19 +300,201 @@
         @media print {
             #toastZone, #avatarPreviewWrap { display: none !important; }
         }
+
+        /* ===== Bandeau d'en-tête "abyssal" — préfixe hdr- ===== */
+        .hdr-banner {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(53, 196, 165, 0.22);
+            background:
+                radial-gradient(120% 140% at 15% -20%, rgba(53, 196, 165, 0.10), transparent 60%),
+                radial-gradient(130% 160% at 100% 120%, rgba(214, 178, 94, 0.06), transparent 55%),
+                linear-gradient(180deg, #061015 0%, var(--abyss) 100%);
+            box-shadow:
+                inset 0 0 60px rgba(0, 0, 0, 0.55),
+                0 8px 30px rgba(0, 0, 0, 0.45);
+        }
+        .hdr-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(90% 120% at 50% 110%, rgba(53, 196, 165, 0.14), transparent 60%);
+            opacity: 0.5;
+            animation: hdr-breathe 14s ease-in-out infinite;
+            z-index: 1;
+        }
+        @keyframes hdr-breathe {
+            0%, 100% { opacity: 0.35; }
+            50%      { opacity: 0.75; }
+        }
+        .hdr-tentacles {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;               /* derrière le texte du bandeau */
+            pointer-events: none;     /* ne bloque jamais les clics */
+            display: block;
+            overflow: visible;
+        }
+        .hdr-tentacle {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: url(#hdr-glow);   /* halo teal atmosphérique */
+        }
+        .hdr-tentacles-group {
+            animation: hdr-breathe-group 9s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes hdr-breathe-group {
+            0%, 100% { opacity: 0.78; }
+            50%      { opacity: 1; }
+        }
+        .hdr-sucker { animation: hdr-sucker-glow 5s ease-in-out infinite; }
+        @keyframes hdr-sucker-glow {
+            0%, 100% { opacity: 0.45; }
+            50%      { opacity: 0.9; }
+        }
+        .hdr-content { position: relative; z-index: 2; }
+        .hdr-content::before {
+            content: "";
+            position: absolute;
+            inset: -0.75rem -1rem;
+            z-index: -1;
+            background: radial-gradient(120% 120% at 25% 50%, rgba(2, 7, 10, 0.78), rgba(2, 7, 10, 0.25) 75%, transparent);
+            border-radius: 0.5rem;
+        }
+        .hdr-title {
+            color: var(--ink);
+            text-shadow: 0 0 18px rgba(53, 196, 165, 0.35), 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        .hdr-title .hdr-accent { color: var(--verdigris); }
+        .hdr-subtitle { color: rgba(215, 226, 223, 0.6); }
+        .hdr-subtitle b { color: var(--old-gold); font-weight: 600; }
+        .hdr-rule {
+            border: 1px solid rgba(214, 178, 94, 0.35);
+            background: rgba(2, 7, 10, 0.55);
+        }
+        .hdr-rule-label { color: var(--old-gold); }
+        .hdr-rule-text { color: rgba(215, 226, 223, 0.85); }
+        @media (prefers-reduced-motion: reduce) {
+            .hdr-banner::after,
+            .hdr-tentacles-group,
+            .hdr-sucker { animation: none !important; }
+            /* fige le morphing SMIL : les tentacules restent visibles mais immobiles */
+            .hdr-tentacles animate { display: none; }
+        }
+        @media print {
+            .hdr-tentacles, .hdr-banner::after { display: none !important; }
+            .hdr-banner {
+                box-shadow: none;
+                background: var(--abyss);
+                border-color: rgba(53, 196, 165, 0.4);
+            }
+            .hdr-title, .hdr-subtitle, .hdr-rule-text { text-shadow: none; }
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 p-4 md:p-8 font-sans">
     <div id="toastZone" aria-live="polite"></div>
     <div class="max-w-6xl mx-auto space-y-8">
         
-        <div class="border-b border-emerald-950 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center">
-            <div>
-                <h1 class="text-2xl font-bold text-emerald-500 tracking-wide">Fiche de Création de Personnage</h1>
-                <p class="text-xs text-slate-400 mt-1 font-mono">Système JDR Custom basé sur Cthulhu/Chtulhu Dark - Pensée et conçue par Azapartam - Développée par Vinthos</p>
-            </div>
-            <div class="mt-2 md:mt-0 bg-slate-900 border border-emerald-900 px-4 py-2 rounded text-xs">
-                <span class="text-emerald-400 font-bold">Règle MJ :</span> De haut en bas, pas d'impasse.
+        <div class="hdr-banner px-5 py-5 md:px-7 md:py-6">
+            <svg class="hdr-tentacles" viewBox="0 0 1200 200" preserveAspectRatio="none"
+                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs>
+                    <linearGradient id="hdr-teal" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0"   stop-color="#1c6f5e"/>
+                        <stop offset="0.5" stop-color="#35c4a5"/>
+                        <stop offset="1"   stop-color="#7ff0d8"/>
+                    </linearGradient>
+                    <linearGradient id="hdr-gold" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0"   stop-color="#35c4a5"/>
+                        <stop offset="1"   stop-color="#d6b25e"/>
+                    </linearGradient>
+                    <filter id="hdr-glow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <g class="hdr-tentacles-group">
+                    <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="9" opacity="0.8"
+                          d="M-20,70 C120,40 220,150 340,110 S520,40 640,90">
+                        <animate attributeName="d" dur="8s" repeatCount="indefinite" calcMode="spline"
+                          keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+                          values="M-20,70 C120,40 220,150 340,110 S520,40 640,90;
+                                   M-20,90 C120,150 220,40 340,140 S520,120 640,60;
+                                   M-20,70 C120,40 220,150 340,110 S520,40 640,90"/>
+                    </path>
+                    <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="7" opacity="0.7"
+                          d="M-20,180 C140,150 240,60 380,120 S560,180 720,140">
+                        <animate attributeName="d" dur="10s" repeatCount="indefinite" calcMode="spline"
+                          keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
+                          values="M-20,180 C140,150 240,60 380,120 S560,180 720,140;
+                                   M-20,160 C140,80 240,170 380,80 S560,120 720,180;
+                                   M-20,180 C140,150 240,60 380,120 S560,180 720,140"/>
+                    </path>
+                    <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="9" opacity="0.8"
+                          d="M1220,80 C1080,50 980,160 860,110 S680,50 560,100">
+                        <animate attributeName="d" dur="9s" repeatCount="indefinite" calcMode="spline"
+                          keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+                          values="M1220,80 C1080,50 980,160 860,110 S680,50 560,100;
+                                   M1220,100 C1080,160 980,40 860,150 S680,120 560,60;
+                                   M1220,80 C1080,50 980,160 860,110 S680,50 560,100"/>
+                    </path>
+                    <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="7" opacity="0.7"
+                          d="M1220,175 C1070,150 960,70 820,125 S640,180 500,150">
+                        <animate attributeName="d" dur="11s" repeatCount="indefinite" calcMode="spline"
+                          keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
+                          values="M1220,175 C1070,150 960,70 820,125 S640,180 500,150;
+                                   M1220,155 C1070,80 960,170 820,85 S640,120 500,190;
+                                   M1220,175 C1070,150 960,70 820,125 S640,180 500,150"/>
+                    </path>
+                    <path class="hdr-tentacle" stroke="url(#hdr-gold)" stroke-width="6" opacity="0.62"
+                          d="M600,220 C560,140 660,120 620,60 S560,-10 600,-30">
+                        <animate attributeName="d" dur="12s" repeatCount="indefinite" calcMode="spline"
+                          keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                          values="M600,220 C560,140 660,120 620,60 S560,-10 600,-30;
+                                   M600,220 C660,140 540,120 660,60 S640,-10 560,-30;
+                                   M600,220 C560,140 660,120 620,60 S560,-10 600,-30"/>
+                    </path>
+                    <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="6" opacity="0.6"
+                          d="M860,220 C820,150 920,120 880,70 S840,10 870,-20">
+                        <animate attributeName="d" dur="10.5s" repeatCount="indefinite" calcMode="spline"
+                          keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                          values="M860,220 C820,150 920,120 880,70 S840,10 870,-20;
+                                   M860,220 C920,150 800,120 940,70 S900,10 800,-20;
+                                   M860,220 C820,150 920,120 880,70 S840,10 870,-20"/>
+                    </path>
+                    <g fill="#7ff0d8">
+                        <circle class="hdr-sucker" cx="200" cy="95"  r="4.5"/>
+                        <circle class="hdr-sucker" cx="340" cy="110" r="5"/>
+                        <circle class="hdr-sucker" cx="470" cy="90"  r="4"/>
+                        <circle class="hdr-sucker" cx="1000" cy="100" r="4.5"/>
+                        <circle class="hdr-sucker" cx="860" cy="110" r="5"/>
+                        <circle class="hdr-sucker" cx="700" cy="95"  r="4"/>
+                    </g>
+                </g>
+            </svg>
+            <div class="hdr-content flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 class="hdr-title text-2xl font-bold tracking-wide">
+                        Fiche de <span class="hdr-accent">Création</span> de Personnage
+                    </h1>
+                    <p class="hdr-subtitle text-xs mt-1 font-mono">
+                        Système JDR Custom basé sur Cthulhu Dark — Pensé et conçu par <b>Azpartam</b> — Développé par <b>Vinthos</b>
+                    </p>
+                </div>
+                <div class="hdr-rule shrink-0 px-4 py-2 rounded text-xs">
+                    <span class="hdr-rule-label font-bold">Règle MJ :</span>
+                    <span class="hdr-rule-text">De haut en bas, pas d'impasse.</span>
+                </div>
             </div>
         </div>
 
@@ -330,6 +512,18 @@
             <button onclick="reinitialiserFiche()" class="btn-reset-fiche font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl" style="background:linear-gradient(135deg,#3a1414,#7c2222);border:1px solid rgba(218,72,72,0.5);">
                 RÉINITIALISER
             </button>
+        </div>
+
+        <div class="gestion-donnees-bloc flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-4 p-4 bg-slate-900 border border-slate-800 rounded-xl shadow-xl">
+            <button onclick="genererAleatoire()" class="font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl" style="background:linear-gradient(135deg,#126954,#2bb894);border:1px solid rgba(107,236,201,0.42);">
+                🎲 Tirer au hasard
+            </button>
+            <div class="flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 w-full sm:w-auto">
+                <label class="text-xs font-bold text-emerald-400 uppercase tracking-wide whitespace-nowrap">Pré-tiré :</label>
+                <select id="selectPretire" onchange="chargerPretire(this.value)" class="flex-grow bg-slate-900 border border-slate-700 rounded p-2 text-sm text-white outline-none min-w-0">
+                    <option value="">— Choisir un archétype —</option>
+                </select>
+            </div>
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -355,7 +549,7 @@
                 <div>
                     <h2 class="text-xl font-bold text-emerald-400 mb-2">Statistiques Principales</h2>
                     <p class="text-xs text-slate-400 mb-4 italic">
-                        La valeur d'une statistique doit être comprise entre 20 et 70 (sauf exception). Modifiez vos valeurs via la case "Saisie" à droite. Le score calculé final s'affiche à gauche.
+                        La valeur d'une statistique doit être comprise entre 20 et 70 (sauf exception). Modifiez vos valeurs via la case "Saisie" à droite ; le score « Actuel » à gauche est recalculé automatiquement en fonction de vos malus d'afflictions et des points saisis.
                     </p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
@@ -368,9 +562,7 @@
                                     <span class="text-slate-600 font-bold">/</span>
                                     <input type="number" id="stat_force" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
-                            </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
-                        </div>
+                            </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_dex">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-sm font-bold text-yellow-200">Dextérité (DEX)</span>
@@ -380,9 +572,7 @@
                                     <span class="text-slate-600 font-bold">/</span>
                                     <input type="number" id="stat_dex" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
-                            </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
-                        </div>
+                            </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_cha">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-sm font-bold text-yellow-200">Charisme (CHA)</span>
@@ -392,9 +582,7 @@
                                     <span class="text-slate-600 font-bold">/</span>
                                     <input type="number" id="stat_cha" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
-                            </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
-                        </div>
+                            </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_per">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-sm font-bold text-yellow-200">Perception (PER)</span>
@@ -404,9 +592,7 @@
                                     <span class="text-slate-600 font-bold">/</span>
                                     <input type="number" id="stat_per" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
-                            </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
-                        </div>
+                            </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_edu">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-sm font-bold text-yellow-200">Éducation (EDU)</span>
@@ -416,9 +602,7 @@
                                     <span class="text-slate-600 font-bold">/</span>
                                     <input type="number" id="stat_edu" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
-                            </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
-                        </div>
+                            </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_chance">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-sm font-bold text-yellow-200">Chance (LUCK)</span>
@@ -428,9 +612,7 @@
                                     <span class="text-slate-600 font-bold">/</span>
                                     <input type="number" id="stat_chance" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
-                            </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
-                        </div>
+                            </div>                        </div>
                     </div>
 
                     <div id="blocCompetencesStats" class="space-y-2 border-t border-slate-800 pt-4 hidden">
@@ -633,6 +815,7 @@
         let afflictionsChoisies = [];
         let indexCompetencesData = {};
         let indexAfflictionsData = {};
+        let indexPretiresData = {};
 
         const statMapping = {
             "Force": "stat_force", "Dextérité": "stat_dex", "Charisme": "stat_cha", "Perception": "stat_per", "Éducation": "stat_edu", "Chance": "stat_chance"
@@ -676,6 +859,13 @@
             selectAff.addEventListener('change', (e) => chargerDetailsAffliction(e.target.value));
 
             initialiserFiche();
+
+            // Pré-tirés (optionnel) : peuple le menu déroulant si le fichier existe
+            fetch('pretires.json').then(r => r.json()).then(p => {
+                indexPretiresData = p;
+                const selP = document.getElementById('selectPretire');
+                Object.keys(p).forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = k; selP.appendChild(o); });
+            }).catch(() => { /* pré-tirés indisponibles : le tirage aléatoire reste utilisable */ });
         }).catch(err => {
             console.error(err);
             toast("Impossible de charger les bases (competences.json / afflictions.json). Ouvrez la page via un serveur local.", "error", 8000);
@@ -930,7 +1120,7 @@
                         : '';
                     return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2.5 rounded border border-slate-800 flex flex-col cursor-pointer hover:bg-slate-800 transition">' +
                            '<div class="flex justify-between items-center w-full">' +
-                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ')]</span></div>' +
+                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ') · ' + item.cout + ' PC]</span></div>' +
                            '<button onclick="event.stopPropagation(); supprimerComp(\'' + escName + '\')" class="text-red-400 font-bold text-xs px-2">✕</button></div>' +
                            descHtml +
                            '</div>';
@@ -1172,7 +1362,7 @@
                 }).join('\n');
 
                 const separateur = "--------------------------------------------------";
-                const superPrompt = "Voici mon enquêteur optimisé selon le framework d'Azapartam :\n" + separateur + "\n" +
+                const superPrompt = "Voici mon enquêteur optimisé selon le framework d'Azpartam :\n" + separateur + "\n" +
                     "Nom de l'Enquêteur : " + charName + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
                     "Caractéristiques modifiées : " + stringStats + "\n" +
                     "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
@@ -1439,6 +1629,122 @@
             ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
             ajouterLigneInventaire('container_global', 'Objet global 1...');
             travaillerCalculsEtRendu();
+        }
+
+        // ============================================================
+        //  PRÉ-TIRÉS  &  GÉNÉRATEUR ALÉATOIRE
+        // ============================================================
+        function chargerPretire(cle) {
+            if (!cle) return;
+            const fiche = indexPretiresData[cle];
+            if (!fiche) { toast("Pré-tiré introuvable.", "error"); return; }
+            const dejaRempli = (val('char_name').trim() !== "" || competencesChoisies.length > 0);
+            if (dejaRempli && !confirm("Charger le pré-tiré « " + cle + " » ?\n\nCela remplacera la fiche en cours.")) {
+                document.getElementById('selectPretire').value = "";
+                return;
+            }
+            appliquerEtatFiche(JSON.parse(JSON.stringify(fiche))); // copie défensive
+            persisterLocal();
+            toast("Pré-tiré chargé : " + cle + ".", "info");
+            document.getElementById('selectPretire').value = "";
+        }
+
+        function _rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        // 6 stats entre 20 et 70 dont la somme fait exactement 300 (transferts depuis 50/50/...)
+        function genererStatsAleatoires() {
+            const cles = ["force", "dex", "cha", "per", "edu", "chance"];
+            const s = { force: 50, dex: 50, cha: 50, per: 50, edu: 50, chance: 50 };
+            for (let i = 0; i < 400; i++) {
+                const a = _rand(cles), b = _rand(cles);
+                if (a !== b && s[a] < 70 && s[b] > 20) { s[a]++; s[b]--; }
+            }
+            return s;
+        }
+
+        function genererAleatoire() {
+            if (!indexCompetencesData || Object.keys(indexCompetencesData).length === 0) {
+                toast("Bases de données non chargées.", "error"); return;
+            }
+            const dejaRempli = (val('char_name').trim() !== "" || competencesChoisies.length > 0);
+            if (dejaRempli && !confirm("Remplacer la fiche en cours par un enquêteur tiré au hasard ?")) return;
+
+            const prenoms = ["Arthur","Eleanor","Howard","Margaret","Walter","Iris","Edgar","Cordelia","Vincent","Beatrice","Oscar","Lavinia","Clarence","Agatha","Ambrose","Wilhelmina","Silas","Rosalind"];
+            const noms = ["Calloway","Ashcroft","Whateley","Marsh","Pickman","Derleth","Lowell","Carter","Blackwood","Thorne","Wexley","Harrow","Vance","Sallow","Gantry","Amherst"];
+            const professions = ["Journaliste","Antiquaire","Médecin","Professeur","Détective privé","Bibliothécaire","Archéologue","Marin au long cours","Prêtre défroqué","Occultiste","Photographe","Notaire","Infirmière","Explorateur"];
+            const peursL = ["L'obscurité totale","Les espaces clos","Les profondeurs marines","Être oublié de tous","Les murmures sans source","La folie héréditaire","Les miroirs au crépuscule","Le grand large"];
+            const vaillancesL = ["Protéger les innocents","Connaître la vérité coûte que coûte","Ne jamais reculer devant l'inconnu","Garder la foi malgré tout","Tenir sa parole jusqu'au bout"];
+
+            const stats = genererStatsAleatoires();
+            const courtParStat = { "Force": "force", "Dextérité": "dex", "Charisme": "cha", "Perception": "per", "Éducation": "edu", "Chance": "chance" };
+
+            // Compétences : TOUJOURS 3, en consommant au mieux le budget PC disponible
+            const niveauxAffichables = ["Basique", "Confirmé", "Avancé", "Expert"]; // ordre croissant de coût
+            const coutNiveau = (comp, niv) => (comp.niveaux[niv] ? comp.niveaux[niv].cout : Infinity);
+            const NB_CIBLE = 3;
+            const budgetTotal = parseInt(document.getElementById('pc_max').value) || 25;
+
+            // 1) Tirer NB_CIBLE compétences distinctes (ayant au moins un niveau affichable)
+            const clesComp = Object.keys(indexCompetencesData).filter(cle => {
+                const c = indexCompetencesData[cle];
+                return c && c.niveaux && niveauxAffichables.some(n => c.niveaux[n]);
+            });
+            for (let i = clesComp.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [clesComp[i], clesComp[j]] = [clesComp[j], clesComp[i]]; }
+            const choisies = [];
+            for (const cle of clesComp) {
+                if (choisies.length >= NB_CIBLE) break;
+                const comp = indexCompetencesData[cle];
+                const nivMin = niveauxAffichables.filter(n => comp.niveaux[n]).sort((a, b) => coutNiveau(comp, a) - coutNiveau(comp, b))[0];
+                choisies.push({ cle, comp, niveauIdx: niveauxAffichables.indexOf(nivMin) });
+            }
+
+            // 2) Monter les niveaux au hasard tant que le budget le permet (maximise l'usage des PC)
+            const coutCourant = () => choisies.reduce((s, x) => s + coutNiveau(x.comp, niveauxAffichables[x.niveauIdx]), 0);
+            let secu = 0;
+            while (secu++ < 300) {
+                const ameliorables = choisies.filter(x => {
+                    const nxt = niveauxAffichables[x.niveauIdx + 1];
+                    if (!nxt || !x.comp.niveaux[nxt]) return false;
+                    const delta = coutNiveau(x.comp, nxt) - coutNiveau(x.comp, niveauxAffichables[x.niveauIdx]);
+                    return coutCourant() + delta <= budgetTotal;
+                });
+                if (ameliorables.length === 0) break;
+                _rand(ameliorables).niveauIdx++;
+            }
+
+            // 3) Finaliser : statChoisie = stat liée la plus haute
+            const competences = choisies.map(x => {
+                const niveau = niveauxAffichables[x.niveauIdx];
+                let statChoisie = null, meilleur = -1;
+                Object.keys(statMapping).forEach(k => {
+                    if (x.comp.stats.includes(k)) {
+                        const v = stats[courtParStat[k]];
+                        if (v > meilleur) { meilleur = v; statChoisie = k; }
+                    }
+                });
+                if (!statChoisie) statChoisie = Object.keys(statMapping).find(k => x.comp.stats.includes(k)) || "Force";
+                return { nom: x.cle, niveau: niveau, statChoisie: statChoisie };
+            });
+
+            const data = {
+                avatar: "",
+                nom: _rand(prenoms) + " " + _rand(noms),
+                profession: _rand(professions),
+                stats: stats,
+                competences: competences,
+                afflictions: [],
+                inventaires: { monnaie: (10 + Math.floor(Math.random() * 40) * 5) + "$", personnel: [], global: [] },
+                lore: { peurs: _rand(peursL), vaillance: _rand(vaillancesL), background: "" },
+                etats: { mentale: "Aucune instabilité", physique: "Aucune blessure" },
+                regles: {
+                    pc_max: document.getElementById('pc_max').value,
+                    comp_max_limit: String(Math.max(3, parseInt(document.getElementById('comp_max_limit').value) || 2)),
+                    pts_deduction: document.getElementById('pts_deduction').value
+                }
+            };
+            appliquerEtatFiche(data);
+            persisterLocal();
+            toast("Enquêteur tiré au hasard : " + data.nom + ".", "success");
         }
     </script>
 </body>

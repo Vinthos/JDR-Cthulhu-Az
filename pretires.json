@@ -1,0 +1,302 @@
+{
+  "Aventurier chasseur de trésors": {
+    "nom": "Harrison Calloway",
+    "profession": "Archéologue de terrain et chasseur de trésors",
+    "avatar": "",
+    "stats": { "force": 55, "dex": 60, "cha": 45, "per": 55, "edu": 55, "chance": 30 },
+    "competences": [
+      { "nom": "Archéologie", "niveau": "Expert", "statChoisie": "Éducation" },
+      { "nom": "Survie", "niveau": "Avancé", "statChoisie": "Force" },
+      { "nom": "Tir à l’arme à feu - Pistolets", "niveau": "Avancé", "statChoisie": "Dextérité" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "180$", "personnel": ["Chapeau de feutre cabossé", "Carnet de fouilles relié de cuir", "Revolver Smith & Wesson"], "global": [] },
+    "lore": {
+      "peurs": "Les espaces clos et grouillants",
+      "vaillance": "Toujours un dernier pas en avant",
+      "background": "Harrison Calloway est né en 1891 dans une famille de pasteurs du Connecticut, où l'on attendait de lui qu'il reprenne la chaire paternelle. Mais l'enfant passait ses dimanches à dévorer les récits de Schliemann et de Burton plutôt que les Écritures. À dix-neuf ans, il s'embarque comme assistant sur un chantier de fouilles en Égypte, et ne reviendra jamais vraiment au pays. Diplômé sur le tard d'archéologie, il s'est forgé une réputation ambiguë : les universitaires le méprisent pour ses méthodes expéditives, les collectionneurs le vénèrent pour les pièces impossibles qu'il rapporte. Charmeur, désinvolte, doté d'un courage que beaucoup confondent avec de l'inconscience, il a survécu à des éboulements, des fièvres et trois bandes de pillards rivales. Sous la bravade se cache une obsession dévorante : retrouver une cité dont son mentor, disparu dans le désert de Rub al-Khali, lui parlait fiévreusement la veille de sa mort. C'est en ouvrant un tombeau scellé au Soudan qu'il a vu pour la première fois quelque chose qui n'aurait pas dû bouger dans le noir. Depuis, il accepte les contrats les plus dangereux non pour l'or, mais pour comprendre ce qui l'attend au fond de la prochaine chambre funéraire. Il porte au cou une amulette qu'il ne montre jamais et dont il refuse de parler."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Exploratrice polaire": {
+    "nom": "Ingrid Sørensen",
+    "profession": "Exploratrice polaire et cartographe des glaces",
+    "avatar": "",
+    "stats": { "force": 50, "dex": 50, "cha": 40, "per": 55, "edu": 55, "chance": 50 },
+    "competences": [
+      { "nom": "Survie", "niveau": "Expert", "statChoisie": "Force" },
+      { "nom": "Médecine", "niveau": "Avancé", "statChoisie": "Éducation" },
+      { "nom": "Pilotage", "niveau": "Avancé", "statChoisie": "Perception" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "150$", "personnel": ["Boussole de marine en laiton", "Combinaison fourrée de renne", "Journal de bord cousu à la main"], "global": [] },
+    "lore": {
+      "peurs": "Le silence total sous la banquise",
+      "vaillance": "Le froid ne décide pas pour moi",
+      "background": "Ingrid Sørensen a grandi dans un village de pêcheurs du Spitzberg, fille d'un capitaine baleinier et d'une institutrice norvégienne qui lui apprit à lire les cartes avant même l'alphabet. Orpheline de mère à douze ans, elle a passé son adolescence à bord, à reprendre les routes du nord là où les hommes renonçaient. Quand la première expédition féminine d'Arctique cherchait une recrue capable d'endurer l'inhumain, on l'a choisie pour sa résistance légendaire et son sang-froid. Elle a enterré deux compagnons dans la glace et ramené les survivants d'une dérive de quarante jours, geste qui lui a valu une médaille qu'elle garde au fond d'un tiroir. Taciturne, méthodique, elle parle peu mais observe tout ; on la dit incapable de paniquer. Sa vie a basculé lors d'un hivernage au Groenland, quand l'équipe a déterré, sous trente mètres de glace ancienne, une structure trop régulière pour être naturelle, et des inscriptions qu'aucun de ses livres ne reconnaissait. Trois membres ont sombré dans la folie après cette nuit-là. Ingrid, elle, a noté des coordonnées qu'elle ne s'explique pas encore et s'est juré d'y retourner. Elle ne croit pas aux fantômes, mais elle a cessé de dormir sans une lampe allumée."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Plongeur en eaux profondes": {
+    "nom": "Marco Benedetti",
+    "profession": "Scaphandrier et plongeur d'épaves en eaux profondes",
+    "avatar": "",
+    "stats": { "force": 60, "dex": 55, "cha": 35, "per": 55, "edu": 55, "chance": 40 },
+    "competences": [
+      { "nom": "Océanologie", "niveau": "Expert", "statChoisie": "Perception" },
+      { "nom": "Pilotage", "niveau": "Avancé", "statChoisie": "Dextérité" },
+      { "nom": "Survie", "niveau": "Avancé", "statChoisie": "Force" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "140$", "personnel": ["Casque de scaphandre en cuivre poli", "Couteau de plongée à manche d'os", "Montre étanche de profondeur"], "global": [] },
+    "lore": {
+      "peurs": "Ce qui nage juste hors du faisceau de la lampe",
+      "vaillance": "Je descends toujours plus bas que les autres",
+      "background": "Marco Benedetti est né à Naples en 1894, fils d'un pêcheur d'éponges qui lui a appris l'apnée avant la marche. Très jeune, il découvre qu'il supporte la pression et l'obscurité là où les autres remontent affolés. Engagé comme scaphandrier sur les chantiers portuaires de Gênes, puis dans la récupération d'épaves de guerre, il s'est taillé une réputation d'homme qu'on appelle quand personne d'autre n'ose enfiler le casque. Solide comme un docker, peu bavard, il préfère la compagnie silencieuse des profondeurs à celle des hommes du quai qui le trouvent inquiétant. Il a tout perdu lors d'un renflouement en Méditerranée : son frère cadet, qui plongeait avec lui, n'est jamais remonté d'une cale noyée, et Marco jure avoir vu, dans la lueur trouble, une forme l'entraîner vers le bas. Les autorités ont parlé de courant. Lui n'a jamais accepté cette version. Depuis, il accepte les contrats les plus profonds, les épaves maudites, les grottes englouties, cherchant moins l'argent qu'une réponse au fond des abîmes. Il rapporte parfois des objets que les musées refusent de cataloguer : statuettes recouvertes d'écailles, tablettes que l'eau n'a pas effacées en mille ans. Il dort mal et n'enlève jamais sa croix."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Pilote d'aviation": {
+    "nom": "Amelia Vance",
+    "profession": "Aviatrice et pilote de raids aériens",
+    "avatar": "",
+    "stats": { "force": 45, "dex": 65, "cha": 50, "per": 60, "edu": 50, "chance": 30 },
+    "competences": [
+      { "nom": "Pilotage", "niveau": "Expert", "statChoisie": "Dextérité" },
+      { "nom": "Mécanique", "niveau": "Avancé", "statChoisie": "Éducation" },
+      { "nom": "Cartographie & Croquis", "niveau": "Avancé", "statChoisie": "Éducation" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "160$", "personnel": ["Casque de cuir et lunettes d'aviateur", "Foulard de soie blanche", "Clé à molette gravée à ses initiales"], "global": [] },
+    "lore": {
+      "peurs": "Rester clouée au sol, impuissante",
+      "vaillance": "Si ça vole, je le ramène",
+      "background": "Amelia Vance a grandi près d'un terrain d'aviation du Kansas, fascinée dès l'enfance par les biplans qui décollaient dans la poussière. Refusant le destin tout tracé de fille de fermier, elle a appris à voler en cachette, payant ses leçons en réparant les moteurs des autres pilotes, talent qui s'est révélé aussi précieux que son audace aux commandes. Pendant la guerre, trop jeune et du mauvais sexe pour le combat, elle a convoyé des appareils et secouru des équipages échoués, gagnant le respect grincheux d'hommes qui n'avaient jamais cru qu'une femme tiendrait le manche dans la tempête. Charismatique, vive, incapable de résister à un défi, elle enchaîne depuis les records et les raids au long cours, des Andes au désert de Gobi. Sa vie a basculé au-dessus d'un plateau d'Asie centrale, lorsque ses instruments se sont affolés sans raison et qu'elle a aperçu, en contrebas, une géométrie de pierres impossible et des lumières qui montaient vers elle. Elle a posé l'appareil de justesse, perdu douze heures de mémoire, et retrouvé son carnet couvert de symboles qu'elle ne se souvient pas d'avoir tracés. Officiellement, elle cherche le prochain record. En vérité, elle replanifie chaque vol pour repasser un jour au-dessus de ce plateau."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Chasseur de fauves": {
+    "nom": "Cordell Mbeki",
+    "profession": "Chasseur de fauves et guide de safari",
+    "avatar": "",
+    "stats": { "force": 55, "dex": 55, "cha": 40, "per": 65, "edu": 45, "chance": 40 },
+    "competences": [
+      { "nom": "Tir à l’arme à feu - Fusils", "niveau": "Expert", "statChoisie": "Dextérité" },
+      { "nom": "Pistage", "niveau": "Avancé", "statChoisie": "Perception" },
+      { "nom": "Zoologie", "niveau": "Avancé", "statChoisie": "Éducation" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "170$", "personnel": ["Fusil de chasse à double canon", "Couteau de brousse à lame large", "Collier de griffes de lion"], "global": [] },
+    "lore": {
+      "peurs": "Traquer une proie qui le traque en retour",
+      "vaillance": "Je connais l'odeur de la peur, pas la mienne",
+      "background": "Cordell Mbeki est né dans la région du Kilimandjaro, d'un père traqueur réputé qui guidait les grandes expéditions coloniales et d'une mère herboriste. Dès l'enfance, il a appris à lire le sol comme une page : une empreinte, un brin d'herbe couché, une mouche qui s'attarde, tout lui parle. Devenu le meilleur guide de fauves de la région, il a sauvé plus de chasseurs imprudents qu'il n'en a vu mourir, et refuse désormais d'abattre une bête sans nécessité, car il a fini par mépriser les trophées faciles des riches étrangers. Calme, patient, doté d'une perception presque surnaturelle, il dégage une autorité tranquille qui force le respect autour du feu de camp. Sa vie a changé la nuit où il a suivi la piste d'un prédateur qui décimait un village : les traces ne correspondaient à aucun animal de son savoir, trop grandes, marchant tantôt à quatre pattes tantôt debout, et ne laissant aucune odeur que ses chiens pouvaient suivre. Il a perdu deux pisteurs cette nuit-là et n'a jamais retrouvé la créature, seulement un arbre couvert de marques en spirale. Depuis, il accepte de guider les expéditions les plus étranges, celles qui cherchent des bêtes que les livres ne nomment pas, persuadé qu'un jour il croisera de nouveau cette piste impossible. Il garde un fragment d'écorce gravée dans sa sacoche."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Détective privé": {
+    "nom": "Augustin Mercier",
+    "profession": "Détective privé",
+    "avatar": "",
+    "stats": { "force": 45, "dex": 50, "cha": 45, "per": 70, "edu": 50, "chance": 40 },
+    "competences": [
+      { "nom": "Espionnage", "niveau": "Expert", "statChoisie": "Perception" },
+      { "nom": "Lecture comportementale", "niveau": "Avancé", "statChoisie": "Perception" },
+      { "nom": "Interrogatoire", "niveau": "Avancé", "statChoisie": "Charisme" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "90$", "personnel": ["Trench-coat usé et chapeau mou", "Calepin relié et crayon", "Loupe de poche en laiton"], "global": [] },
+    "lore": {
+      "peurs": "Les pièces sans issue et l'idée d'avoir laissé un coupable filer",
+      "vaillance": "Garde son sang-froid quand tout le monde panique",
+      "background": "Augustin Mercier a grandi dans les ruelles grises d'un faubourg ouvrier, fils d'un horloger taciturne qui lui apprit la patience et l'art de démonter chaque mécanisme jusqu'à comprendre son secret. Trop curieux pour rester derrière un établi, il s'engagea jeune dans la police municipale, où il se forgea une réputation d'observateur infaillible : un pli de manche, une cendre froide, un mensonge dans le regard, rien ne lui échappait. Mais l'uniforme lui pesait. Lassé des affaires étouffées par les puissants et des dossiers classés trop vite, il rendit sa plaque et ouvrit une modeste agence au-dessus d'un bureau de tabac, éclairée d'une seule lampe et d'une bouteille toujours entamée. C'est en filant un mari volage qu'il bascula vers l'étrange : la maîtresse n'existait pas, et l'homme rejoignait chaque nuit une cave où des inconnus psalmodiaient devant une pierre noire suintante. Depuis, Augustin ne croit plus aux coïncidences. Il a vu des ombres se mouvoir contre la logique, des disparus revenir le regard vide. Son obsession le ronge : retrouver Lucie, sa fiancée évaporée un soir de brume, dont il garde la photographie écornée dans la poche intérieure. Il sait qu'une vérité innommable se cache derrière sa disparition, et il creusera, dossier après dossier, dût-il y perdre la raison."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Journaliste d'investigation": {
+    "nom": "Solène Vaillancourt",
+    "profession": "Journaliste d'investigation",
+    "avatar": "",
+    "stats": { "force": 35, "dex": 45, "cha": 60, "per": 55, "edu": 65, "chance": 40 },
+    "competences": [
+      { "nom": "Documentation & Recherche", "niveau": "Expert", "statChoisie": "Éducation" },
+      { "nom": "Bagou", "niveau": "Avancé", "statChoisie": "Charisme" },
+      { "nom": "Imposture & Déguisement", "niveau": "Avancé", "statChoisie": "Charisme" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "90$", "personnel": ["Carte de presse et carnet sténo", "Appareil photo compact dans le sac", "Flasque d'argent gravée"], "global": [] },
+    "lore": {
+      "peurs": "Le silence imposé, et l'idée qu'une vérité meure avec elle",
+      "vaillance": "Affronte sans ciller ceux qui voudraient la faire taire",
+      "background": "Solène Vaillancourt est née dans une famille de typographes, bercée par l'odeur de l'encre et le claquement des presses. Très tôt, elle comprit que les mots imprimés pouvaient faire trembler des hommes que rien d'autre n'effrayait. Brillante mais indocile, elle dévora les bancs de l'université avant d'imposer sa plume acérée dans une rédaction qui ne voulait pas de femmes aux affaires sérieuses. Elle s'y tailla une place à la force du scandale : trafics portuaires, élus corrompus, fortunes bâties sur le crime. Caméléon redoutable, elle se glissait dans n'importe quel rôle, ouvrière, mondaine ou secrétaire, pour arracher la confidence de trop. Son basculement vint d'un dossier qu'elle aurait dû refuser : une série de suicides parmi les membres d'un cercle de bienfaisance huppé. En recoupant les coupures, elle découvrit des symboles identiques tracés près de chaque corps, et un nom récurrent qu'aucun registre officiel ne reconnaissait. Une nuit, on glissa sous sa porte une enveloppe contenant une photographie d'elle endormie, et un seul mot : cesse. Elle n'a pas cessé. Son secret, qu'elle ne confie à personne, est qu'elle conserve un double de chaque preuve dans une consigne anonyme, certaine qu'on finira par la réduire au silence. Son obsession est plus forte que la peur : publier, coûte que coûte, ce que d'autres veulent enterrer."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Archéologue": {
+    "nom": "Édouard Lansbury",
+    "profession": "Archéologue explorateur de tombeaux",
+    "avatar": "",
+    "stats": { "force": 50, "dex": 50, "cha": 40, "per": 50, "edu": 70, "chance": 40 },
+    "competences": [
+      { "nom": "Archéologie", "niveau": "Expert", "statChoisie": "Éducation" },
+      { "nom": "Langues étrangères", "niveau": "Avancé", "statChoisie": "Éducation" },
+      { "nom": "Crochetage", "niveau": "Avancé", "statChoisie": "Perception" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "90$", "personnel": ["Carnet de fouilles relié de cuir", "Lampe-tempête et briquet à amadou", "Trousseau de crochets et truelle"], "global": [] },
+    "lore": {
+      "peurs": "Les espaces clos et confinés sous terre, et ce qui dort dans le noir",
+      "vaillance": "Descend le premier là où nul n'ose mettre les pieds",
+      "background": "Édouard Lansbury est l'héritier déçu d'une lignée de notables qui rêvaient pour lui d'une chaire poussiéreuse et d'une vie sans surprise. Il préféra le soleil brûlant des chantiers de fouilles et la fraîcheur vénéneuse des tombeaux scellés depuis des millénaires. Polyglotte précoce, il déchiffrait hiéroglyphes et écritures cunéiformes quand ses camarades peinaient encore sur leurs déclinaisons. Sa réputation se fit en Orient, où il rouvrit des sépultures que les ouvriers locaux refusaient d'approcher en murmurant des avertissements qu'il prit pour de la superstition. Méthodique, audacieux, il forçait serrures antiques et mécanismes de pierre avec une patience d'orfèvre, persuadé que le savoir valait tous les risques. La bascule survint dans une chambre funéraire que nulle carte ne mentionnait : les fresques y représentaient des astres faux et des créatures sans nom, et l'air semblait y respirer. Trois de ses porteurs y perdirent la raison ; lui en sortit avec une tablette qu'il ne parvient toujours pas à traduire entièrement, et des cauchemars récurrents. Son obsession est devenue un secret honteux : il sait désormais que certaines tombes n'ont pas été creusées pour enfermer des morts, mais pour contenir autre chose. Il poursuit néanmoins ses recherches, partagé entre la terreur et le désir dévorant de comprendre ce que l'humanité a si soigneusement voulu oublier."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Illusionniste de scène": {
+    "nom": "Lucien Valmont",
+    "profession": "Illusionniste de music-hall",
+    "avatar": "",
+    "stats": { "force": 35, "dex": 65, "cha": 65, "per": 50, "edu": 45, "chance": 40 },
+    "competences": [
+      { "nom": "Escamotage", "niveau": "Expert", "statChoisie": "Dextérité" },
+      { "nom": "Arts & Interprétation", "niveau": "Avancé", "statChoisie": "Charisme" },
+      { "nom": "Hypnose", "niveau": "Avancé", "statChoisie": "Charisme" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "90$", "personnel": ["Jeu de cartes truqué", "Montre à gousset pour l'hypnose", "Cape de scène doublée de soie rouge"], "global": [] },
+    "lore": {
+      "peurs": "Que le tour échappe à son contrôle et révèle une vraie magie",
+      "vaillance": "Sait garder le sourire et le geste sûr sous le feu des projecteurs",
+      "background": "Lucien Valmont grandit dans les coulisses miteuses d'un théâtre ambulant, fils d'une danseuse et d'un prestidigitateur de seconde zone qui lui enseigna l'art sacré de la diversion : faire regarder la main gauche pendant que la droite opère. Doté de doigts d'une agilité prodigieuse et d'un charme qui faisait taire les salles, il s'imposa jeune comme la coqueluche des music-halls, vendant à un public ébloui l'illusion parfaite que l'impossible existait. Il ne croyait, bien sûr, à aucune de ses propres merveilles. Tout n'était que mécanique, miroirs, psychologie et hypnose de salon. Cette certitude rationnelle était son orgueil et son armure. Elle vola en éclats le soir où, lors d'une séance d'hypnose, une spectatrice ordinaire se mit à parler d'une voix qui n'était pas la sienne, décrivant la mort prochaine de Lucien avec une précision glaçante, dans une langue gutturale qu'elle ne pouvait connaître. La salle crut à un numéro ; lui sut que ce n'en était pas un. Depuis, il traque les vrais mystères derrière les faux, hanté par l'idée que ses tours ne sont peut-être qu'une porte entrouverte sur quelque chose de réel. Son secret le terrifie : certaines nuits, ses illusions fonctionnent mieux qu'elles ne le devraient, comme si une présence prêtait main-forte au magicien sans qu'il l'ait jamais invitée."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Antiquaire mystérieux": {
+    "nom": "Cornelius Aldebrandt",
+    "profession": "Antiquaire et expert en curiosités",
+    "avatar": "",
+    "stats": { "force": 35, "dex": 45, "cha": 55, "per": 55, "edu": 70, "chance": 40 },
+    "competences": [
+      { "nom": "Collection", "niveau": "Expert", "statChoisie": "Éducation" },
+      { "nom": "Cryptographie", "niveau": "Avancé", "statChoisie": "Éducation" },
+      { "nom": "Tromperie", "niveau": "Avancé", "statChoisie": "Charisme" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "90$", "personnel": ["Loupe d'horloger et balance de précision", "Registre de provenance relié de cuir noir", "Bague-cachet à sceau ancien"], "global": [] },
+    "lore": {
+      "peurs": "Posséder sans le savoir un objet qui le possède en retour",
+      "vaillance": "Marchande avec un calme imperturbable, même face au pire",
+      "background": "Cornelius Aldebrandt règne sur une boutique étroite et surchargée, dans une ruelle où la lumière du jour semble hésiter à entrer. Né dans une dynastie de marchands d'art dont la fortune s'est faite et défaite au gré des empires, il a hérité d'un œil infaillible pour l'authentique et d'une langue assez habile pour vendre le faux au prix du vrai quand la nécessité l'exige. Érudit jusqu'à l'obsession, il déchiffre les chiffres anciens et les écritures secrètes des collectionneurs disparus, capable de retracer l'histoire d'un objet à travers les siècles et les mains qui l'ont convoité. Sa clientèle est discrète, fortunée, et parfois inquiétante : il ne pose jamais de questions, à condition qu'on paie. Sa bascule vers l'étrange fut progressive, insidieuse. Certaines pièces qui passaient entre ses doigts s'accompagnaient de malheurs trop précis pour être fortuits : un acquéreur mort dans son sommeil, une statuette qui changeait imperceptiblement de position dans sa vitrine, un grimoire dont l'encre semblait fraîche malgré ses quatre cents ans. Son secret, qu'il garde mieux que n'importe quel trésor, est qu'il possède dans un coffre scellé une collection d'objets qu'il refuse de vendre, non par avarice, mais par crainte de ce qu'ils feraient au monde. Son obsession le pousse pourtant à en acquérir toujours davantage, persuadé qu'en les rassemblant, il finira par comprendre la mécanique cachée qui les relie tous."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Soldat vétéran": {
+    "nom": "Marcus Vandenberg",
+    "profession": "Ancien sergent d'infanterie, Corps expéditionnaire américain",
+    "avatar": "",
+    "stats": { "force": 65, "dex": 58, "cha": 30, "per": 52, "edu": 50, "chance": 45 },
+    "competences": [
+      { "nom": "Tir à l’arme à feu - Fusils", "niveau": "Expert", "statChoisie": "Perception" },
+      { "nom": "Combat à mains nues", "niveau": "Avancé", "statChoisie": "Force" },
+      { "nom": "Survie", "niveau": "Avancé", "statChoisie": "Force" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "70$", "personnel": ["Fusil Springfield 1903 entretenu", "Plaques d'identité bosselées", "Briquet de tranchée gravé"], "global": [] },
+    "lore": {
+      "peurs": "Les sifflements aigus, le brouillard épais, l'odeur de poudre humide",
+      "vaillance": "Tient sa position quand tout le monde fuit ; ne laisse jamais un camarade derrière",
+      "background": "Marcus est né en 1891 dans une ferme du Minnesota, fils d'immigrants flamands taiseux qui lui ont appris à travailler dur et à parler peu. À dix-huit ans il s'engage, attiré par l'uniforme plus que par la guerre. Les tranchées de l'Argonne lui ôteront toute illusion : trois ans de boue, de gaz et de copains fauchés à ses côtés. Promu sergent au mérite, il devient ce mur impassible derrière lequel les jeunes recrues s'abritaient. Démobilisé en 1919, il rentre dans un pays qui ne veut plus entendre parler de la guerre, et qui le regarde comme un fantôme encombrant. Il enchaîne les emplois de gardien et de convoyeur, dort mal, sursaute au moindre claquement. C'est lors d'une nuit de garde dans un entrepôt portuaire qu'il bascule : une cargaison venue d'Orient s'ouvre seule, et il voit des choses ramper qui n'avaient pas de nom dans aucun manuel militaire. Depuis, il sait que l'ennemi qu'il a combattu en France n'était qu'une ombre comparé à ce qui rôde dans les marges du monde. Marcus garde un secret : cette nuit-là, il a vidé son chargeur sur une silhouette qui ne saignait pas, et il a fui. Cette fuite le ronge plus que toutes ses cicatrices. Il s'est juré de ne plus jamais reculer, quitte à y laisser la peau. Son obsession est désormais de retrouver d'où venait cette cargaison, et de comprendre pourquoi l'armée a classé l'affaire sans suite."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Capitaine de navire": {
+    "nom": "Erik Halvorsen",
+    "profession": "Capitaine de cargo au long cours",
+    "avatar": "",
+    "stats": { "force": 55, "dex": 58, "cha": 45, "per": 62, "edu": 42, "chance": 38 },
+    "competences": [
+      { "nom": "Pilotage", "niveau": "Expert", "statChoisie": "Dextérité" },
+      { "nom": "Océanologie", "niveau": "Avancé", "statChoisie": "Perception" },
+      { "nom": "Survie", "niveau": "Avancé", "statChoisie": "Force" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "70$", "personnel": ["Sextant en laiton hérité", "Carnet de bord cerclé de sel", "Pipe en écume de mer"], "global": [] },
+    "lore": {
+      "peurs": "Le calme plat absolu, les eaux trop sombres, la cloche qui sonne sans personne",
+      "vaillance": "Garde la barre dans la tempête la plus noire ; rassure un équipage au bord de la mutinerie",
+      "background": "Erik est né à Bergen, en Norvège, dans une famille de pêcheurs où l'on disait que la mer prenait toujours son dû. À douze ans il était déjà mousse, à trente il commandait son premier vapeur. Quarante années de traversées ont buriné son visage et lui ont donné cette autorité tranquille que rien ne semble entamer. Il a vu naufrages, mutineries et tempêtes capables de plier l'acier, et il en est toujours revenu, ce qui lui a forgé une réputation de capitaine maudit ou béni, selon les ports. Veuf depuis dix ans, sans enfants, le navire est devenu sa seule famille. Sa bascule vers l'étrange remonte à une traversée du Pacifique Sud, lorsque son cargo dériva trois jours dans une zone que les cartes disaient vide et que la mer, là-bas, ne reflétait aucune étoile. Des hommes d'équipage entendirent des chants sous la coque ; deux disparurent sans laisser de trace, sans une vague. Erik consigna tout dans son carnet de bord, puis arracha les pages par peur d'être interné. Depuis, il évite cette latitude, change de cap au moindre prétexte, et scrute l'horizon avec une vigilance presque maladive. Son secret : il a gardé les pages arrachées, pliées dans la doublure de sa veste, parce qu'il sait qu'un jour il devra y retourner. Son obsession est de comprendre ce qui appelait depuis les profondeurs, et de sauver les deux marins dont il refuse de croire qu'ils soient vraiment morts."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Médecin aliéniste": {
+    "nom": "Eleanor Vance",
+    "profession": "Médecin aliéniste, ancienne praticienne d'asile",
+    "avatar": "",
+    "stats": { "force": 30, "dex": 50, "cha": 52, "per": 55, "edu": 68, "chance": 45 },
+    "competences": [
+      { "nom": "Médecine", "niveau": "Expert", "statChoisie": "Éducation" },
+      { "nom": "Hypnose", "niveau": "Avancé", "statChoisie": "Charisme" },
+      { "nom": "Documentation & Recherche", "niveau": "Avancé", "statChoisie": "Éducation" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "70$", "personnel": ["Trousse de médecine cuir noir", "Montre de gousset à balancier hypnotique", "Carnet de cas relié de cuir"], "global": [] },
+    "lore": {
+      "peurs": "Les rires sans cause, les patients qui parlent à l'unisson, son propre reflet la nuit",
+      "vaillance": "Reste calme face au délire le plus violent ; entre seule dans une cellule capitonnée",
+      "background": "Eleanor Vance est née en 1888 à Boston, dans une famille de la bonne société qui voyait d'un mauvais œil qu'une jeune fille ambitionne la médecine. Elle s'est battue pour entrer en faculté, a essuyé les moqueries des confrères, et a fini major de sa promotion par pur entêtement. Fascinée par les abîmes de l'esprit humain, elle s'oriente vers l'aliénisme et obtient un poste dans un asile du Massachusetts, où elle développe des méthodes douces, l'hypnose et l'écoute patiente, là où l'époque préfère la contention. Sa personnalité mêle une froideur clinique de façade à une compassion réelle qu'elle dissimule par crainte de paraître faible. Sa bascule survient avec un patient, un homme ramené d'une expédition arctique, dont les divagations contenaient des descriptions cohérentes de géométries impossibles et de cités sous la glace. Sous hypnose, il parlait des langues qu'aucun linguiste ne reconnaissait. Une nuit, il se suicida en traçant sur le mur, avec son sang, un symbole qu'Eleanor reconnut plus tard dans un grimoire confisqué. Depuis, elle ne croit plus que la folie soit toujours une maladie : parfois, c'est de la lucidité. Son secret : elle a commencé à pratiquer l'auto-hypnose pour accéder aux mêmes visions que ses patients, et elle ignore jusqu'où cela la mène. Son obsession est de prouver que certaines démences ne sont que la perception d'une réalité voilée aux esprits sains."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Aviatrice de l'extrême": {
+    "nom": "Margot Delacroix",
+    "profession": "Aviatrice de raid et casse-cou de meeting aérien",
+    "avatar": "",
+    "stats": { "force": 42, "dex": 65, "cha": 48, "per": 60, "edu": 40, "chance": 45 },
+    "competences": [
+      { "nom": "Pilotage", "niveau": "Expert", "statChoisie": "Dextérité" },
+      { "nom": "Mécanique", "niveau": "Avancé", "statChoisie": "Dextérité" },
+      { "nom": "Survie", "niveau": "Avancé", "statChoisie": "Force" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "70$", "personnel": ["Lunettes d'aviateur cerclées de cuir", "Écharpe de soie blanche porte-bonheur", "Clé à molette personnelle"], "global": [] },
+    "lore": {
+      "peurs": "Le silence d'un moteur qui cale, le givre sur les ailes, les nuages qui bougent à contresens",
+      "vaillance": "Pique vers le sol pour redresser au dernier mètre ; traverse un orage que tous fuient",
+      "background": "Margot Delacroix est née à Toulouse en 1896, fille d'un cheminot et d'une couturière, dans un quartier où l'on n'osait pas rêver plus haut que les toits. Le passage d'un avion au-dessus de la ville, quand elle avait dix ans, décida de toute sa vie. Adolescente, elle s'introduisait dans les hangars pour toucher les carlingues ; à vingt ans, elle avait appris à voler en échange de réparations gratuites des moteurs, car elle comprenait la mécanique mieux que la plupart des pilotes. Casse-cou par tempérament, panache et bravade, elle s'est fait un nom dans les meetings aériens d'après-guerre, enchaînant loopings et vols inversés au ras des foules. Sa bascule vers l'étrange s'est produite lors d'une tentative de record d'altitude : à une hauteur où l'air se raréfie et où le ciel vire au noir en plein jour, elle a aperçu, suspendues entre les nuages, des formes immenses et lentes qui n'appartenaient à aucun bestiaire connu. Son altimètre s'est affolé, sa boussole a tourné comme folle, et elle est redescendue avec trois heures de vol qu'elle ne pouvait expliquer sur quarante minutes de carburant. Personne ne l'a crue, et elle a appris à se taire. Son secret : depuis ce vol, elle entend parfois un bourdonnement grave quand elle approche certaines altitudes, comme un appel. Son obsession est de remonter là-haut, plus haut encore, pour savoir ce qui l'attend dans le noir au-dessus des nuages."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  },
+  "Dompteur de cirque": {
+    "nom": "Lev Antonov",
+    "profession": "Dompteur de fauves, cirque itinérant",
+    "avatar": "",
+    "stats": { "force": 60, "dex": 58, "cha": 50, "per": 52, "edu": 40, "chance": 40 },
+    "competences": [
+      { "nom": "Zoologie", "niveau": "Expert", "statChoisie": "Perception" },
+      { "nom": "Intimidation", "niveau": "Avancé", "statChoisie": "Force" },
+      { "nom": "Combat à mains nues", "niveau": "Avancé", "statChoisie": "Force" }
+    ],
+    "afflictions": [],
+    "inventaires": { "monnaie": "70$", "personnel": ["Fouet de dressage en cuir tressé", "Tabouret de domptage usé", "Médaillon d'ambre de sa mère"], "global": [] },
+    "lore": {
+      "peurs": "Les yeux d'animaux brillant dans le noir sans corps autour, les grognements humains, les cages vides ouvertes",
+      "vaillance": "Entre seul dans la cage du fauve le plus nerveux ; fixe sans ciller une bête deux fois plus grosse que lui",
+      "background": "Lev Antonov est né en 1893 dans une troupe de cirque russe, entre deux roulottes, par une nuit d'hiver ukrainien. Il n'a jamais connu d'autre maison que la sciure de la piste et le rugissement des fauves. Élevé par sa mère, dresseuse d'ours, il a hérité d'elle ce calme animal et ce regard qui plie l'échine des bêtes les plus farouches. La révolution et la guerre ont dispersé sa troupe ; il a fui vers l'ouest, traversant l'Europe avec quelques lions affamés et la conviction que les hommes étaient parfois plus dangereux que ses fauves. Solide, taciturne, mais capable d'une douceur surprenante avec les animaux, il s'est reconstruit dans un cirque ambulant français où il est devenu la vedette du numéro de domptage. Sa bascule vers l'étrange remonte à l'achat d'une panthère noire, capturée disait-on dans une jungle d'Asie centrale jamais cartographiée. La bête ne dormait jamais, ne mangeait qu'à la nouvelle lune, et fixait le vide comme si quelque chose y répondait. Une nuit, Lev la surprit en train de tracer des cercles parfaits dans la sciure et de gémir des sons qui ressemblaient à des mots. Au matin, la cage était vide, verrouillée de l'intérieur, et trois artistes avaient perdu la raison. Son secret : il a gardé le collier de la panthère, gravé de signes qu'aucun zoologiste ne reconnaît. Son obsession est de retrouver la bête, qu'il croit toujours vivante, et de comprendre ce qu'elle appelait dans la nuit."
+    },
+    "etats": { "mentale": "Aucune instabilité", "physique": "Aucune blessure" },
+    "regles": { "pc_max": "25", "comp_max_limit": "3", "pts_deduction": "0" }
+  }
+}
