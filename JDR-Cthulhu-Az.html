@@ -7,39 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
-            body {
-                background-color: white !important;
-                color: black !important;
-            }
-            .bg-slate-950, .bg-slate-900, .bg-slate-950 {
-                background: white !important;
-                color: black !important;
-            }
-            .border-slate-800, .border-slate-700, .border-emerald-950 {
-                border-color: #cbd5e1 !important;
-            }
-            .text-white, .text-slate-100, .text-slate-200, .text-slate-300 {
-                color: black !important;
-            }
-            .text-emerald-500, .text-emerald-400, .text-purple-400, .text-red-400 {
-                color: #0f172a !important;
-                font-weight: bold !important;
-            }
-            input, textarea, select {
-                background-color: #f1f5f9 !important;
-                color: black !important;
-                border-color: #cbd5e1 !important;
-            }
-            #btnGenererPrompt, #btnExporterPDF {
-                display: none !important;
-            }
-            #outputContainer {
-                display: block !important;
-            }
-            @page {
-                size: A4;
-                margin: 10mm 10mm;
-            }
+            body { background-color: white !important; color: black !important; }
+            .bg-slate-950, .bg-slate-900, .bg-slate-950 { background: white !important; color: black !important; }
+            .border-slate-800, .border-slate-700, .border-emerald-950 { border-color: #cbd5e1 !important; }
+            .text-white, .text-slate-100, .text-slate-200, .text-slate-300 { color: black !important; }
+            input, textarea, select { background-color: #f1f5f9 !important; color: black !important; border-color: #cbd5e1 !important; }
+            #btnGenererPrompt, #btnExporterPDF { display: none !important; }
+            #outputContainer { display: block !important; }
+            @page { size: A4; margin: 10mm 10mm; }
         }
     </style>
 </head>
@@ -49,7 +24,7 @@
         <div class="border-b border-emerald-950 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
                 <h1 class="text-2xl font-bold text-emerald-500 tracking-wide">Fiche de Création de Personnage : Pensée et conçue par Azapartam</h1>
-                <p class="text-xs text-slate-400 mt-1 font-mono">Système JDR Custom basé sur Cthulhu/Chtulhu Dark - Interface et design réalisés par Vinthos</p>
+                <p class="text-xs text-slate-400 mt-1 font-mono">Système JDR Custom basé sur Cthulhu/Chtulhu Dark - Interface par Vinthos</p>
             </div>
             <div class="mt-2 md:mt-0 bg-slate-900 border border-emerald-900 px-4 py-2 rounded text-xs">
                 <span class="text-emerald-400 font-bold">Règle MJ :</span> De haut en bas, pas d'impasse.
@@ -58,72 +33,118 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">1. Avatar (Lien Photo Réelle / IA)</label>
-                <input type="text" id="char_avatar" placeholder="https://thispersondoesnotexist.com/..." class="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 p-2.5 rounded text-sm outline-none transition">
+                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Avatar (Lien Photo)</label>
+                <input type="text" id="char_avatar" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
             <div>
-                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">2. Nom & Prénom de l'Enquêteur</label>
-                <input type="text" id="char_name" placeholder="John Doe" class="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 p-2.5 rounded text-sm outline-none transition">
+                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Nom & Prénom de l'Enquêteur</label>
+                <input type="text" id="char_name" placeholder="Clark Ashton Derleth" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
             <div>
-                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">3. Fonction / Profession</label>
-                <input type="text" id="char_profession" placeholder="Journaliste, Détective, Archiviste..." class="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 p-2.5 rounded text-sm outline-none transition">
+                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Fonction / Profession</label>
+                <input type="text" id="char_profession" placeholder="Journaliste, Détective..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl lg:col-span-2 space-y-4">
+            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl lg:col-span-2 flex flex-col justify-between space-y-4">
                 <div>
-                    <h2 class="text-lg font-bold text-white mb-2">4. Statistiques Principales</h2>
-                    <p class="text-xs text-slate-400 mb-4 italic">Chaque stat doit être comprise entre 20 (min) et 70 (max). Le total doit être égal à 300.</p>
+                    <h2 class="text-lg font-bold text-white mb-2">Statistiques Principales</h2>
+                    <p class="text-xs text-slate-400 mb-4 italic">Modifiez vos valeurs via la case "Saisie" à droite. Le score calculé final s'affiche à gauche.</p>
                     
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="statsContainerGrid">
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                            <label class="block text-xs text-slate-400 font-bold mb-1">Force (STR)</label>
-                            <input type="number" id="stat_force" min="20" max="70" value="50" class="stat-input w-full bg-slate-900 text-center text-xl font-bold text-white p-1.5 rounded border border-slate-700">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_force">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-bold text-slate-200">Force (STR)</span>
+                                <div class="text-sm font-mono flex items-center space-x-1.5">
+                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
+                                    <span id="display_force" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
+                                    <span class="text-slate-600 font-bold">/</span>
+                                    <input type="number" id="stat_force" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuelle = score-malus d'affliction</div>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                            <label class="block text-xs text-slate-400 font-bold mb-1">Dextérité (DEX)</label>
-                            <input type="number" id="stat_dex" min="20" max="70" value="50" class="stat-input w-full bg-slate-900 text-center text-xl font-bold text-white p-1.5 rounded border border-slate-700">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_dex">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-bold text-slate-200">Dextérité (DEX)</span>
+                                <div class="text-sm font-mono flex items-center space-x-1.5">
+                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
+                                    <span id="display_dex" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
+                                    <span class="text-slate-600 font-bold">/</span>
+                                    <input type="number" id="stat_dex" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuelle = score-malus d'affliction</div>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                            <label class="block text-xs text-slate-400 font-bold mb-1">Charisme (CHA)</label>
-                            <input type="number" id="stat_cha" min="20" max="70" value="50" class="stat-input w-full bg-slate-900 text-center text-xl font-bold text-white p-1.5 rounded border border-slate-700">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_cha">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-bold text-slate-200">Charisme (CHA)</span>
+                                <div class="text-sm font-mono flex items-center space-x-1.5">
+                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
+                                    <span id="display_cha" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
+                                    <span class="text-slate-600 font-bold">/</span>
+                                    <input type="number" id="stat_cha" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuelle = score-malus d'affliction</div>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                            <label class="block text-xs text-slate-400 font-bold mb-1">Perception (PER)</label>
-                            <input type="number" id="stat_per" min="20" max="70" value="50" class="stat-input w-full bg-slate-900 text-center text-xl font-bold text-white p-1.5 rounded border border-slate-700">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_per">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-bold text-slate-200">Perception (PER)</span>
+                                <div class="text-sm font-mono flex items-center space-x-1.5">
+                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
+                                    <span id="display_per" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
+                                    <span class="text-slate-600 font-bold">/</span>
+                                    <input type="number" id="stat_per" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuelle = score-malus d'affliction</div>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                            <label class="block text-xs text-slate-400 font-bold mb-1">Éducation (EDU)</label>
-                            <input type="number" id="stat_edu" min="20" max="70" value="50" class="stat-input w-full bg-slate-900 text-center text-xl font-bold text-white p-1.5 rounded border border-slate-700">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_edu">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-bold text-slate-200">Éducation (EDU)</span>
+                                <div class="text-sm font-mono flex items-center space-x-1.5">
+                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
+                                    <span id="display_edu" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
+                                    <span class="text-slate-600 font-bold">/</span>
+                                    <input type="number" id="stat_edu" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuelle = score-malus d'affliction</div>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                            <label class="block text-xs text-slate-400 font-bold mb-1">Chance (LUCK)</label>
-                            <input type="number" id="stat_chance" min="20" max="70" value="50" class="stat-input w-full bg-slate-900 text-center text-xl font-bold text-white p-1.5 rounded border border-slate-700">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_chance">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-bold text-slate-200">Chance (LUCK)</span>
+                                <div class="text-sm font-mono flex items-center space-x-1.5">
+                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
+                                    <span id="display_chance" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
+                                    <span class="text-slate-600 font-bold">/</span>
+                                    <input type="number" id="stat_chance" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuelle = score-malus d'affliction</div>
                         </div>
+                    </div>
+
+                    <div id="blocCompetencesStats" class="space-y-2 border-t border-slate-800 pt-4 hidden">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">Bonus de compétences appliqués (Basé sur Score Actuel)</h3>
+                        <div id="listeCompetencesStats" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                     </div>
                 </div>
 
-                <div id="blocCompetencesStats" class="space-y-2 hidden border-t border-slate-800 pt-4">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Bonus de compétences appliqués</h3>
-                    <div id="listeCompetencesStats" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
-                </div>
-
-                <div class="space-y-2">
+                <div class="space-y-2 pt-2 border-t border-slate-800 mt-4">
                     <div class="p-3 bg-slate-950 rounded-lg flex justify-between items-center text-xs border border-slate-800">
-                        <div>Pool de points statistiques dépensés : <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> / 300</div>
+                        <div><span>Gestion des points de statistiques :</span> <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> / 300</div>
                         <div id="statStatus" class="text-emerald-400 font-bold">✓ Total valide</div>
                     </div>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                         <div class="p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
                             <div class="flex items-center space-x-2">
-                                <label class="text-slate-400 font-bold">PC Max :</label>
+                                <label class="text-slate-400 font-bold">Points de compétences initiales :</label>
                                 <input type="number" id="pc_max" value="25" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-0.5">
                             </div>
-                            <div>PC Restants globaux : <span id="pc_restants_global" class="font-mono font-bold text-emerald-400">25</span></div>
+                            <div>points restant : <span id="pc_restants_global" class="font-mono font-bold text-emerald-400">25</span> PC</div>
                         </div>
                         <div class="p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
                             <label class="text-slate-400 font-bold">Points de déductions (Bonus MJ) :</label>
@@ -134,8 +155,7 @@
             </div>
 
             <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
-                <h2 class="text-lg font-bold text-white">5. Seuils & États de Santé</h2>
-                
+                <h2 class="text-lg font-bold text-white">Seuils & États de Santé</h2>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="bg-slate-950 p-2 rounded border border-slate-800">
                         <span class="text-slate-400 block">Courage :</span>
@@ -147,34 +167,34 @@
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-purple-400 uppercase mb-1.5">MENTALE (Chocs mentaux)</label>
+                <div class="p-3 rounded-lg border border-purple-900 bg-purple-950/25 shadow-md">
+                    <label class="block text-xs font-black text-purple-400 uppercase tracking-wider mb-2">MENTALE (Chocs mentaux)</label>
                     <div class="space-y-1 text-xs">
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_mentale" value="Aucune instabilité" checked class="rounded accent-purple-500"> <span class="text-emerald-400 font-bold">Aucune instabilité</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_mentale" value="Instabilité Légère" class="rounded accent-purple-500"> <span>Instabilité Légère</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_mentale" value="Instabilité Modérée" class="rounded accent-purple-500"> <span>Instabilité Modérée</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_mentale" value="Instabilité Lourde" class="rounded accent-purple-500"> <span>Instabilité Lourde</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_mentale" value="Instabilité Grave" class="rounded accent-purple-500"> <span>Instabilité Grave</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_mentale" value="Folie" class="rounded accent-purple-500 text-red-500"> <span class="text-red-400 font-bold">Folie</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Aucune instabilité" checked class="accent-purple-500"> <span class="text-emerald-400 font-bold">Aucune instabilité</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Légère" class="accent-purple-500"> <span>Instabilité Légère</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Modérée" class="accent-purple-500"> <span>Instabilité Modérée</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Lourde" class="accent-purple-500"> <span>Instabilité Lourde</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Grave" class="accent-purple-500"> <span>Instabilité Grave</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Folie" class="accent-purple-500"><span class="text-fuchsia-400 font-bold tracking-wide">Folie</span></label>
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-red-400 uppercase mb-1.5">Physique (Blessures physiques)</label>
+                <div class="p-3 rounded-lg border border-orange-800 bg-orange-950/25 shadow-md">
+                    <label class="block text-xs font-black text-orange-500 uppercase tracking-wider mb-2">Physique (Blessures)</label>
                     <div class="space-y-1 text-xs">
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_physique" value="Aucune blessure" checked class="rounded accent-red-500"> <span class="text-emerald-400 font-bold">Aucune blessure</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_physique" value="Blessure(s) Légère(s)" class="rounded accent-red-500"> <span>Blessure(s) Légère(s)</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_physique" value="Blessure(s) Modérée(s)" class="rounded accent-red-500"> <span>Blessure(s) Modérée(s)</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_physique" value="Blessure(s) Lourde(s)" class="rounded accent-red-500"> <span>Blessure(s) Lourde(s)</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_physique" value="Blessure(s) Grave(s)" class="rounded accent-red-500"> <span>Blessure(s) Grave(s)</span></label>
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800 hover:bg-slate-850"><input type="radio" name="san_physique" value="Blessure(s) Mortelle(s)" class="rounded accent-red-500"> <span class="text-red-500 font-bold">Blessure(s) Mortelle(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Aucune blessure" checked class="accent-orange-500"> <span class="text-emerald-400 font-bold">Aucune blessure</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Légère(s)" class="accent-orange-500"> <span>Blessure(s) Légère(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Modérée(s)" class="accent-orange-500"> <span>Blessure(s) Modérée(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Lourde(s)" class="accent-orange-500"> <span>Blessure(s) Lourde(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Grave(s)" class="accent-orange-500"> <span>Blessure(s) Grave(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Mortelle(s)" class="accent-orange-500"><span class="text-orange-400 font-bold tracking-wide">Blessure(s) Mortelle(s)</span></label>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
-            <h2 class="text-xl font-bold text-white">11. Afflictions du Personnage</h2>
+            <h2 class="text-xl font-bold text-white">Afflictions du Personnage (3 max)</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <select id="selectAffliction" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none focus:border-red-500 transition">
@@ -188,8 +208,13 @@
                 </div>
                 <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex flex-col justify-between">
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2 mb-3">Afflictions Actives</h3>
-                        <div id="panierAfflictions" class="space-y-2 text-sm">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Afflictions Actives</h3>
+                            <span class="text-xs font-mono bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                                <span id="aff_count_display" class="text-red-400 font-bold">0</span> / 3 Max
+                            </span>
+                        </div>
+                        <div id="panierAfflictions" class="space-y-3">
                             <p class="italic text-slate-600 text-xs">Aucune affliction sélectionnée pour le moment.</p>
                         </div>
                     </div>
@@ -199,43 +224,40 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-lg font-bold text-white">6. Gestion des Inventaires</h2>
+                <h2 class="text-lg font-bold text-white">Gestion des Inventaires</h2>
                 <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
                     <label class="text-xs font-bold text-emerald-400 uppercase">Monnaie :</label>
                     <input type="text" id="inv_money" placeholder="Ex: 150$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
                 </div>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center">
-                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Inventaire Global (Coffre, Véhicule, Planque)</label>
-                        <button onclick="ajouterLigneInventaire('container_global', 'Objet global...')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2.5 py-0.5 rounded text-xs">+</button>
-                    </div>
-                    <div id="container_global" class="space-y-1.5"></div>
-                </div>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center">
-                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Inventaire Personnel (Sur soi)</label>
-                        <button onclick="ajouterLigneInventaire('container_perso', 'Objet sur soi...')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2.5 py-0.5 rounded text-xs">+</button>
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Personnel (Sur soi)</label>
+                        <button onclick="ajouterLigneInventaire('container_perso', 'Objet sur soi...')" class="bg-emerald-600 text-white font-bold px-2 rounded text-xs">+</button>
                     </div>
                     <div id="container_perso" class="space-y-1.5"></div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Global (Coffre, Planque)</label>
+                        <button onclick="ajouterLigneInventaire('container_global', 'Objet global...')" class="bg-emerald-600 text-white font-bold px-2 rounded text-xs">+</button>
+                    </div>
+                    <div id="container_global" class="space-y-1.5"></div>
                 </div>
             </div>
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <h2 class="text-xl font-bold text-white mb-2">7. Compétences</h2>
+                <h2 class="text-xl font-bold text-white mb-2">Compétences</h2>
                 <div class="flex items-center space-x-4 mb-4 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
                     <label class="text-slate-400 font-bold">Nombre de compétences max autorisé par le MJ :</label>
                     <input type="number" id="comp_max_limit" value="2" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
                 </div>
-                
-                <select id="selectCompetence" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none focus:border-emerald-500 transition">
+                <select id="selectCompetence" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none">
                     <option value="">-- Sélectionner la compétence --</option>
                 </select>
-
                 <div id="details" class="bg-slate-950 p-4 rounded-lg border border-slate-800 hidden space-y-3">
                     <div>
                         <h3 id="compNom" class="text-lg font-bold text-white"></h3>
@@ -267,18 +289,18 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <label class="block text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">8. Peurs Profondes</label>
-                <input type="text" id="lore_peurs" placeholder="La perte de contrôle, l'isolement..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none focus:border-purple-500">
+                <label class="block text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">Peurs Profondes</label>
+                <input type="text" id="lore_peurs" placeholder="L'isolement..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
             <div>
-                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">9. Vaillance (Résistance concrète)</label>
-                <input type="text" id="lore_vaillance" placeholder="Peur de la foule surmontée..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none focus:border-emerald-500">
+                <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Vaillance (Résistance concrète)</label>
+                <input type="text" id="lore_vaillance" placeholder="Peur surmontée..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-2">
-            <label class="block text-sm font-bold text-slate-400 tracking-wider uppercase">10. Background (Histoire complète de l'enquêteur - Min 15 lignes)</label>
-            <textarea id="lore_background" rows="8" placeholder="Écrivez votre histoire ici..." class="w-full bg-slate-950 border border-slate-800 p-3 rounded text-sm text-white outline-none focus:border-emerald-500 transition overflow-hidden resize-none"></textarea>
+            <label class="block text-sm font-bold text-slate-400 tracking-wider uppercase">Background (Histoire complète de l'enquêteur - Min 15 lignes)</label>
+            <textarea id="lore_background" rows="8" placeholder="Écrivez votre histoire..." class="w-full bg-slate-950 border border-slate-800 p-3 rounded text-sm text-white outline-none resize-none"></textarea>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pb-12">
@@ -291,12 +313,8 @@
         </div>
 
         <div id="outputContainer" class="hidden text-left bg-slate-900 p-4 rounded-xl border border-emerald-950 space-y-2">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Prompt généré :</span>
-            </div>
-            <textarea id="promptOutput" rows="14" class="w-full bg-slate-950 border border-slate-850 p-3 rounded text-xs text-slate-300 font-mono focus:outline-none" readonly></textarea>
+            <textarea id="promptOutput" rows="14" class="w-full bg-slate-950 p-3 rounded text-xs text-slate-300 font-mono focus:outline-none" readonly></textarea>
         </div>
-
     </div>
 
     <script>
@@ -306,378 +324,308 @@
         let indexAfflictionsData = {};
 
         const statMapping = {
-            "Force": "stat_force",
-            "Dextérité": "stat_dex",
-            "Charisme": "stat_cha",
-            "Perception": "stat_per",
-            "Éducation": "stat_edu",
-            "Chance": "stat_chance"
+            "Force": "stat_force", "Dextérité": "stat_dex", "Charisme": "stat_cha", "Perception": "stat_per", "Éducation": "stat_edu", "Chance": "stat_chance"
+        };
+        
+        // DICTIONNAIRE MAGIQUE POUR REGLER LE BUG DES IDS (Dextérité -> display_dex)
+        const displayMapping = {
+            "Force": "display_force",
+            "Dextérité": "display_dex",
+            "Charisme": "display_cha",
+            "Perception": "display_per",
+            "Éducation": "display_edu",
+            "Chance": "display_chance"
         };
 
-        const tx = document.getElementById('lore_background');
-        tx.addEventListener("input", OnInput, false);
-        function OnInput() {
-            this.style.height = "auto";
-            this.style.height = (this.scrollHeight) + "px";
+        // Événements de saisie sur les caractéristiques de base
+        document.querySelectorAll('.stat-input').forEach(input => {
+            input.addEventListener('input', travaillerCalculsEtRendu);
+        });
+
+        document.getElementById('pc_max').addEventListener('input', travaillerCalculsEtRendu);
+        document.getElementById('comp_max_limit').addEventListener('input', travaillerCalculsEtRendu);
+
+        // Chargement JSON Compétences
+        fetch('competences.json').then(res => res.json()).then(data => {
+            indexCompetencesData = data;
+            const select = document.getElementById('selectCompetence');
+            Object.keys(data).forEach(key => {
+                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; select.appendChild(opt);
+            });
+            select.addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
+        });
+
+        // Chargement JSON Afflictions
+        fetch('afflictions.json').then(res => res.json()).then(data => {
+            indexAfflictionsData = data;
+            const select = document.getElementById('selectAffliction');
+            Object.keys(data).forEach(key => {
+                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; select.appendChild(opt);
+            });
+            select.addEventListener('change', (e) => chargerDetailsAffliction(e.target.value));
+        });
+
+        // CHARGEMENT DU PANNEAU DE DÉTAIL D'UNE COMPÉTENCE AVEC RÈGLE DE SUIVANCE DES MALUS
+        function chargerDetailsCompetence(nomComp) {
+            document.getElementById('selectCompetence').value = nomComp;
+            const comp = indexCompetencesData[nomComp];
+            if (!comp) { document.getElementById('details').classList.add('hidden'); return; }
+            document.getElementById('details').classList.remove('hidden');
+            document.getElementById('compNom').textContent = comp.nom;
+            document.getElementById('compStats').textContent = "Stats liées : " + comp.stats;
+
+            const container = document.getElementById('niveauxList'); container.innerHTML = '';
+            
+            // Ordre logique d'évaluation de la cascade (suivance)
+            const ordreNiveaux = ["Basique", "Confirmé", "Avancé", "Expert"];
+            let malusRapporte = null; 
+
+            ordreNiveaux.forEach(nomNiveau => {
+                if (comp.niveaux && comp.niveaux[nomNiveau]) {
+                    const d = comp.niveaux[nomNiveau];
+                    
+                    // Si ce niveau spécifie son propre malus, il remplace la valeur de référence
+                    if (d.malus !== undefined && d.malus !== null && d.malus !== "") {
+                        malusRapporte = d.malus;
+                    }
+
+                    const div = document.createElement('div');
+                    div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
+                    
+                    let htmlContenu = '<div><div class="font-bold text-white">' + nomNiveau + ' <span class="text-slate-500">(Coût: ' + d.cout + ' PC)</span></div>';
+                    if (d.bonus) htmlContenu += '<div class="text-emerald-400 text-[10px]">Bonus : +' + d.bonus + '</div>';
+                    
+                    // On applique le malus actif par effet de suivance
+                    if (malusRapporte) {
+                        htmlContenu += '<div class="text-red-400 text-[10px] font-mono italic">Malus appliqué : ' + malusRapporte + '</div>';
+                    }
+                    if (d.description) htmlContenu += '<div class="text-slate-400 italic mt-1 text-[11px]">' + d.description + '</div>';
+                    htmlContenu += '</div>';
+                    
+                    div.innerHTML = htmlContenu;
+
+                    const btn = document.createElement('button');
+                    btn.textContent = "Associer"; btn.className = "bg-emerald-600 text-white font-bold px-2.5 py-1 rounded text-[10px] ml-4 shrink-0";
+                    btn.onclick = () => ajouterComp(comp.nom, nomNiveau, d.bonus || 0, d.cout, comp.stats);
+                    
+                    div.appendChild(btn);
+                    container.appendChild(div);
+                }
+            });
+        }
+
+        function chargerDetailsAffliction(nomAff) {
+            document.getElementById('selectAffliction').value = nomAff;
+            const aff = indexAfflictionsData[nomAff];
+            if (!aff) { document.getElementById('afflictionDetailPanel').classList.add('hidden'); return; }
+            document.getElementById('afflictionDetailPanel').classList.remove('hidden');
+            document.getElementById('afflictionNom').textContent = aff.nom;
+            document.getElementById('afflictionDef').textContent = aff.definition;
+
+            const container = document.getElementById('afflictionStadesList'); container.innerHTML = '';
+            for (const [nomStade, d] of Object.entries(aff.niveaux)) {
+                const div = document.createElement('div');
+                div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
+                div.innerHTML = '<div><div class="font-bold text-white">' + nomStade + '</div>' +
+                               '<div class="text-[10px] text-red-400">Coût : ' + d.cout_ps + ' PS</div>' +
+                               '<div class="text-[10px] text-emerald-400">Gain : +' + d.gain_pc + ' PC</div>' +
+                               '<div class="text-purple-400 text-[10px]">Points de Compétence bonus : +' + (d.bonus_comp || 0) + '</div></div>';
+                const btn = document.createElement('button');
+                btn.textContent = "Appliquer"; btn.className = "bg-red-700 text-white font-bold px-2.5 py-1 rounded text-[10px] ml-4 shrink-0";
+                btn.onclick = () => ajouterAffliction(aff.nom, nomStade, d.cout_ps, d.gain_pc, d.bonus_comp || 0, d.condition, aff.definition);
+                div.appendChild(btn); container.appendChild(div);
+            }
+        }
+
+        function ajouterComp(nom, niveau, bonus, cout, stringStats) {
+            let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
+            let pcInitialMax = parseInt(document.getElementById('pc_max').value) || 25;
+            if (competencesChoisies.filter(i => i.nom !== nom).reduce((s, i) => s + i.cout, 0) + cout > (pcInitialMax + totalGainPC)) {
+                alert("Erreur : Budget de PC insuffisant !"); return;
+            }
+            let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
+            if (!competencesChoisies.some(i => i.nom === nom) && competencesChoisies.length >= ((parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp)) {
+                alert("Erreur MJ : Nombre de compétences actives max atteint !"); return;
+            }
+            competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
+            
+            let statLaPlusHaute = "Force"; let scoreMax = -1;
+            for (const key of Object.keys(statMapping)) {
+                if (stringStats.includes(key)) {
+                    let displayEl = document.getElementById(displayMapping[key]);
+                    let valeurStatCalculée = displayEl ? parseInt(displayEl.textContent) : 50;
+                    if (valeurStatCalculée > scoreMax) { scoreMax = valeurStatCalculée; statLaPlusHaute = key; }
+                }
+            }
+            competencesChoisies.push({ nom, niveau, bonus, cout, stringStats, statChoisie: statLaPlusHaute });
+            travaillerCalculsEtRendu();
+        }
+
+        function ajouterAffliction(nom, stade, cout_ps, gain_pc, bonus_comp, condition, definition) {
+            if (!afflictionsChoisies.some(i => i.nom === nom) && afflictionsChoisies.length >= 3) {
+                alert("Erreur : Maximum de 3 afflictions atteint !"); return;
+            }
+            let ancienne = afflictionsChoisies.find(i => i.nom === nom);
+            let statSauvegardee = ancienne ? ancienne.statImpactee : "Force";
+
+            afflictionsChoisies = afflictionsChoisies.filter(item => item.nom !== nom);
+            afflictionsChoisies.push({ nom, stade, cout_ps, gain_pc, bonus_comp, condition, definition, statImpactee: statSauvegardee });
+            travaillerCalculsEtRendu();
+        }
+
+        function supprimerAffliction(nom) {
+            afflictionsChoisies = afflictionsChoisies.filter(item => item.nom !== nom);
+            travaillerCalculsEtRendu();
+        }
+
+        function changerStatMalusAffliction(nomAff, nouvelleStat) {
+            let aff = afflictionsChoisies.find(item => item.nom === nomAff);
+            if (aff) { aff.statImpactee = nouvelleStat; travaillerCalculsEtRendu(); }
+        }
+
+        function changerStatAssociee(nomComp, nouvelleStat) {
+            let comp = competencesChoisies.find(item => item.nom === nomComp);
+            if (comp) { comp.statChoisie = nouvelleStat; travaillerCalculsEtRendu(); }
+        }
+
+        function supprimerComp(nom) {
+            competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
+            travaillerCalculsEtRendu();
+        }
+
+        // LOGIQUE DE CALCUL ET RENDU GLOBAL RECALIBRÉE
+        function travaillerCalculsEtRendu() {
+            let totalSaisi = 0;
+            let malusCumules = { "Force": 0, "Dextérité": 0, "Charisme": 0, "Perception": 0, "Éducation": 0, "Chance": 0 };
+            
+            afflictionsChoisies.forEach(a => {
+                if (a.statImpactee && malusCumules[a.statImpactee] !== undefined) malusCumules[a.statImpactee] += a.cout_ps;
+            });
+
+            Object.keys(statMapping).forEach(key => {
+                let inputEl = document.getElementById(statMapping[key]);
+                let wrapperEl = document.getElementById("wrapper_" + statMapping[key]);
+                let displayEl = document.getElementById(displayMapping[key]);
+                
+                let baseSaisie = parseInt(inputEl.value) || 0;
+                totalSaisi += baseSaisie;
+                
+                let scoreCalculeFinal = baseSaisie - malusCumules[key];
+                if (displayEl) displayEl.textContent = scoreCalculeFinal;
+
+                if (malusCumules[key] > 0) {
+                    if (displayEl) displayEl.className = "text-red-500 font-black text-lg bg-slate-900 border border-red-700 px-1.5 py-0.5 rounded";
+                    if (wrapperEl) wrapperEl.className = "bg-slate-950 p-3 rounded-lg border border-red-900/60 shadow-inner";
+                } else {
+                    if (displayEl) displayEl.className = "text-white font-bold bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded";
+                    if (wrapperEl) wrapperEl.className = "bg-slate-950 p-3 rounded-lg border border-slate-800";
+                }
+            });
+
+            document.getElementById('totalPoints').textContent = totalSaisi;
+            const status = document.getElementById('statStatus');
+            status.textContent = totalSaisi === 300 ? "✓ Total valide" : "⚠ Invalide (" + (totalSaisi - 300 > 0 ? '+' : '') + (totalSaisi - 300) + " pts)";
+            status.className = totalSaisi === 300 ? "text-emerald-400 font-bold" : "text-red-400 font-bold";
+
+            const force = parseInt(document.getElementById('display_force').textContent) || 0;
+            const dex = parseInt(document.getElementById('display_dex').textContent) || 0;
+            const cha = parseInt(document.getElementById('display_cha').textContent) || 0;
+            const per = parseInt(document.getElementById('display_per').textContent) || 0;
+            const edu = parseInt(document.getElementById('display_edu').textContent) || 0;
+            const luck = parseInt(document.getElementById('display_chance').textContent) || 0;
+
+            document.getElementById('val_courage').textContent = Math.ceil((cha + per + edu) / 3) || 0;
+            document.getElementById('val_resistance').textContent = Math.ceil((force + dex + luck) / 3) || 0;
+
+            let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
+            let pcInitialMax = parseInt(document.getElementById('pc_max').value) || 25;
+            let pcRestantsFinaux = (pcInitialMax + totalGainPC) - competencesChoisies.reduce((sum, item) => sum + item.cout, 0);
+            
+            document.getElementById('pc_restants_global').textContent = pcRestantsFinaux;
+            document.getElementById('pc_panier_restants').textContent = pcRestantsFinaux;
+
+            document.getElementById('pc_restants_global').className = pcRestantsFinaux < 0 ? "font-mono font-bold text-red-400" : "font-mono font-bold text-emerald-400";
+            document.getElementById('pc_panier_restants').className = pcRestantsFinaux < 0 ? "text-red-400 font-bold" : "text-emerald-400 font-bold";
+
+            let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
+            document.getElementById('comp_count').textContent = competencesChoisies.length;
+            document.getElementById('comp_max_display').textContent = (parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp;
+            document.getElementById('aff_count_display').textContent = afflictionsChoisies.length;
+
+            // Rendu Panier Compétences (A droite)
+            const panierContainer = document.getElementById('panierList');
+            if (competencesChoisies.length === 0) {
+                panierContainer.innerHTML = '<p class="italic text-slate-600 text-xs">Aucune compétence ajoutée.</p>';
+            } else {
+                panierContainer.innerHTML = competencesChoisies.map(item => {
+                    let escName = item.nom.replace(/'/g, "\\'");
+                    return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center cursor-pointer hover:bg-slate-800 transition">' +
+                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ']</span></div>' +
+                           '<button onclick="event.stopPropagation(); supprimerComp(\'' + escName + '\')" class="text-red-400 font-bold text-xs px-2">✕</button></div>';
+                }).join('');
+            }
+
+            // Rendu Panier Afflictions Actives
+            const panierAffContainer = document.getElementById('panierAfflictions');
+            if (afflictionsChoisies.length === 0) {
+                panierAffContainer.innerHTML = '<p class="italic text-slate-600 text-xs">Aucune affliction active.</p>';
+            } else {
+                panierAffContainer.innerHTML = afflictionsChoisies.map(item => {
+                    let escName = item.nom.replace(/'/g, "\\'");
+                    let optionsHtml = Object.keys(statMapping).map(sName => 
+                        '<option value="' + sName + '" ' + (item.statImpactee === sName ? "selected" : "") + '>' + sName + '</option>'
+                    ).join('');
+
+                    return '<div class="bg-slate-950 p-3 rounded-lg border border-red-950 flex flex-col space-y-2 cursor-pointer hover:border-red-900 transition" onclick="chargerDetailsAffliction(\'' + escName + '\')">' +
+                           '<div class="flex justify-between items-center"><div><span class="font-bold text-red-400 text-sm">' + item.nom + '</span><span class="text-purple-400 text-xs"> [' + item.stade + ']</span></div>' +
+                           '<button onclick="event.stopPropagation(); supprimerAffliction(\'' + escName + '\')" class="text-red-400 font-bold px-1">✕</button></div>' +
+                           '<p class="text-[11px] text-slate-400 italic font-sans leading-relaxed">' + (item.definition || "Pas de définition.") + '</p>' +
+                           '<div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-900 text-[11px] font-mono">' +
+                           '<div>Gain : <span class="text-emerald-400 font-bold">+' + item.gain_pc + ' PC</span></div>' +
+                           '<div class="flex items-center space-x-1" onclick="event.stopPropagation();"><span class="text-red-400">-' + item.cout_ps + ' PS sur :</span>' +
+                           '<select onchange="changerStatMalusAffliction(\'' + escName + '\', this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 rounded px-1 text-[10px]">' + optionsHtml + '</select></div></div></div>';
+                }).join('');
+            }
+
+            // RENDU SÉCURISÉ DU BLOC COMPÉTENCES AU BAS DES STATISTIQUES PRINCIPALES
+            const statsBlock = document.getElementById('blocCompetencesStats');
+            const listeContainer = document.getElementById('listeCompetencesStats');
+            if (competencesChoisies.length === 0) { 
+                statsBlock.classList.add('hidden'); 
+            } else {
+                statsBlock.classList.remove('hidden');
+                listeContainer.innerHTML = competencesChoisies.map(item => {
+                    let optionsHtml = Object.keys(statMapping).map(k => '<option value="' + k + '" ' + (item.statChoisie === k ? "selected" : "") + '>' + k + '</option>').join('');
+                    let keyElementId = displayMapping[item.statChoisie];
+                    let valBaseCalculée = parseInt(document.getElementById(keyElementId).textContent) || 0;
+                    let totalScore = valBaseCalculée + item.bonus;
+                    let escName = item.nom.replace(/'/g, "\\'");
+                    return '<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
+                           '<div class="font-bold text-white truncate">' + item.nom + '</div>' +
+                           '<div class="flex items-center justify-between"><select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
+                           '<div class="font-mono ' + (totalScore > 70 ? 'text-fuchsia-400 font-black' : 'text-emerald-400') + '">Total = ' + totalScore + '</div></div></div>';
+                }).join('');
+            }
         }
 
         function ajouterLigneInventaire(containerId, placeholderText) {
             const container = document.getElementById(containerId);
             const div = document.createElement('div');
             div.className = "flex items-center space-x-2 item-ligne-inv";
-            
-            div.innerHTML = '<input type="text" placeholder="' + placeholderText + '" class="w-full bg-slate-950 border border-slate-800 p-2 rounded text-sm text-white focus:outline-none focus:border-emerald-500">' +
-                            '<button onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-500 font-bold px-2">✕</button>';
-            
-            const inputField = div.querySelector('input');
-            inputField.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    ajouterLigneInventaire(containerId, placeholderText);
-                    setTimeout(() => {
-                        const allInputs = container.querySelectorAll('input');
-                        if (allInputs.length > 0) {
-                            allInputs[allInputs.length - 1].focus();
-                        }
-                    }, 50);
-                }
-            });
-
+            div.innerHTML = '<input type="text" placeholder="' + placeholderText + '" class="w-full bg-slate-950 border border-slate-800 p-2 rounded text-sm text-white focus:outline-none">' +
+                            '<button onclick="this.parentElement.remove()" class="text-red-400 font-bold px-2">✕</button>';
             container.appendChild(div);
-        }
-
-        ajouterLigneInventaire('container_global', 'Objet global 1...');
-        ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
-
-        const inputs = document.querySelectorAll('.stat-input');
-        inputs.forEach(input => {
-            input.addEventListener('input', travaillerCalculsEtRendu);
-            input.addEventListener('blur', corrigerBornesInput);
-        });
-        
-        document.getElementById('pc_max').addEventListener('input', travaillerCalculsEtRendu);
-        document.getElementById('comp_max_limit').addEventListener('input', () => {
-            document.getElementById('comp_max_display').textContent = document.getElementById('comp_max_limit').value || "0";
-        });
-
-        function travaillerCalculsEtRendu() {
-            let total = 0;
-            inputs.forEach(input => {
-                total += parseInt(input.value) || 0;
-            });
-
-            document.getElementById('totalPoints').textContent = total;
-            const status = document.getElementById('statStatus');
-            if (total === 300) {
-                status.textContent = "✓ Total valide";
-                status.className = "text-emerald-400 font-bold";
-            } else {
-                status.textContent = "⚠ Invalide (" + (total - 300 > 0 ? '+' : '') + (total - 300) + " pts)";
-                status.className = "text-red-400 font-bold";
-            }
-
-            const force = parseInt(document.getElementById('stat_force').value) || 0;
-            const dex = parseInt(document.getElementById('stat_dex').value) || 0;
-            const cha = parseInt(document.getElementById('stat_cha').value) || 0;
-            const per = parseInt(document.getElementById('stat_per').value) || 0;
-            const edu = parseInt(document.getElementById('stat_edu').value) || 0;
-            const luck = parseInt(document.getElementById('stat_chance').value) || 0;
-
-            document.getElementById('val_courage').textContent = Math.ceil((cha + per + edu) / 3) || 0;
-            document.getElementById('val_resistance').textContent = Math.ceil((force + dex + luck) / 3) || 0;
-
-            calculerBudgetEtRendu();
-        }
-
-        function corrigerBornesInput(e) {
-            let input = e.target;
-            let val = parseInt(input.value) || 0;
-            if (val < 20) input.value = 20;
-            if (val > 70) input.value = 70;
-            travaillerCalculsEtRendu();
-        }
-
-        fetch('competences.json')
-            .then(res => res.json())
-            .then(data => {
-                indexCompetencesData = data;
-                const select = document.getElementById('selectCompetence');
-                Object.keys(data).forEach(key => {
-                    const opt = document.createElement('option');
-                    opt.value = key;
-                    opt.textContent = key;
-                    select.appendChild(opt);
-                });
-                select.addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
-            });
-
-        fetch('afflictions.json')
-            .then(res => res.json())
-            .then(data => {
-                indexAfflictionsData = data;
-                const select = document.getElementById('selectAffliction');
-                Object.keys(data).forEach(key => {
-                    const opt = document.createElement('option');
-                    opt.value = key;
-                    opt.textContent = key;
-                    select.appendChild(opt);
-                });
-                select.addEventListener('change', (e) => chargerDetailsAffliction(e.target.value));
-            });
-
-        function chargerDetailsCompetence(nomComp) {
-            document.getElementById('selectCompetence').value = nomComp;
-            const comp = indexCompetencesData[nomComp];
-            if (!comp) {
-                document.getElementById('details').classList.add('hidden');
-                return;
-            }
-
-            document.getElementById('details').classList.remove('hidden');
-            document.getElementById('compNom').textContent = comp.nom;
-            document.getElementById('compStats').textContent = "Stats liées : " + comp.stats;
-
-            const container = document.getElementById('niveauxList');
-            container.innerHTML = '';
-
-            for (const [nomNiveau, d] of Object.entries(comp.niveaux)) {
-                const div = document.createElement('div');
-                div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
-                
-                let html = '<div><div class="font-bold text-white">' + nomNiveau + ' <span class="text-slate-500 font-normal">(Coût: ' + d.cout + ' PC)</span></div>';
-                if (d.bonus) html += '<div class="text-emerald-400 text-[10px]">Bonus : +' + d.bonus + '</div>';
-                if (d.malus && d.malus !== 0) html += '<div class="text-red-400 text-[10px]">Malus : ' + d.malus + '</div>';
-                if (d.description) html += '<div class="text-slate-400 italic text-[11px] mt-1">' + d.description + '</div>';
-                html += '</div>';
-
-                const btn = document.createElement('button');
-                btn.textContent = "Associer";
-                btn.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2.5 py-1 rounded text-[10px] ml-4 shrink-0 transition";
-                btn.onclick = () => ajouterComp(comp.nom, nomNiveau, d.bonus || 0, d.cout, comp.stats);
-
-                div.innerHTML = html;
-                div.appendChild(btn);
-                container.appendChild(div);
-            }
-        }
-
-        function chargerDetailsAffliction(nomAff) {
-            document.getElementById('selectAffliction').value = nomAff;
-            const aff = indexAfflictionsData[nomAff];
-            if (!aff) {
-                document.getElementById('afflictionDetailPanel').classList.add('hidden');
-                return;
-            }
-
-            document.getElementById('afflictionDetailPanel').classList.remove('hidden');
-            document.getElementById('afflictionNom').textContent = aff.nom;
-            document.getElementById('afflictionDef').textContent = aff.definition;
-
-            const container = document.getElementById('afflictionStadesList');
-            container.innerHTML = '';
-
-            for (const [nomStade, d] of Object.entries(aff.niveaux)) {
-                const div = document.createElement('div');
-                div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
-                
-                let html = '<div><div class="font-bold text-white">' + nomStade + '</div>' +
-                           '<div class="text-[10px] text-slate-400">Condition : ' + (d.condition || "Aucune") + '</div>' +
-                           '<div class="text-[10px] text-red-400">Coût : ' + d.cout_ps + ' PS</div>' +
-                           '<div class="text-[10px] text-emerald-400">Gain : +' + d.gain_pc + ' PC</div>';
-                if (d.bonus_comp > 0) html += '<div class="text-purple-400 text-[10px]">Compétence bonus : +' + d.bonus_comp + '</div>';
-                html += '</div>';
-
-                const btn = document.createElement('button');
-                btn.textContent = "Appliquer";
-                btn.className = "bg-red-700 hover:bg-red-600 text-white font-bold px-2.5 py-1 rounded text-[10px] ml-4 shrink-0 transition";
-                btn.onclick = () => ajouterAffliction(aff.nom, nomStade, d.cout_ps, d.gain_pc, d.bonus_comp, d.condition);
-
-                div.innerHTML = html;
-                div.appendChild(btn);
-                container.appendChild(div);
-            }
-        }
-
-        function ajouterComp(nom, niveau, bonus, cout, stringStats) {
-            let pcMax = parseInt(document.getElementById('pc_max').value) || 25;
-            let pcUtilisesSaufCelleLa = competencesChoisies
-                .filter(item => item.nom !== nom)
-                .reduce((sum, item) => sum + item.cout, 0);
-
-            if (pcUtilisesSaufCelleLa + cout > pcMax) {
-                alert("Erreur : Limite de PC atteinte !");
-                return;
-            }
-
-            let compMaxMJ = parseInt(document.getElementById('comp_max_limit').value) || 0;
-            if (!competencesChoisies.some(item => item.nom === nom) && competencesChoisies.length >= compMaxMJ) {
-                alert("Erreur MJ : Limite de compétences actives atteinte !");
-                return;
-            }
-
-            competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
-            
-            let statLaPlusHaute = "";
-            let scoreMaxTrouve = -1;
-            for (const key of Object.keys(statMapping)) {
-                if (stringStats.includes(key)) {
-                    let valeurStat = parseInt(document.getElementById(statMapping[key]).value) || 0;
-                    if (valeurStat > scoreMaxTrouve) {
-                        scoreMaxTrouve = valeurStat;
-                        statLaPlusHaute = key;
-                    }
-                }
-            }
-
-            competencesChoisies.push({ nom, niveau, bonus, cout, stringStats, statChoisie: statLaPlusHaute });
-            calculerBudgetEtRendu();
-        }
-
-        function ajouterAffliction(nom, stade, cout_ps, gain_pc, bonus_comp, condition) {
-            afflictionsChoisies = afflictionsChoisies.filter(item => item.nom !== nom);
-            afflictionsChoisies.push({ nom, stade, cout_ps, gain_pc, bonus_comp, condition });
-            calculerBudgetEtRendu();
-        }
-
-        function supprimerAffliction(nom) {
-            afflictionsChoisies = afflictionsChoisies.filter(item => item.nom !== nom);
-            calculerBudgetEtRendu();
-        }
-
-        function changerStatAssociee(nomComp, nouvelleStat) {
-            let comp = competencesChoisies.find(item => item.nom === nomComp);
-            if (comp) {
-                comp.statChoisie = nouvelleStat;
-                calculerBudgetEtRendu();
-            }
-        }
-
-        function supprimerComp(nom) {
-            competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
-            calculerBudgetEtRendu();
-        }
-
-        function recalculerScoresPanier() {
-            competencesChoisies.forEach(item => {
-                if (!item.stringStats.includes(item.statChoisie)) {
-                    let statLaPlusHaute = "";
-                    let scoreMaxTrouve = -1;
-                    for (const key of Object.keys(statMapping)) {
-                        if (item.stringStats.includes(key)) {
-                            let valeurStat = parseInt(document.getElementById(statMapping[key]).value) || 0;
-                            if (valeurStat > scoreMaxTrouve) {
-                                scoreMaxTrouve = valeurStat;
-                                statLaPlusHaute = key;
-                            }
-                        }
-                    }
-                    item.statChoisie = statLaPlusHaute;
-                }
-            });
-            calculerBudgetEtRendu();
-        }
-
-        function calculerBudgetEtRendu() {
-            let pcUtilises = 0;
-            competencesChoisies.forEach(item => pcUtilises += item.cout);
-
-            let pcMax = parseInt(document.getElementById('pc_max').value) || 25;
-            let restants = pcMax - pcUtilises;
-            
-            document.getElementById('pc_restants_global').textContent = restants;
-            const panierPcSpan = document.getElementById('pc_panier_restants');
-            panierPcSpan.textContent = restants;
-
-            if(restants < 0) {
-                document.getElementById('pc_restants_global').className = "font-mono font-bold text-red-400";
-                panierPcSpan.className = "text-red-400 font-bold";
-            } else {
-                document.getElementById('pc_restants_global').className = "font-mono font-bold text-emerald-400";
-                panierPcSpan.className = "text-emerald-400 font-bold";
-            }
-
-            document.getElementById('comp_count').textContent = competencesChoisies.length;
-            document.getElementById('comp_max_display').textContent = document.getElementById('comp_max_limit').value || "0";
-
-            // Rendu Panier Compétences
-            const panierContainer = document.getElementById('panierList');
-            if (competencesChoisies.length === 0) {
-                panierContainer.innerHTML = '<p class="italic text-slate-600 text-xs">Aucune compétence ajoutée pour le moment.</p>';
-            } else {
-                panierContainer.innerHTML = competencesChoisies.map(item => {
-                    let escName = item.nom.replace(/'/g, "\\'");
-                    return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center cursor-pointer hover:bg-slate-800 transition">' +
-                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span>' +
-                           '<span class="text-emerald-400 font-mono text-[11px]"> [' + item.niveau + ']</span>' +
-                           '<span class="text-slate-500 text-[10px]">(-' + item.cout + ' PC)</span></div>' +
-                           '<button onclick="event.stopPropagation(); supprimerComp(\'' + escName + '\')" class="text-red-400 hover:text-red-500 font-bold text-xs px-2 py-1">✕</button></div>';
-                }).join('');
-            }
-
-            // Rendu Panier Afflictions Active (Mis à jour pour permettre la sélection au clic complet de la ligne)
-            const panierAffContainer = document.getElementById('panierAfflictions');
-            if (afflictionsChoisies.length === 0) {
-                panierAffContainer.innerHTML = '<p class="italic text-slate-600 text-xs">Aucune affliction active pour le moment.</p>';
-            } else {
-                panierAffContainer.innerHTML = afflictionsChoisies.map(item => {
-                    let escName = item.nom.replace(/'/g, "\\'");
-                    return '<div onclick="chargerDetailsAffliction(\'' + escName + '\')" class="bg-slate-900 p-2 rounded border border-red-950 flex justify-between items-center text-xs cursor-pointer hover:bg-slate-800 transition">' +
-                           '<div><span class="font-bold text-white">' + item.nom + '</span><span class="text-red-400 font-mono"> [' + item.stade + ']</span></div>' +
-                           '<button onclick="event.stopPropagation(); supprimerAffliction(\'' + escName + '\')" class="text-red-400 hover:text-red-500 font-bold px-1">✕</button></div>';
-                }).join('');
-            }
-
-            // Affichage dynamique des bonus statistiques
-            const statsBlock = document.getElementById('blocCompetencesStats');
-            const listeContainer = document.getElementById('listeCompetencesStats');
-            
-            if (competencesChoisies.length === 0) {
-                statsBlock.classList.add('hidden');
-                listeContainer.innerHTML = '';
-            } else {
-                statsBlock.classList.remove('hidden');
-                listeContainer.innerHTML = competencesChoisies.map(item => {
-                    let optionsHtml = "";
-                    for (const key of Object.keys(statMapping)) {
-                        if (item.stringStats.includes(key)) {
-                            let selected = item.statChoisie === key ? "selected" : "";
-                            optionsHtml += '<option value="' + key + '" ' + selected + '>' + key + '</option>';
-                        }
-                    }
-
-                    let inputId = statMapping[item.statChoisie];
-                    let valeurBaseStat = parseInt(document.getElementById(inputId).value) || 0;
-                    let totalScore = valeurBaseStat + item.bonus;
-                    let escName = item.nom.replace(/'/g, "\\'");
-
-                    let colorStyle = "text-emerald-400";
-                    if (totalScore > 70) {
-                        colorStyle = "text-fuchsia-400 font-black tracking-wide";
-                    }
-
-                    return '<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
-                           '<div class="font-bold text-white truncate">' + item.nom + ' <span class="' + (totalScore > 70 ? 'text-fuchsia-400' : 'text-emerald-400') + '">(+' + item.bonus + ')</span></div>' +
-                           '<div class="flex items-center justify-between space-x-1">' +
-                           '<select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 border border-slate-700 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
-                           '<div class="font-mono bg-slate-900 px-2 py-1 rounded text-right shrink-0 ' + colorStyle + '">Total = ' + totalScore + '</div></div></div>';
-                }).join('');
-            }
         }
 
         function collecterInventaire(containerId) {
             const inputs = document.querySelectorAll('#' + containerId + ' input');
-            let items = [];
-            inputs.forEach(i => {
-                if(i.value.trim() !== "") items.push(i.value.trim());
-            });
+            let items = []; inputs.forEach(i => { if(i.value.trim() !== "") items.push(i.value.trim()); });
             return items.length > 0 ? items.map(it => "- " + it).join('\n') : "Aucun objet.";
         }
 
         function mt_getRadioValue(name) {
             const rads = document.getElementsByName(name);
-            for (let i = 0; i < rads.length; i++) {
-                if (rads[i].checked) return rads[i].value;
-            }
+            for (let i = 0; i < rads.length; i++) { if (rads[i].checked) return rads[i].value; }
             return "Aucun";
         }
 
@@ -685,83 +633,68 @@
             try {
                 const invGlobalListText = collecterInventaire('container_global');
                 const invPersoListText = collecterInventaire('container_perso');
-
                 const valCourage = document.getElementById('val_courage').textContent;
                 const valResistance = document.getElementById('val_resistance').textContent;
                 
                 const stateMentale = mt_getRadioValue('san_mentale');
                 const statePhysique = mt_getRadioValue('san_physique');
-
+                
                 const charName = document.getElementById('char_name').value || "[Sans Nom]";
                 const charProfession = document.getElementById('char_profession').value || "Inconnue";
                 const charAvatar = document.getElementById('char_avatar').value || "Aucun";
                 
-                const statForce = document.getElementById('stat_force').value;
-                const statDex = document.getElementById('stat_dex').value;
-                const statCha = document.getElementById('stat_cha').value;
-                const statPer = document.getElementById('stat_per').value;
-                const statEdu = document.getElementById('stat_edu').value;
-                const statChance = document.getElementById('stat_chance').value;
-                const stringStats = "STR: " + statForce + ", DEX: " + statDex + ", CHA: " + statCha + ", PER: " + statPer + ", EDU: " + statEdu + ", LUCK: " + statChance;
+                const stringStats = "Force (STR): " + document.getElementById('display_force').textContent + 
+                                    ", Dextérité (DEX): " + document.getElementById('display_dex').textContent + 
+                                    ", Charisme (CHA): " + document.getElementById('display_cha').textContent + 
+                                    ", Perception (PER): " + document.getElementById('display_per').textContent + 
+                                    ", Éducation (EDU): " + document.getElementById('display_edu').textContent + 
+                                    ", Chance (LUCK): " + document.getElementById('display_chance').textContent;
 
-                const pcMax = document.getElementById('pc_max').value;
+                let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
+                const pcMaxInitial = document.getElementById('pc_max').value;
                 const pcRestant = document.getElementById('pc_restants_global').textContent;
                 const compCount = competencesChoisies.length;
-                const compMaxMJ = document.getElementById('comp_max_limit').value;
+                let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
+                let totalQuotaMaxAutorise = parseInt(document.getElementById('comp_max_limit').value) + totalBonusComp;
                 const deductions = document.getElementById('pts_deduction').value;
                 const monnaie = document.getElementById('inv_money').value || "0$";
                 const peurs = document.getElementById('lore_peurs').value || "Aucune";
                 const vaillance = document.getElementById('lore_vaillance').value || "Aucune";
                 const bg = document.getElementById('lore_background').value || "Non rédigé";
 
-                let compText = competencesChoisies.map(c => {
-                    let inputId = statMapping[c.statChoisie];
-                    let base = parseInt(document.getElementById(inputId).value) || 0;
-                    return "- " + c.nom + " [" + c.niveau + "] : Bonus +" + c.bonus + " associé sur " + c.statChoisie + " (Base: " + base + " -> Score final calculé: " + (base + c.bonus) + ")";
-                }).join('\n');
-
-                let affText = afflictionsChoisies.map(a => {
-                    return "- " + a.nom + " [" + a.stade + "] : Coût: " + a.cout_ps + " PS | Gain: " + a.gain_pc + " PC" + (a.condition ? " (Condition: " + a.condition + ")" : "");
-                }).join('\n');
+                let compText = competencesChoisies.map(c => "- " + c.nom + " [" + c.niveau + "] : Bonus +" + c.bonus + " sur " + c.statChoisie).join('\n');
+                let affText = afflictionsChoisies.map(a => "- " + a.nom + " [" + a.stade + "] : Malus -" + a.cout_ps + " PS sur " + a.statImpactee + " | Gain : +" + a.gain_pc + " PC | Points de Compétence bonus: +" + a.bonus_comp + " | Définition : " + a.definition).join('\n');
 
                 const separateur = "--------------------------------------------------";
-
-                const superPrompt = "Voici mon enquêteur prêt à affronter les horreurs de Cthulhu, avec sa fiche technique optimisée selon les règles d'Azapartam :\n" +
-                    separateur + "\n" +
-                    "Nom : " + charName + " | Profession : " + charProfession + " | Avatar : " + charAvatar + "\n" +
-                    "Caractéristiques de base : " + stringStats + "\n" +
-                    "Courage (Calculé) : " + valCourage + " | Résistance (Calculé) : " + valResistance + "\n" +
-                    "Points de déductions (Bonus MJ) : " + deductions + "\n\n" +
-                    "Peurs Profondes : " + peurs + "\n" +
-                    "Vaillance : " + vaillance + "\n\n" +
-                    "MENTALE (Chocs mentaux) : " + stateMentale + "\n" +
-                    "PHYSIQUE (Blessures physiques) : " + statePhysique + "\n" +
-                    separateur + "\n" +
-                    "Compétences Actives & Calculs appliqués (bonus pur) :\n" +
-                    (compText || "Aucune compétence sélectionnée") + "\n\n" +
-                    "Points de Compétences : Réserve de " + pcMax + " PC | Restants : " + pcRestant + " PC\n" +
-                    "Nombre de compétences sélectionnées : " + compCount + " / " + compMaxMJ + " maximum autorisé\n\n" +
-                    "Afflictions Actives :\n" +
-                    (affText || "Aucune affliction active") + "\n" +
-                    separateur + "\n" +
+                const superPrompt = "Voici mon enquêteur optimisé selon le framework d'Azapartam :\n" + separateur + "\n" +
+                    "Nom de l'Enquêteur : " + charName + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
+                    "Caractéristiques modifiées : " + stringStats + "\n" +
+                    "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
+                    "Points de déductions (MJ) : " + deductions + "\n\n" +
+                    "Peurs Profondes : " + peurs + "\nVaillance : " + vaillance + "\n\n" +
+                    "STATUT SANTE MENTALE : " + stateMentale + "\n" +
+                    "STATUT BLESSURES PHYSIQUES : " + statePhysique + "\n" + separateur + "\n" +
+                    "Compétences Actives configurées :\n" + (compText || "Aucune compétence rattachée.") + "\n\n" +
+                    "Points de Compétences : Réserve " + pcMaxInitial + " PC (+" + totalGainPC + " généré par Afflictions) | Solde disponible : " + pcRestant + " PC\n" +
+                    "Nombre de compétences : " + compCount + " utilisées / " + totalQuotaMaxAutorise + " autorisées au maximum\n\n" +
+                    "Afflictions Actives enregistrées :\n" + (affText || "Aucune affliction active.") + "\n" + separateur + "\n" +
                     "Monnaie : " + monnaie + "\n\n" +
-                    "Inventaire Global :\n" +
-                    invGlobalListText + "\n\n" +
-                    "Inventaire Personnel :\n" +
-                    invPersoListText + "\n" +
-                    separateur + "\n" +
-                    "Background :\n" +
-                    bg;
+                    "Inventaire Global :\n" + invGlobalListText + "\n\nInventaire Personnel :\n" + invPersoListText + "\n" + separateur + "\n" +
+                    "Background rédigé :\n" + bg;
 
                 document.getElementById('promptOutput').value = superPrompt;
                 document.getElementById('outputContainer').classList.remove('hidden');
                 navigator.clipboard.writeText(superPrompt);
                 alert("Fiche générée et copiée avec succès !");
             } catch (err) {
-                alert("Erreur technique rencontrée. Inspectez la console de votre navigateur.");
+                alert("Erreur technique lors de la génération. Inspectez la console."); 
                 console.error(err);
             }
         });
+
+        // Lignes d'inventaire par défaut
+        ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
+        ajouterLigneInventaire('container_global', 'Objet global 1...');
 
         travaillerCalculsEtRendu();
     </script>
