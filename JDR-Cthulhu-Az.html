@@ -31,6 +31,225 @@
             -webkit-appearance: none; margin: 0;
         }
         .no-spinners { -moz-appearance: textfield; }
+
+        :root {
+            color-scheme: dark;
+            --abyss: #02070a;
+            --ink: #d7e2df;
+            --verdigris: #35c4a5;
+            --old-gold: #d6b25e;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                linear-gradient(180deg, rgba(2, 7, 10, 0.98), rgba(3, 8, 8, 0.98) 48%, rgba(1, 4, 7, 1)),
+                radial-gradient(ellipse at 14% 0%, rgba(31, 103, 84, 0.24), transparent 38%),
+                radial-gradient(ellipse at 86% 8%, rgba(88, 28, 72, 0.17), transparent 34%),
+                repeating-linear-gradient(90deg, rgba(223, 244, 236, 0.025) 0 1px, transparent 1px 14px);
+            color: var(--ink);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+                radial-gradient(ellipse at center, transparent 44%, rgba(0, 0, 0, 0.58) 100%);
+            background-size: 42px 42px, 42px 42px, 100% 100%;
+            mix-blend-mode: screen;
+            opacity: 0.45;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 5px);
+            opacity: 0.08;
+        }
+
+        body > .max-w-6xl {
+            position: relative;
+            z-index: 1;
+        }
+
+        body .bg-slate-900 {
+            background:
+                linear-gradient(145deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98)) !important;
+            border-color: rgba(79, 112, 103, 0.36) !important;
+            box-shadow:
+                0 24px 55px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(214, 178, 94, 0.07),
+                inset 0 0 28px rgba(53, 196, 165, 0.025) !important;
+        }
+
+        body .bg-slate-950 {
+            background:
+                linear-gradient(145deg, rgba(2, 7, 10, 0.96), rgba(7, 13, 14, 0.98)) !important;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.38);
+        }
+
+        body .border-slate-800 { border-color: rgba(79, 112, 103, 0.38) !important; }
+        body .border-emerald-950 { border-color: rgba(34, 127, 104, 0.54) !important; }
+        body .border-emerald-900 { border-color: rgba(53, 196, 165, 0.43) !important; }
+        body .border-red-950 { border-color: rgba(143, 37, 37, 0.58) !important; }
+        body .border-purple-900 { border-color: rgba(159, 106, 216, 0.42) !important; }
+        body .border-orange-800 { border-color: rgba(184, 92, 40, 0.42) !important; }
+
+        h1, h2, h3,
+        .text-emerald-400,
+        .text-purple-400,
+        .text-red-400 {
+            text-shadow: 0 0 18px currentColor;
+        }
+
+        h1 {
+            color: #c8a3ff !important;
+            letter-spacing: 0;
+        }
+
+        h2 {
+            letter-spacing: 0;
+        }
+
+        label {
+            letter-spacing: 0.03em;
+        }
+
+        input, select, textarea {
+            border-color: rgba(115, 139, 131, 0.4) !important;
+            box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.42);
+            transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: rgba(53, 196, 165, 0.75) !important;
+            box-shadow:
+                0 0 0 1px rgba(53, 196, 165, 0.3),
+                0 0 22px rgba(53, 196, 165, 0.13),
+                inset 0 0 16px rgba(0, 0, 0, 0.44);
+        }
+
+        select {
+            background-color: #02070a !important;
+            color: #d7e2df !important;
+            scrollbar-color: rgba(53, 196, 165, 0.55) #02070a;
+        }
+
+        select option,
+        select optgroup {
+            background-color: #02070a !important;
+            color: #d7e2df !important;
+        }
+
+        select option:checked {
+            background-color: #123c35 !important;
+            color: #f5f0d0 !important;
+        }
+
+        button {
+            box-shadow:
+                0 10px 22px rgba(0, 0, 0, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        body .rounded-xl,
+        body .rounded-lg {
+            border-radius: 0.5rem !important;
+        }
+
+        #statsContainerGrid {
+            grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            gap: 0.85rem !important;
+        }
+
+        #statsContainerGrid > div {
+            position: relative;
+            overflow: hidden;
+            min-height: 118px;
+            border-color: rgba(214, 178, 94, 0.22) !important;
+            box-shadow:
+                0 15px 28px rgba(0, 0, 0, 0.32),
+                inset 0 0 24px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        #statsContainerGrid > div::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-left: 2px solid rgba(214, 178, 94, 0.42);
+            background: linear-gradient(90deg, rgba(214, 178, 94, 0.06), transparent 42%);
+            pointer-events: none;
+        }
+
+        #statsContainerGrid > div > div:first-child {
+            position: relative;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 0.45rem;
+        }
+
+        #statsContainerGrid .stat-input {
+            width: 3rem !important;
+        }
+
+        #statsContainerGrid .text-yellow-200 {
+            color: var(--old-gold) !important;
+        }
+
+        #blocCompetencesStats {
+            border-color: rgba(53, 196, 165, 0.32) !important;
+            background: linear-gradient(180deg, rgba(53, 196, 165, 0.055), transparent);
+            margin-top: 0.2rem;
+            padding: 0.95rem;
+            border-radius: 0.5rem;
+        }
+
+        #panierAfflictions > div,
+        #panierList > div,
+        #details,
+        #afflictionDetailPanel {
+            box-shadow:
+                0 14px 28px rgba(0, 0, 0, 0.34),
+                inset 0 0 22px rgba(0, 0, 0, 0.34);
+        }
+
+        #panierAfflictions .grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        }
+
+        #btnGenererPrompt {
+            background: linear-gradient(135deg, #126954, #2bb894) !important;
+            border: 1px solid rgba(107, 236, 201, 0.42);
+        }
+
+        #btnExporterPDF {
+            background: linear-gradient(135deg, #2a3033, #11181b) !important;
+            border: 1px solid rgba(159, 106, 216, 0.3);
+        }
+
+        @media print {
+            body::before, body::after { display: none !important; }
+        }
+
+        @media (min-width: 640px) {
+            #statsContainerGrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #statsContainerGrid {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 p-4 md:p-8 font-sans">
@@ -38,7 +257,7 @@
         
         <div class="border-b border-emerald-950 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
-                <h1 class="text-2xl font-bold text-emerald-500 tracking-wide">Fiche de Création de Personnage : Pensée et conçue par Azapartam</h1>
+                <h1 class="text-2xl font-bold text-purple-400 tracking-wide">Fiche de Création de Personnage : Pensée et conçue par Azapartam</h1>
                 <p class="text-xs text-slate-400 mt-1 font-mono">Système JDR Custom basé sur Cthulhu/Chtulhu Dark - Interface par Vinthos</p>
             </div>
             <div class="mt-2 md:mt-0 bg-slate-900 border border-emerald-900 px-4 py-2 rounded text-xs">
@@ -64,16 +283,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl lg:col-span-2 flex flex-col justify-between space-y-4">
                 <div>
-                    <h2 class="text-lg font-bold text-white mb-2">Statistiques Principales</h2>
+                    <h2 class="text-lg font-bold text-emerald-400 mb-2">Statistiques Principales</h2>
                     <p class="text-xs text-slate-400 mb-4 italic">
-                        Modifiez vos valeurs via la case "Saisie" à droite. Le score calculé final s'affiche à gauche. 
-                        <span class="text-emerald-400 font-bold ml-1">Rappel : la valeur d'une statistique doit être comprise entre 20 et 70 (sauf exception).</span>
+                        La valeur d'une statistique doit être comprise entre 20 et 70 (sauf exception). Modifiez vos valeurs via la case "Saisie" à droite. Le score calculé final s'affiche à gauche.
                     </p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_force">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Force (STR)</span>
+                                <span class="text-sm font-bold text-yellow-200">Force (STR)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_force" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -85,7 +303,7 @@
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_dex">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Dextérité (DEX)</span>
+                                <span class="text-sm font-bold text-yellow-200">Dextérité (DEX)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_dex" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -97,7 +315,7 @@
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_cha">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Charisme (CHA)</span>
+                                <span class="text-sm font-bold text-yellow-200">Charisme (CHA)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_cha" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -109,7 +327,7 @@
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_per">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Perception (PER)</span>
+                                <span class="text-sm font-bold text-yellow-200">Perception (PER)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_per" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -121,7 +339,7 @@
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_edu">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Éducation (EDU)</span>
+                                <span class="text-sm font-bold text-yellow-200">Éducation (EDU)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_edu" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -133,7 +351,7 @@
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_chance">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Chance (LUCK)</span>
+                                <span class="text-sm font-bold text-yellow-200">Chance (LUCK)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_chance" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -166,7 +384,7 @@
                             <div class="ml-6 pl-4 border-l border-slate-800 text-right whitespace-nowrap">points restant : <span id="pc_restants_global" class="font-mono font-bold text-emerald-400 ml-1">25</span> PC</div>
                         </div>
                         <div class="flex-shrink-0 sm:w-1/3 p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
-                            <label class="text-slate-400 font-bold">Déductions (Bonus MJ) :</label>
+                            <label class="text-slate-400 font-bold">Points de Déduction:</label>
                             <input type="number" id="pts_deduction" value="0" class="w-14 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1 ml-2">
                         </div>
                     </div>
@@ -174,7 +392,7 @@
             </div>
 
             <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
-                <h2 class="text-lg font-bold text-white">Seuils & États de Santé</h2>
+                <h2 class="text-lg font-bold text-emerald-400">Seuils & États de Santé</h2>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="bg-slate-950 p-2 rounded border border-slate-800">
                         <span class="text-slate-400 block">Courage :</span>
@@ -189,7 +407,7 @@
                 <div class="p-3 rounded-lg border border-purple-900 bg-purple-950/25 shadow-md">
                     <label class="block text-xs font-black text-purple-400 uppercase tracking-wider mb-2">MENTALE (Chocs mentaux)</label>
                     <div class="space-y-1 text-xs">
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Aucune instabilité" checked class="accent-purple-500"> <span class="text-emerald-400 font-bold">Aucune instabilité</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Aucune instabilité" checked class="accent-purple-500"> <span class="text-yellow-200 font-bold">Aucune instabilité</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Légère" class="accent-purple-500"> <span>Instabilité Légère</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Modérée" class="accent-purple-500"> <span>Instabilité Modérée</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Lourde" class="accent-purple-500"> <span>Instabilité Lourde</span></label>
@@ -201,7 +419,7 @@
                 <div class="p-3 rounded-lg border border-orange-800 bg-orange-950/25 shadow-md">
                     <label class="block text-xs font-black text-orange-500 uppercase tracking-wider mb-2">Physique (Blessures)</label>
                     <div class="space-y-1 text-xs">
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Aucune blessure" checked class="accent-orange-500"> <span class="text-emerald-400 font-bold">Aucune blessure</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Aucune blessure" checked class="accent-orange-500"> <span class="text-yellow-200 font-bold">Aucune blessure</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Légère(s)" class="accent-orange-500"> <span>Blessure(s) Légère(s)</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Modérée(s)" class="accent-orange-500"> <span>Blessure(s) Modérée(s)</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Lourde(s)" class="accent-orange-500"> <span>Blessure(s) Lourde(s)</span></label>
@@ -213,7 +431,7 @@
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
-            <h2 class="text-xl font-bold text-white">Afflictions du Personnage (3 max)</h2>
+            <h2 class="text-xl font-bold text-emerald-400">Afflictions du Personnage (3 max)</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <select id="selectAffliction" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none focus:border-red-500 transition">
@@ -243,7 +461,7 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-lg font-bold text-white">Gestion des Inventaires</h2>
+                <h2 class="text-lg font-bold text-emerald-400">Gestion des Inventaires</h2>
                 <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
                     <label class="text-xs font-bold text-emerald-400 uppercase">Monnaie :</label>
                     <input type="text" id="inv_money" placeholder="Ex: 150$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
@@ -269,9 +487,9 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <h2 class="text-xl font-bold text-white mb-2">Compétences</h2>
+                <h2 class="text-xl font-bold text-emerald-400 mb-2">Compétences</h2>
                 <div class="flex items-center space-x-4 mb-4 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
-                    <label class="text-slate-400 font-bold">Nombre de compétences max autorisé par le MJ :</label>
+                    <label class="text-slate-400 font-bold">Nombre de compétences de départ (vu avec le MJ) :</label>
                     <input type="number" id="comp_max_limit" value="2" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
                 </div>
                 <select id="selectCompetence" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none">
@@ -624,7 +842,7 @@
                     let escName = item.nom.replace(/'/g, "\\'");
                     let descHtml = item.description 
                         ? `<p class="text-[11px] text-slate-400 italic mt-1 bg-slate-950 p-1.5 rounded border border-slate-800/40">${item.description}</p>` 
-                        : '';
+                        : '<div></div>';
                     return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2.5 rounded border border-slate-800 flex flex-col cursor-pointer hover:bg-slate-800 transition">' +
                            '<div class="flex justify-between items-center w-full">' +
                            '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ')]</span></div>' +
@@ -673,19 +891,23 @@
                         : `<span class="text-red-500 font-bold text-xs font-mono animate-pulse">⚠️ À répartir : ${reste} PS</span>`;
 
                     // Insertion de la mention du Slot Compétence bonus entre le Gain et le Malus total
-                    let bonusCompHtml = item.bonus_comp > 0
+                    let bonusCompInlineHtml = item.bonus_comp > 0
                         ? `<div class="text-purple-400 font-bold text-center text-[11px] bg-purple-950/40 py-0.5 rounded border border-purple-900/60 mt-1">+${item.bonus_comp} Slot Compétence Autorisé</div>`
                         : '';
+
+                    bonusCompInlineHtml = item.bonus_comp > 0
+                        ? `<div class="text-purple-400 font-bold text-center text-[10px] bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/60 whitespace-nowrap">+${item.bonus_comp} Slot Comp.</div>`
+                        : '<div></div>';
 
                     return '<div class="bg-slate-950 p-4 rounded-lg border border-red-950 flex flex-col space-y-2 cursor-pointer hover:border-red-900 transition" onclick="chargerDetailsAffliction(\'' + escName + '\')">' +
                            '<div class="flex justify-between items-center"><div><span class="font-bold text-red-400 text-sm">' + item.nom + '</span><span class="text-purple-400 text-xs"> [' + item.stade + ']</span></div>' +
                            '<button onclick="event.stopPropagation(); supprimerAffliction(\'' + escName + '\')" class="text-red-400 font-bold px-1">✕</button></div>' +
                            '<p class="text-[11px] text-slate-400 italic font-sans leading-relaxed">' + (item.definition || "Pas de définition.") + '</p>' +
-                           '<div class="flex items-center justify-between text-[11px] font-mono mt-1">' +
+                           '<div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 text-[11px] font-mono mt-1">' +
                            '<div>Gain PS ➔ PC: <span class="text-emerald-400 font-bold">+' + item.gain_pc + ' PC</span></div>' +
-                           '<div>Malus total: <span class="text-red-400 font-bold">-' + item.cout_ps + ' PS</span></div>' +
+                           bonusCompInlineHtml +
+                           '<div class="sm:text-right">Malus total: <span class="text-red-400 font-bold">-' + item.cout_ps + ' PS</span></div>' +
                            '</div>' +
-                           bonusCompHtml +
                            '<div class="text-center mt-1.5">' + resteHtml + '</div>' +
                            repartitionHtml +
                            '</div>';
@@ -725,6 +947,14 @@
             div.innerHTML = '<input type="text" placeholder="' + placeholderText + '" class="w-full bg-slate-950 border border-slate-800 p-2 rounded text-sm text-white focus:outline-none">' +
                             '<button onclick="this.parentElement.remove()" class="text-red-400 font-bold px-2">✕</button>';
             container.appendChild(div);
+            const input = div.querySelector('input');
+            input.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter') return;
+                event.preventDefault();
+                ajouterLigneInventaire(containerId, placeholderText);
+                const lignes = container.querySelectorAll('.item-ligne-inv input');
+                lignes[lignes.length - 1].focus();
+            });
         }
 
         function collecterInventaire(containerId) {
@@ -748,7 +978,7 @@
                 const stateMentale = mt_getRadioValue('san_mentale');
                 const statePhysique = mt_getRadioValue('san_physique');
                 
-                const charName = document.getElementById('char_name').value || "[Sans Nom]";
+                const charName = document.getElementById('char_name').value || "Sans Nom";
                 const charProfession = document.getElementById('char_profession').value || "Inconnue";
                 const charAvatar = document.getElementById('char_avatar').value || "Aucun";
                 
@@ -771,7 +1001,12 @@
                 const vaillance = document.getElementById('lore_vaillance').value || "Aucune";
                 const bg = document.getElementById('lore_background').value || "Non rédigé";
 
-                let compText = competencesChoisies.map(c => "- " + c.nom + " [" + c.niveau + "] : Bonus +" + c.bonus + " sur " + c.statChoisie).join('\n');
+                let compText = competencesChoisies.map(c => {
+                    const idStat = displayMapping[c.statChoisie];
+                    const statActuelle = parseInt(document.getElementById(idStat)?.textContent) || 0;
+                    const totalAvecCompetence = statActuelle + c.bonus;
+                    return "- " + c.nom + " [" + c.niveau + "] : Bonus +" + c.bonus + " sur " + c.statChoisie + " | Stat actuelle : " + statActuelle + " | Total avec competence : " + totalAvecCompetence;
+                }).join('\n');
                 
                 let affText = afflictionsChoisies.map(a => {
                     let repStr = Object.entries(a.repartition).filter(([k,v]) => v > 0).map(([k,v]) => `-${v} sur ${k}`).join(', ');
@@ -779,7 +1014,7 @@
                 }).join('\n');
 
                 const separateur = "--------------------------------------------------";
-                const superPrompt = "Voici mon enquêteur optimisé selon le framework d'Azapartam :\n" + separateur + "\n" +
+                const superPrompt = "Voici mon enquêteur optimisé et prêt pour l'aventure ! :\n" + separateur + "\n" +
                     "Nom de l'Enquêteur : " + charName + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
                     "Caractéristiques modifiées : " + stringStats + "\n" +
                     "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
@@ -793,7 +1028,7 @@
                     "Afflictions Actives enregistrées :\n" + (affText || "Aucune affliction active.") + "\n" + separateur + "\n" +
                     "Monnaie : " + monnaie + "\n\n" +
                     "Inventaire Global :\n" + invGlobalListText + "\n\nInventaire Personnel :\n" + invPersoListText + "\n" + separateur + "\n" +
-                    "Background rédigé :\n" + bg;
+                    "Background :\n" + bg;
 
                 document.getElementById('promptOutput').value = superPrompt;
                 document.getElementById('outputContainer').classList.remove('hidden');

@@ -38,7 +38,7 @@
         
         <div class="border-b border-emerald-950 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
-                <h1 class="text-2xl font-bold text-emerald-500 tracking-wide">Fiche de Création de Personnage : Pensée et conçue par Azapartam</h1>
+                <h1 class="text-2xl font-bold text-purple-400 tracking-wide">Fiche de Création de Personnage : Pensée et conçue par Azapartam</h1>
                 <p class="text-xs text-slate-400 mt-1 font-mono">Système JDR Custom basé sur Cthulhu/Chtulhu Dark - Interface par Vinthos</p>
             </div>
             <div class="mt-2 md:mt-0 bg-slate-900 border border-emerald-900 px-4 py-2 rounded text-xs">
@@ -64,13 +64,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl lg:col-span-2 flex flex-col justify-between space-y-4">
                 <div>
-                    <h2 class="text-lg font-bold text-white mb-2">Statistiques Principales</h2>
-                    <p class="text-xs text-slate-400 mb-4 italic">Modifiez vos valeurs via la case "Saisie" à droite. Le score calculé final s'affiche à gauche.</p>
+                    <h2 class="text-lg font-bold text-emerald-400 mb-2">Statistiques Principales</h2>
+                    <p class="text-xs text-slate-400 mb-4 italic">
+                        La valeur d'une statistique doit être comprise entre 20 et 70 (sauf exception). Modifiez vos valeurs via la case "Saisie" à droite. Le score calculé final s'affiche à gauche.
+                    </p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_force">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Force (STR)</span>
+                                <span class="text-sm font-bold text-yellow-200">Force (STR)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_force" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -78,11 +80,11 @@
                                     <input type="number" id="stat_force" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuel = saisie - malus d'affliction</div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_dex">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Dextérité (DEX)</span>
+                                <span class="text-sm font-bold text-yellow-200">Dextérité (DEX)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_dex" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -90,11 +92,11 @@
                                     <input type="number" id="stat_dex" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuel = saisie - malus d'affliction</div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_cha">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Charisme (CHA)</span>
+                                <span class="text-sm font-bold text-yellow-200">Charisme (CHA)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_cha" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -102,11 +104,11 @@
                                     <input type="number" id="stat_cha" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuel = saisie - malus d'affliction</div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_per">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Perception (PER)</span>
+                                <span class="text-sm font-bold text-yellow-200">Perception (PER)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_per" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -114,11 +116,11 @@
                                     <input type="number" id="stat_per" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuel = saisie - malus d'affliction</div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_edu">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Éducation (EDU)</span>
+                                <span class="text-sm font-bold text-yellow-200">Éducation (EDU)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_edu" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -126,11 +128,11 @@
                                     <input type="number" id="stat_edu" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuel = saisie - malus d'affliction</div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
                         </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_chance">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-200">Chance (LUCK)</span>
+                                <span class="text-sm font-bold text-yellow-200">Chance (LUCK)</span>
                                 <div class="text-sm font-mono flex items-center space-x-1.5">
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_chance" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
@@ -138,7 +140,7 @@
                                     <input type="number" id="stat_chance" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>
-                            <div class="text-[10px] text-slate-500 font-mono italic">calcul : score actuel = saisie - malus d'affliction</div>
+                            <div class="text-[10px] text-slate-500 font-mono italic">La valeur actuelle est calculée en fonction de vos malus et des points saisis.</div>
                         </div>
                     </div>
 
@@ -149,28 +151,29 @@
                 </div>
 
                 <div class="space-y-2 pt-2 border-t border-slate-800 mt-4">
-                    <div class="p-3 bg-slate-950 rounded-lg flex justify-between items-center text-xs border border-slate-800">
+                    <div class="p-3 bg-slate-950 rounded-lg flex flex-col sm:flex-row justify-between items-center text-xs border border-slate-800 gap-2 sm:gap-0">
                         <div><span>Gestion des points de statistiques :</span> <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> / 300</div>
-                        <div id="statStatus" class="text-emerald-400 font-bold">✓ Total valide</div>
+                        <div id="statStatus" class="text-emerald-400 font-bold text-center">✓ Total valide</div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                        <div class="p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
-                            <div class="flex items-center space-x-2">
+                    
+                    <div class="flex flex-col sm:flex-row gap-2 text-xs">
+                        <div class="flex-grow sm:w-2/3 p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
+                            <div class="flex items-center space-x-4">
                                 <label class="text-slate-400 font-bold">Points de compétences initiales :</label>
-                                <input type="number" id="pc_max" value="25" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-0.5">
+                                <input type="number" id="pc_max" value="25" class="w-16 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
                             </div>
-                            <div>points restant : <span id="pc_restants_global" class="font-mono font-bold text-emerald-400">25</span> PC</div>
+                            <div class="ml-6 pl-4 border-l border-slate-800 text-right whitespace-nowrap">points restant : <span id="pc_restants_global" class="font-mono font-bold text-emerald-400 ml-1">25</span> PC</div>
                         </div>
-                        <div class="p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
-                            <label class="text-slate-400 font-bold">Points de déductions (Bonus MJ) :</label>
-                            <input type="number" id="pts_deduction" value="0" class="w-14 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
+                        <div class="flex-shrink-0 sm:w-1/3 p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
+                            <label class="text-slate-400 font-bold">Points de Déduction:</label>
+                            <input type="number" id="pts_deduction" value="0" class="w-14 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1 ml-2">
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
-                <h2 class="text-lg font-bold text-white">Seuils & États de Santé</h2>
+                <h2 class="text-lg font-bold text-emerald-400">Seuils & États de Santé</h2>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="bg-slate-950 p-2 rounded border border-slate-800">
                         <span class="text-slate-400 block">Courage :</span>
@@ -185,7 +188,7 @@
                 <div class="p-3 rounded-lg border border-purple-900 bg-purple-950/25 shadow-md">
                     <label class="block text-xs font-black text-purple-400 uppercase tracking-wider mb-2">MENTALE (Chocs mentaux)</label>
                     <div class="space-y-1 text-xs">
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Aucune instabilité" checked class="accent-purple-500"> <span class="text-emerald-400 font-bold">Aucune instabilité</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Aucune instabilité" checked class="accent-purple-500"> <span class="text-yellow-200 font-bold">Aucune instabilité</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Légère" class="accent-purple-500"> <span>Instabilité Légère</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Modérée" class="accent-purple-500"> <span>Instabilité Modérée</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Lourde" class="accent-purple-500"> <span>Instabilité Lourde</span></label>
@@ -197,7 +200,7 @@
                 <div class="p-3 rounded-lg border border-orange-800 bg-orange-950/25 shadow-md">
                     <label class="block text-xs font-black text-orange-500 uppercase tracking-wider mb-2">Physique (Blessures)</label>
                     <div class="space-y-1 text-xs">
-                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Aucune blessure" checked class="accent-orange-500"> <span class="text-emerald-400 font-bold">Aucune blessure</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Aucune blessure" checked class="accent-orange-500"> <span class="text-yellow-200 font-bold">Aucune blessure</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Légère(s)" class="accent-orange-500"> <span>Blessure(s) Légère(s)</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Modérée(s)" class="accent-orange-500"> <span>Blessure(s) Modérée(s)</span></label>
                         <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Lourde(s)" class="accent-orange-500"> <span>Blessure(s) Lourde(s)</span></label>
@@ -209,7 +212,7 @@
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
-            <h2 class="text-xl font-bold text-white">Afflictions du Personnage (3 max)</h2>
+            <h2 class="text-xl font-bold text-emerald-400">Afflictions du Personnage (3 max)</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <select id="selectAffliction" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none focus:border-red-500 transition">
@@ -239,7 +242,7 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-lg font-bold text-white">Gestion des Inventaires</h2>
+                <h2 class="text-lg font-bold text-emerald-400">Gestion des Inventaires</h2>
                 <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
                     <label class="text-xs font-bold text-emerald-400 uppercase">Monnaie :</label>
                     <input type="text" id="inv_money" placeholder="Ex: 150$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
@@ -265,9 +268,9 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <h2 class="text-xl font-bold text-white mb-2">Compétences</h2>
+                <h2 class="text-xl font-bold text-emerald-400 mb-2">Compétences</h2>
                 <div class="flex items-center space-x-4 mb-4 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
-                    <label class="text-slate-400 font-bold">Nombre de compétences max autorisé par le MJ :</label>
+                    <label class="text-slate-400 font-bold">Nombre de compétences de départ (vu avec le MJ) :</label>
                     <input type="number" id="comp_max_limit" value="2" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
                 </div>
                 <select id="selectCompetence" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none">
@@ -571,8 +574,20 @@
 
             document.getElementById('totalPoints').textContent = totalSaisi;
             const status = document.getElementById('statStatus');
-            status.textContent = totalSaisi === 300 ? "✓ Total valide" : "⚠ Invalide (" + (totalSaisi - 300 > 0 ? '+' : '') + (totalSaisi - 300) + " pts)";
-            status.className = totalSaisi === 300 ? "text-emerald-400 font-bold" : "text-red-400 font-bold";
+            
+            // Logique intelligente des messages de validation pour les 300 points
+            if (totalSaisi === 300) {
+                status.textContent = "✓ Total valide";
+                status.className = "text-emerald-400 font-bold text-center";
+            } else if (totalSaisi > 300) {
+                let trop = totalSaisi - 300;
+                status.textContent = "⚠ Invalide (vous avez " + trop + " point" + (trop > 1 ? 's' : '') + " en trop)";
+                status.className = "text-red-400 font-bold text-center";
+            } else {
+                let manque = 300 - totalSaisi;
+                status.textContent = "⚠ Invalide (il vous manque " + manque + " point" + (manque > 1 ? 's' : '') + " à répartir)";
+                status.className = "text-red-400 font-bold text-center";
+            }
 
             const force = parseInt(document.getElementById('display_force').textContent) || 0;
             const dex = parseInt(document.getElementById('display_dex').textContent) || 0;
@@ -591,7 +606,7 @@
             document.getElementById('pc_restants_global').textContent = pcRestantsFinaux;
             document.getElementById('pc_panier_restants').textContent = pcRestantsFinaux;
 
-            document.getElementById('pc_restants_global').className = pcRestantsFinaux < 0 ? "font-mono font-bold text-red-400" : "font-mono font-bold text-emerald-400";
+            document.getElementById('pc_restants_global').className = pcRestantsFinaux < 0 ? "font-mono font-bold text-red-400 ml-1" : "font-mono font-bold text-emerald-400 ml-1";
             document.getElementById('pc_panier_restants').className = pcRestantsFinaux < 0 ? "text-red-400 font-bold" : "text-emerald-400 font-bold";
 
             let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
@@ -732,7 +747,7 @@
                 const stateMentale = mt_getRadioValue('san_mentale');
                 const statePhysique = mt_getRadioValue('san_physique');
                 
-                const charName = document.getElementById('char_name').value || "[Sans Nom]";
+                const charName = document.getElementById('char_name').value || "Sans Nom";
                 const charProfession = document.getElementById('char_profession').value || "Inconnue";
                 const charAvatar = document.getElementById('char_avatar').value || "Aucun";
                 
@@ -763,7 +778,7 @@
                 }).join('\n');
 
                 const separateur = "--------------------------------------------------";
-                const superPrompt = "Voici mon enquêteur optimisé selon le framework d'Azapartam :\n" + separateur + "\n" +
+                const superPrompt = "Voici mon enquêteur optimisé et prêt pour l'aventure ! :\n" + separateur + "\n" +
                     "Nom de l'Enquêteur : " + charName + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
                     "Caractéristiques modifiées : " + stringStats + "\n" +
                     "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
@@ -777,7 +792,7 @@
                     "Afflictions Actives enregistrées :\n" + (affText || "Aucune affliction active.") + "\n" + separateur + "\n" +
                     "Monnaie : " + monnaie + "\n\n" +
                     "Inventaire Global :\n" + invGlobalListText + "\n\nInventaire Personnel :\n" + invPersoListText + "\n" + separateur + "\n" +
-                    "Background rédigé :\n" + bg;
+                    "Background :\n" + bg;
 
                 document.getElementById('promptOutput').value = superPrompt;
                 document.getElementById('outputContainer').classList.remove('hidden');
