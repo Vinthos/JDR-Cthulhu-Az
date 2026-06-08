@@ -6,26 +6,53 @@
     <title>Créateur de Personnage Cthulhu - Azpartam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Force la conservation des couleurs et structures sombres à l'impression / export PDF */
+        /* CSS d'impression : Version épurée, ultra-lisible et économique en encre */
         @media print {
             body { 
-                background-color: #020617 !important; /* bg-slate-950 */
-                color: #f1f5f9 !important; /* text-slate-100 */
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
+                background: white !important;
+                color: black !important;
+                font-size: 12px;
             }
-            .bg-slate-900 { background-color: #0f172a !important; }
-            .bg-slate-950 { background-color: #020617 !important; }
-            .bg-purple-950\/25 { background-color: rgba(58, 22, 110, 0.25) !important; }
-            .bg-orange-950\/25 { background-color: rgba(124, 45, 18, 0.25) !important; }
-            .border-slate-800 { border-color: #1e293b !important; }
-            .border-red-950 { border-color: #450a0a !important; }
-            .border-emerald-950 { border-color: #022c22 !important; }
+            body::before, body::after { display: none !important; }
+            .max-w-6xl { max-w: 100% !important; width: 100% !important; padding: 0 !important; }
             
-            #btnGenererPrompt, #btnExporterPDF { display: none !important; }
-            #outputContainer { display: block !important; }
-            @page { size: A4; margin: 10mm 10mm; }
+            /* Masquage des éléments inutiles à l'impression */
+            #btnGenererPrompt, #btnExporterPDF, .gestion-donnees-bloc, 
+            #selectAffliction, #afflictionDetailPanel, #selectCompetence, #details,
+            .item-ligne-inv button, #outputContainer { 
+                display: none !important; 
+            }
+            
+            /* Restructuration des boîtes en blocs blancs nets avec bordures fines */
+            .bg-slate-900, .bg-slate-950, .bg-purple-950\/25, .bg-orange-950\/25 {
+                background: white !important;
+                color: black !important;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                padding: 10px !important;
+            }
+            
+            input, textarea, select {
+                background: #f8fafc !important;
+                color: black !important;
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+            }
+            
+            .text-emerald-400, .text-purple-400, .text-red-400, .text-yellow-200, h1, h2, h3 {
+                color: black !important;
+                text-shadow: none !important;
+            }
+            
+            #statsContainerGrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 8px !important;
+            }
+            #statsContainerGrid > div::before { display: none !important; }
+            
+            @page { size: A4; margin: 15mm 15mm; }
         }
+
         .no-spinners::-webkit-outer-spin-button,
         .no-spinners::-webkit-inner-spin-button {
             -webkit-appearance: none; margin: 0;
@@ -81,8 +108,7 @@
         }
 
         body .bg-slate-900 {
-            background:
-                linear-gradient(145deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98)) !important;
+            background: linear-gradient(145deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98)) !important;
             border-color: rgba(79, 112, 103, 0.36) !important;
             box-shadow:
                 0 24px 55px rgba(0, 0, 0, 0.45),
@@ -91,8 +117,7 @@
         }
 
         body .bg-slate-950 {
-            background:
-                linear-gradient(145deg, rgba(2, 7, 10, 0.96), rgba(7, 13, 14, 0.98)) !important;
+            background: linear-gradient(145deg, rgba(2, 7, 10, 0.96), rgba(7, 13, 14, 0.98)) !important;
             box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.38);
         }
 
@@ -103,25 +128,11 @@
         body .border-purple-900 { border-color: rgba(159, 106, 216, 0.42) !important; }
         body .border-orange-800 { border-color: rgba(184, 92, 40, 0.42) !important; }
 
-        h1, h2, h3,
-        .text-emerald-400,
-        .text-purple-400,
-        .text-red-400 {
+        h1, h2, h3, .text-emerald-400, .text-purple-400, .text-red-400 {
             text-shadow: 0 0 18px currentColor;
         }
 
-        h1 {
-            color: #c8a3ff !important;
-            letter-spacing: 0;
-        }
-
-        h2 {
-            letter-spacing: 0;
-        }
-
-        label {
-            letter-spacing: 0.03em;
-        }
+        h1 { color: #c8a3ff !important; }
 
         input, select, textarea {
             border-color: rgba(115, 139, 131, 0.4) !important;
@@ -140,30 +151,18 @@
         select {
             background-color: #02070a !important;
             color: #d7e2df !important;
-            scrollbar-color: rgba(53, 196, 165, 0.55) #02070a;
         }
 
-        select option,
-        select optgroup {
+        select option {
             background-color: #02070a !important;
             color: #d7e2df !important;
         }
 
-        select option:checked {
-            background-color: #123c35 !important;
-            color: #f5f0d0 !important;
-        }
-
         button {
-            box-shadow:
-                0 10px 22px rgba(0, 0, 0, 0.28),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
-        body .rounded-xl,
-        body .rounded-lg {
-            border-radius: 0.5rem !important;
-        }
+        body .rounded-xl, body .rounded-lg { border-radius: 0.5rem !important; }
 
         #statsContainerGrid {
             grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
@@ -175,9 +174,7 @@
             overflow: hidden;
             min-height: 118px;
             border-color: rgba(214, 178, 94, 0.22) !important;
-            box-shadow:
-                0 15px 28px rgba(0, 0, 0, 0.32),
-                inset 0 0 24px rgba(0, 0, 0, 0.45) !important;
+            box-shadow: 0 15px 28px rgba(0, 0, 0, 0.32), inset 0 0 24px rgba(0, 0, 0, 0.45) !important;
         }
 
         #statsContainerGrid > div::before {
@@ -189,67 +186,34 @@
             pointer-events: none;
         }
 
-        #statsContainerGrid > div > div:first-child {
-            position: relative;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            gap: 0.45rem;
-        }
-
-        #statsContainerGrid .stat-input {
-            width: 3rem !important;
-        }
-
-        #statsContainerGrid .text-yellow-200 {
-            color: var(--old-gold) !important;
-        }
+        #statsContainerGrid .stat-input { width: 3rem !important; }
+        #statsContainerGrid .text-yellow-200 { color: var(--old-gold) !important; }
 
         #blocCompetencesStats {
             border-color: rgba(53, 196, 165, 0.32) !important;
             background: linear-gradient(180deg, rgba(53, 196, 165, 0.055), transparent);
-            margin-top: 0.2rem;
             padding: 0.95rem;
             border-radius: 0.5rem;
         }
 
-        #panierAfflictions > div,
-        #panierList > div,
-        #details,
-        #afflictionDetailPanel {
-            box-shadow:
-                0 14px 28px rgba(0, 0, 0, 0.34),
-                inset 0 0 22px rgba(0, 0, 0, 0.34);
+        #panierAfflictions > div, #panierList > div, #details, #afflictionDetailPanel {
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.34), inset 0 0 22px rgba(0, 0, 0, 0.34);
         }
 
-        #panierAfflictions .grid-cols-3 {
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-        }
+        #panierAfflictions .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 
-        #btnGenererPrompt {
+        #btnGenererPrompt, .btn-save-design {
             background: linear-gradient(135deg, #126954, #2bb894) !important;
-            border: 1px solid rgba(107, 236, 201, 0.42);
+            border: 1px solid rgba(107, 236, 201, 0.42) !important;
         }
 
-        #btnExporterPDF {
+        #btnExporterPDF, .btn-import-design {
             background: linear-gradient(135deg, #2a3033, #11181b) !important;
-            border: 1px solid rgba(159, 106, 216, 0.3);
+            border: 1px solid rgba(159, 106, 216, 0.3) !important;
         }
 
-        @media print {
-            body::before, body::after { display: none !important; }
-        }
-
-        @media (min-width: 640px) {
-            #statsContainerGrid {
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            #statsContainerGrid {
-                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-            }
-        }
+        @media (min-width: 640px) { #statsContainerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+        @media (min-width: 1024px) { #statsContainerGrid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 p-4 md:p-8 font-sans">
@@ -257,12 +221,22 @@
         
         <div class="border-b border-emerald-950 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
-                <h1 class="text-2xl font-bold text-purple-400 tracking-wide">Fiche de Création de Personnage : Pensée et conçue par Azapartam</h1>
-                <p class="text-xs text-slate-400 mt-1 font-mono">Système JDR Custom basé sur Cthulhu/Chtulhu Dark - Interface par Vinthos</p>
+                <h1 class="text-2xl font-bold text-purple-400 tracking-wide">Fiche de Création de Personnage</h1>
+                <p class="text-xs text-slate-400 mt-1 font-mono">Système JDR Custom basé sur Cthulhu/Chtulhu Dark - Pensée et conçue par Azapartam - Développée par Vinthos</p>
             </div>
             <div class="mt-2 md:mt-0 bg-slate-900 border border-emerald-900 px-4 py-2 rounded text-xs">
                 <span class="text-emerald-400 font-bold">Règle MJ :</span> De haut en bas, pas d'impasse.
             </div>
+        </div>
+
+        <div class="gestion-donnees-bloc flex flex-col sm:flex-row justify-center items-center gap-4 p-4 bg-slate-900 border border-slate-800 rounded-xl shadow-xl">
+            <button onclick="sauvegarderFiche()" class="btn-save-design font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl">
+                SAUVEGARDER MA FICHE
+            </button>
+            <label class="btn-import-design font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase text-center cursor-pointer shadow-2xl">
+                IMPORTER UNE SAUVEGARDE
+                <input type="file" id="importFile" onchange="importerFiche(event)" class="hidden" accept=".json">
+            </label>
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -461,7 +435,7 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-lg font-bold text-emerald-400">Gestion des Inventaires</h2>
+                <h2 class="text-lg font-bold text-white">Gestion des Inventaires</h2>
                 <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
                     <label class="text-xs font-bold text-emerald-400 uppercase">Monnaie :</label>
                     <input type="text" id="inv_money" placeholder="Ex: 150$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
@@ -470,14 +444,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Personnel (Sur soi)</label>
+                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Personnel (Sur soi) [Entrée pour ajouter]</label>
                         <button onclick="ajouterLigneInventaire('container_perso', 'Objet sur soi...')" class="bg-emerald-600 text-white font-bold px-2 rounded text-xs">+</button>
                     </div>
                     <div id="container_perso" class="space-y-1.5"></div>
                 </div>
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Global (Coffre, Planque)</label>
+                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Global (Coffre, Planque) [Entrée pour ajouter]</label>
                         <button onclick="ajouterLigneInventaire('container_global', 'Objet global...')" class="bg-emerald-600 text-white font-bold px-2 rounded text-xs">+</button>
                     </div>
                     <div id="container_global" class="space-y-1.5"></div>
@@ -487,9 +461,9 @@
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <h2 class="text-xl font-bold text-emerald-400 mb-2">Compétences</h2>
+                <h2 class="text-xl font-bold text-white mb-2">Compétences</h2>
                 <div class="flex items-center space-x-4 mb-4 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
-                    <label class="text-slate-400 font-bold">Nombre de compétences de départ (vu avec le MJ) :</label>
+                    <label class="text-slate-400 font-bold">Nombre de compétences max autorisé par le MJ :</label>
                     <input type="number" id="comp_max_limit" value="2" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
                 </div>
                 <select id="selectCompetence" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none">
@@ -794,7 +768,6 @@
             document.getElementById('totalPoints').textContent = totalSaisi;
             const status = document.getElementById('statStatus');
             
-            // Logique intelligente des messages de validation pour les 300 points
             if (totalSaisi === 300) {
                 status.textContent = "✓ Total valide";
                 status.className = "text-emerald-400 font-bold text-center";
@@ -842,7 +815,7 @@
                     let escName = item.nom.replace(/'/g, "\\'");
                     let descHtml = item.description 
                         ? `<p class="text-[11px] text-slate-400 italic mt-1 bg-slate-950 p-1.5 rounded border border-slate-800/40">${item.description}</p>` 
-                        : '<div></div>';
+                        : '';
                     return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2.5 rounded border border-slate-800 flex flex-col cursor-pointer hover:bg-slate-800 transition">' +
                            '<div class="flex justify-between items-center w-full">' +
                            '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ')]</span></div>' +
@@ -852,7 +825,7 @@
                 }).join('');
             }
 
-            // RENDU PANIER AFFLICTIONS ACTIVES (AVEC CONFIGURATION LARGE EN 3 COLONNES & AFFICHAGE DU SLOT COMPÉTENCE BONUS)
+            // RENDU PANIER AFFLICTIONS ACTIVES
             const panierAffContainer = document.getElementById('panierAfflictions');
             if (afflictionsChoisies.length === 0) {
                 panierAffContainer.innerHTML = '<p class="italic text-slate-600 text-xs">Aucune affliction active.</p>';
@@ -864,7 +837,6 @@
                     let totalReparti = Object.values(rep).reduce((a, b) => a + b, 0);
                     let reste = item.cout_ps - totalReparti;
                     
-                    // Design élargi en grille à 3 colonnes (3 par lignes) pour une visibilité totale
                     let repartitionHtml = '<div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-red-900/40">';
                     Object.keys(statMapping).forEach(stat => {
                         let val = rep[stat] || 0;
@@ -890,24 +862,19 @@
                         ? `<span class="text-emerald-400 font-bold text-xs font-mono">Répartition complète ✓</span>` 
                         : `<span class="text-red-500 font-bold text-xs font-mono animate-pulse">⚠️ À répartir : ${reste} PS</span>`;
 
-                    // Insertion de la mention du Slot Compétence bonus entre le Gain et le Malus total
-                    let bonusCompInlineHtml = item.bonus_comp > 0
+                    let bonusCompHtml = item.bonus_comp > 0
                         ? `<div class="text-purple-400 font-bold text-center text-[11px] bg-purple-950/40 py-0.5 rounded border border-purple-900/60 mt-1">+${item.bonus_comp} Slot Compétence Autorisé</div>`
                         : '';
-
-                    bonusCompInlineHtml = item.bonus_comp > 0
-                        ? `<div class="text-purple-400 font-bold text-center text-[10px] bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/60 whitespace-nowrap">+${item.bonus_comp} Slot Comp.</div>`
-                        : '<div></div>';
 
                     return '<div class="bg-slate-950 p-4 rounded-lg border border-red-950 flex flex-col space-y-2 cursor-pointer hover:border-red-900 transition" onclick="chargerDetailsAffliction(\'' + escName + '\')">' +
                            '<div class="flex justify-between items-center"><div><span class="font-bold text-red-400 text-sm">' + item.nom + '</span><span class="text-purple-400 text-xs"> [' + item.stade + ']</span></div>' +
                            '<button onclick="event.stopPropagation(); supprimerAffliction(\'' + escName + '\')" class="text-red-400 font-bold px-1">✕</button></div>' +
                            '<p class="text-[11px] text-slate-400 italic font-sans leading-relaxed">' + (item.definition || "Pas de définition.") + '</p>' +
-                           '<div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-2 text-[11px] font-mono mt-1">' +
+                           '<div class="flex items-center justify-between text-[11px] font-mono mt-1">' +
                            '<div>Gain PS ➔ PC: <span class="text-emerald-400 font-bold">+' + item.gain_pc + ' PC</span></div>' +
-                           bonusCompInlineHtml +
-                           '<div class="sm:text-right">Malus total: <span class="text-red-400 font-bold">-' + item.cout_ps + ' PS</span></div>' +
+                           '<div>Malus total: <span class="text-red-400 font-bold">-' + item.cout_ps + ' PS</span></div>' +
                            '</div>' +
+                           bonusCompHtml +
                            '<div class="text-center mt-1.5">' + resteHtml + '</div>' +
                            repartitionHtml +
                            '</div>';
@@ -940,21 +907,26 @@
             }
         }
 
-        function ajouterLigneInventaire(containerId, placeholderText) {
+        // Ajout d'une ligne d'inventaire avec écouteur de touche pour "Entrée"
+        function ajouterLigneInventaire(containerId, placeholderText, valeurInitiale = "") {
             const container = document.getElementById(containerId);
             const div = document.createElement('div');
             div.className = "flex items-center space-x-2 item-ligne-inv";
-            div.innerHTML = '<input type="text" placeholder="' + placeholderText + '" class="w-full bg-slate-950 border border-slate-800 p-2 rounded text-sm text-white focus:outline-none">' +
+            div.innerHTML = `<input type="text" placeholder="${placeholderText}" value="${valeurInitiale}" class="w-full bg-slate-950 border border-slate-800 p-2 rounded text-sm text-white focus:outline-none">` +
                             '<button onclick="this.parentElement.remove()" class="text-red-400 font-bold px-2">✕</button>';
-            container.appendChild(div);
-            const input = div.querySelector('input');
-            input.addEventListener('keydown', (event) => {
-                if (event.key !== 'Enter') return;
-                event.preventDefault();
-                ajouterLigneInventaire(containerId, placeholderText);
-                const lignes = container.querySelectorAll('.item-ligne-inv input');
-                lignes[lignes.length - 1].focus();
+            
+            // Écouteur pour intercepter l'appui sur "Entrée"
+            const inputElement = div.querySelector('input');
+            inputElement.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Évite tout rechargement ou soumission de formulaire indésirable
+                    const nouvelleLigne = ajouterLigneInventaire(containerId, placeholderText);
+                    nouvelleLigne.focus(); // Met automatiquement le curseur dans la nouvelle ligne créée
+                }
             });
+
+            container.appendChild(div);
+            return inputElement;
         }
 
         function collecterInventaire(containerId) {
@@ -963,10 +935,131 @@
             return items.length > 0 ? items.map(it => "- " + it).join('\n') : "Aucun objet.";
         }
 
+        function stockerInventaireTableau(containerId) {
+            const inputs = document.querySelectorAll('#' + containerId + ' input');
+            let items = []; inputs.forEach(i => { if(i.value.trim() !== "") items.push(i.value.trim()); });
+            return items;
+        }
+
         function mt_getRadioValue(name) {
             const rads = document.getElementsByName(name);
             for (let i = 0; i < rads.length; i++) { if (rads[i].checked) return rads[i].value; }
             return "Aucun";
+        }
+
+        // --- SAUVEGARDER LA FICHE (Format JSON) ---
+        function sauvegarderFiche() {
+            const data = {
+                avatar: document.getElementById('char_avatar').value,
+                nom: document.getElementById('char_name').value,
+                profession: document.getElementById('char_profession').value,
+                stats: {
+                    force: document.getElementById('stat_force').value,
+                    dex: document.getElementById('stat_dex').value,
+                    cha: document.getElementById('stat_cha').value,
+                    per: document.getElementById('stat_per').value,
+                    edu: document.getElementById('stat_edu').value,
+                    chance: document.getElementById('stat_chance').value
+                },
+                competences: competencesChoisies,
+                afflictions: afflictionsChoisies,
+                inventaires: {
+                    monnaie: document.getElementById('inv_money').value,
+                    personnel: stockerInventaireTableau('container_perso'),
+                    global: stockerInventaireTableau('container_global')
+                },
+                lore: {
+                    peurs: document.getElementById('lore_peurs').value,
+                    vaillance: document.getElementById('lore_vaillance').value,
+                    background: document.getElementById('lore_background').value
+                },
+                etats: {
+                    mentale: mt_getRadioValue('san_mentale'),
+                    physique: mt_getRadioValue('san_physique')
+                },
+                regles: {
+                    pc_max: document.getElementById('pc_max').value,
+                    comp_max_limit: document.getElementById('comp_max_limit').value,
+                    pts_deduction: document.getElementById('pts_deduction').value
+                }
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Sauvegarde_${data.nom.replace(/[^a-z0-9]/gi, '_') || 'Enqueteur'}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // --- IMPORTER LA FICHE (Restauration complète) ---
+        function importerFiche(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    document.getElementById('char_avatar').value = data.avatar || "";
+                    document.getElementById('char_name').value = data.nom || "";
+                    document.getElementById('char_profession').value = data.profession || "";
+                    
+                    if (data.stats) {
+                        document.getElementById('stat_force').value = data.stats.force || 50;
+                        document.getElementById('stat_dex').value = data.stats.dex || 50;
+                        document.getElementById('stat_cha').value = data.stats.cha || 50;
+                        document.getElementById('stat_per').value = data.stats.per || 50;
+                        document.getElementById('stat_edu').value = data.stats.edu || 50;
+                        document.getElementById('stat_chance').value = data.stats.chance || 50;
+                    }
+                    
+                    if (data.regles) {
+                        document.getElementById('pc_max').value = data.regles.pc_max || 25;
+                        document.getElementById('comp_max_limit').value = data.regles.comp_max_limit || 2;
+                        document.getElementById('pts_deduction').value = data.regles.pts_deduction || 0;
+                    }
+
+                    if (data.lore) {
+                        document.getElementById('lore_peurs').value = data.lore.peurs || "";
+                        document.getElementById('lore_vaillance').value = data.lore.vaillance || "";
+                        document.getElementById('lore_background').value = data.lore.background || "";
+                    }
+
+                    if (data.inventaires) {
+                        document.getElementById('inv_money').value = data.inventaires.monnaie || "";
+                        
+                        const containerPerso = document.getElementById('container_perso');
+                        containerPerso.innerHTML = "";
+                        (data.inventaires.personnel || []).forEach(item => {
+                            ajouterLigneInventaire('container_perso', 'Objet sur soi...', item);
+                        });
+
+                        const containerGlobal = document.getElementById('container_global');
+                        containerGlobal.innerHTML = "";
+                        (data.inventaires.global || []).forEach(item => {
+                            ajouterLigneInventaire('container_global', 'Objet global...', item);
+                        });
+                    }
+
+                    if (data.etats) {
+                        const radsM = document.getElementsByName('san_mentale');
+                        radsM.forEach(r => { r.checked = (r.value === data.etats.mentale); });
+                        const radsP = document.getElementsByName('san_physique');
+                        radsP.forEach(r => { r.checked = (r.value === data.etats.physique); });
+                    }
+
+                    competencesChoisies = data.competences || [];
+                    afflictionsChoisies = data.afflictions || [];
+                    
+                    travaillerCalculsEtRendu();
+                    alert("Fiche d'enquêteur restaurée avec succès !");
+                } catch (err) {
+                    alert("Erreur lors de l'importation. Format de fichier non reconnu.");
+                    console.error(err);
+                }
+            };
+            reader.readAsText(file);
         }
 
         document.getElementById('btnGenererPrompt').addEventListener('click', () => {
@@ -978,7 +1071,7 @@
                 const stateMentale = mt_getRadioValue('san_mentale');
                 const statePhysique = mt_getRadioValue('san_physique');
                 
-                const charName = document.getElementById('char_name').value || "Sans Nom";
+                const charName = document.getElementById('char_name').value || "[Sans Nom]";
                 const charProfession = document.getElementById('char_profession').value || "Inconnue";
                 const charAvatar = document.getElementById('char_avatar').value || "Aucun";
                 
@@ -1001,12 +1094,7 @@
                 const vaillance = document.getElementById('lore_vaillance').value || "Aucune";
                 const bg = document.getElementById('lore_background').value || "Non rédigé";
 
-                let compText = competencesChoisies.map(c => {
-                    const idStat = displayMapping[c.statChoisie];
-                    const statActuelle = parseInt(document.getElementById(idStat)?.textContent) || 0;
-                    const totalAvecCompetence = statActuelle + c.bonus;
-                    return "- " + c.nom + " [" + c.niveau + "] : Bonus +" + c.bonus + " sur " + c.statChoisie + " | Stat actuelle : " + statActuelle + " | Total avec competence : " + totalAvecCompetence;
-                }).join('\n');
+                let compText = competencesChoisies.map(c => "- " + c.nom + " [" + c.niveau + "] : Bonus +" + c.bonus + " sur " + c.statChoisie).join('\n');
                 
                 let affText = afflictionsChoisies.map(a => {
                     let repStr = Object.entries(a.repartition).filter(([k,v]) => v > 0).map(([k,v]) => `-${v} sur ${k}`).join(', ');
@@ -1014,7 +1102,7 @@
                 }).join('\n');
 
                 const separateur = "--------------------------------------------------";
-                const superPrompt = "Voici mon enquêteur optimisé et prêt pour l'aventure ! :\n" + separateur + "\n" +
+                const superPrompt = "Voici mon enquêteur optimisé selon le framework d'Azapartam :\n" + separateur + "\n" +
                     "Nom de l'Enquêteur : " + charName + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
                     "Caractéristiques modifiées : " + stringStats + "\n" +
                     "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
@@ -1028,7 +1116,7 @@
                     "Afflictions Actives enregistrées :\n" + (affText || "Aucune affliction active.") + "\n" + separateur + "\n" +
                     "Monnaie : " + monnaie + "\n\n" +
                     "Inventaire Global :\n" + invGlobalListText + "\n\nInventaire Personnel :\n" + invPersoListText + "\n" + separateur + "\n" +
-                    "Background :\n" + bg;
+                    "Background : \n" + bg;
 
                 document.getElementById('promptOutput').value = superPrompt;
                 document.getElementById('outputContainer').classList.remove('hidden');
@@ -1040,6 +1128,7 @@
             }
         });
 
+        // Initialisation de lignes vides par défaut si l'utilisateur n'importe rien au début
         ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
         ajouterLigneInventaire('container_global', 'Objet global 1...');
 
