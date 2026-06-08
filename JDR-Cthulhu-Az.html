@@ -320,9 +320,8 @@
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background: radial-gradient(90% 120% at 50% 110%, rgba(53, 196, 165, 0.14), transparent 60%);
-            opacity: 0.5;
-            animation: hdr-breathe 14s ease-in-out infinite;
+            background: radial-gradient(90% 120% at 50% 110%, rgba(53, 196, 165, 0.09), transparent 60%);
+            opacity: 0.35;
             z-index: 1;
         }
         @keyframes hdr-breathe {
@@ -338,6 +337,7 @@
             pointer-events: none;     /* ne bloque jamais les clics */
             display: block;
             overflow: visible;
+            opacity: 0.2;             /* discret, en filigrane */
         }
         .hdr-tentacle {
             fill: none;
@@ -345,19 +345,8 @@
             stroke-linejoin: round;
             filter: url(#hdr-glow);   /* halo teal atmosphérique */
         }
-        .hdr-tentacles-group {
-            animation: hdr-breathe-group 9s ease-in-out infinite;
-            transform-origin: center;
-        }
-        @keyframes hdr-breathe-group {
-            0%, 100% { opacity: 0.78; }
-            50%      { opacity: 1; }
-        }
-        .hdr-sucker { animation: hdr-sucker-glow 5s ease-in-out infinite; }
-        @keyframes hdr-sucker-glow {
-            0%, 100% { opacity: 0.45; }
-            50%      { opacity: 0.9; }
-        }
+        .hdr-tentacles-group { transform-origin: center; }
+        .hdr-sucker { opacity: 0.5; }
         .hdr-content { position: relative; z-index: 2; }
         .hdr-content::before {
             content: "";
@@ -425,53 +414,17 @@
                 </defs>
                 <g class="hdr-tentacles-group">
                     <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="9" opacity="0.8"
-                          d="M-20,70 C120,40 220,150 340,110 S520,40 640,90">
-                        <animate attributeName="d" dur="8s" repeatCount="indefinite" calcMode="spline"
-                          keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
-                          values="M-20,70 C120,40 220,150 340,110 S520,40 640,90;
-                                   M-20,90 C120,150 220,40 340,140 S520,120 640,60;
-                                   M-20,70 C120,40 220,150 340,110 S520,40 640,90"/>
-                    </path>
+                          d="M-20,70 C120,40 220,150 340,110 S520,40 640,90"/>
                     <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="7" opacity="0.7"
-                          d="M-20,180 C140,150 240,60 380,120 S560,180 720,140">
-                        <animate attributeName="d" dur="10s" repeatCount="indefinite" calcMode="spline"
-                          keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
-                          values="M-20,180 C140,150 240,60 380,120 S560,180 720,140;
-                                   M-20,160 C140,80 240,170 380,80 S560,120 720,180;
-                                   M-20,180 C140,150 240,60 380,120 S560,180 720,140"/>
-                    </path>
+                          d="M-20,180 C140,150 240,60 380,120 S560,180 720,140"/>
                     <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="9" opacity="0.8"
-                          d="M1220,80 C1080,50 980,160 860,110 S680,50 560,100">
-                        <animate attributeName="d" dur="9s" repeatCount="indefinite" calcMode="spline"
-                          keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
-                          values="M1220,80 C1080,50 980,160 860,110 S680,50 560,100;
-                                   M1220,100 C1080,160 980,40 860,150 S680,120 560,60;
-                                   M1220,80 C1080,50 980,160 860,110 S680,50 560,100"/>
-                    </path>
+                          d="M1220,80 C1080,50 980,160 860,110 S680,50 560,100"/>
                     <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="7" opacity="0.7"
-                          d="M1220,175 C1070,150 960,70 820,125 S640,180 500,150">
-                        <animate attributeName="d" dur="11s" repeatCount="indefinite" calcMode="spline"
-                          keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
-                          values="M1220,175 C1070,150 960,70 820,125 S640,180 500,150;
-                                   M1220,155 C1070,80 960,170 820,85 S640,120 500,190;
-                                   M1220,175 C1070,150 960,70 820,125 S640,180 500,150"/>
-                    </path>
+                          d="M1220,175 C1070,150 960,70 820,125 S640,180 500,150"/>
                     <path class="hdr-tentacle" stroke="url(#hdr-gold)" stroke-width="6" opacity="0.62"
-                          d="M600,220 C560,140 660,120 620,60 S560,-10 600,-30">
-                        <animate attributeName="d" dur="12s" repeatCount="indefinite" calcMode="spline"
-                          keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
-                          values="M600,220 C560,140 660,120 620,60 S560,-10 600,-30;
-                                   M600,220 C660,140 540,120 660,60 S640,-10 560,-30;
-                                   M600,220 C560,140 660,120 620,60 S560,-10 600,-30"/>
-                    </path>
+                          d="M600,220 C560,140 660,120 620,60 S560,-10 600,-30"/>
                     <path class="hdr-tentacle" stroke="url(#hdr-teal)" stroke-width="6" opacity="0.6"
-                          d="M860,220 C820,150 920,120 880,70 S840,10 870,-20">
-                        <animate attributeName="d" dur="10.5s" repeatCount="indefinite" calcMode="spline"
-                          keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
-                          values="M860,220 C820,150 920,120 880,70 S840,10 870,-20;
-                                   M860,220 C920,150 800,120 940,70 S900,10 800,-20;
-                                   M860,220 C820,150 920,120 880,70 S840,10 870,-20"/>
-                    </path>
+                          d="M860,220 C820,150 920,120 880,70 S840,10 870,-20"/>
                     <g fill="#7ff0d8">
                         <circle class="hdr-sucker" cx="200" cy="95"  r="4.5"/>
                         <circle class="hdr-sucker" cx="340" cy="110" r="5"/>
