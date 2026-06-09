@@ -6,29 +6,37 @@
     <title>Créateur de Personnage Cthulhu - Azpartam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.3/dist/html2pdf.bundle.min.js" integrity="sha384-1Rq385dzyHeeImKREXc2dTf1lhBKJHL8YR6phOUkikTCsUwGgDyWRoGv8KVG2+qY" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
-        /* Force la conservation des couleurs et structures sombres à l'impression / export PDF */
+        /* Impression directe (Ctrl+P de secours) : fond blanc, texte noir, peu d'encre */
         @media print {
-            body { 
-                background-color: #020617 !important; /* bg-slate-950 */
-                color: #f1f5f9 !important; /* text-slate-100 */
+            body {
+                background: #fff !important;
+                color: #000 !important;
+                background-image: none !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
-                background-image: none !important; /* Enlève les dégradés lourds au spoulage */
             }
-            body::before, body::after { display: none !important; } /* Enlève les grilles matricielles lourdes */
-            .bg-slate-900 { background-color: #0f172a !important; }
-            .bg-slate-950 { background-color: #020617 !important; }
-            .bg-purple-950\/25 { background-color: rgba(58, 22, 110, 0.25) !important; }
-            .bg-orange-950\/25 { background-color: rgba(124, 45, 18, 0.25) !important; }
-            .border-slate-800 { border-color: #1e293b !important; }
-            .border-red-950 { border-color: #450a0a !important; }
-            .border-emerald-950 { border-color: #022c22 !important; }
-            
+            body::before, body::after { display: none !important; }
             #btnGenererPrompt, #btnExporterPDF, .gestion-donnees-bloc { display: none !important; }
-            #outputContainer { display: block !important; }
-            @page { size: A4; margin: 10mm 10mm; }
+            @page { size: A4; margin: 12mm; }
         }
+
+        /* ============================================================
+           FICHE PDF (générée par html2pdf) — tableau simple noir/blanc
+           ============================================================ */
+        .pdf-sheet { width: 720px; box-sizing: border-box; background: #fff; color: #000; padding: 6px 10px 14px; font-family: Arial, Helvetica, sans-serif; }
+        .pdf-sheet, .pdf-sheet * { color: #000 !important; }
+        .pdf-sheet h1 { font-size: 19px; margin: 4px 0 2px; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
+        .pdf-sheet .pdf-sub { text-align: center; font-size: 10px; margin: 0 0 12px; }
+        .pdf-sheet h2 { font-size: 13px; margin: 14px 0 5px; padding: 4px 7px; background: #ececec; border: 1px solid #000; text-transform: uppercase; letter-spacing: .5px; }
+        .pdf-sheet table { border-collapse: collapse; width: 100%; margin-bottom: 5px; }
+        .pdf-sheet th, .pdf-sheet td { border: 1px solid #000; padding: 3px 6px; font-size: 11px; text-align: left; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
+        .pdf-sheet th { font-weight: bold; background: #f5f5f5; }
+        .pdf-sheet .pdf-note { font-size: 10px; font-style: italic; margin: 3px 0 7px; line-height: 1.35; }
+        .pdf-sheet .pdf-bg { font-size: 11px; line-height: 1.5; white-space: pre-wrap; border: 1px solid #000; padding: 7px; }
+        .pdf-sheet .pdf-box { display: inline-block; width: 12px; height: 12px; line-height: 12px; border: 1px solid #000; text-align: center; font-size: 10px; font-weight: bold; }
+        .pdf-block { page-break-inside: avoid; break-inside: avoid; }
         .no-spinners::-webkit-outer-spin-button,
         .no-spinners::-webkit-inner-spin-button {
             -webkit-appearance: none; margin: 0;
@@ -45,11 +53,17 @@
 
         body {
             min-height: 100vh;
+            /* Fond de page : grimoire « tentacouilles » sous un voile sombre (lisibilité). */
             background:
-                linear-gradient(180deg, rgba(2, 7, 10, 0.98), rgba(3, 8, 8, 0.98) 48%, rgba(1, 4, 7, 1)),
-                radial-gradient(ellipse at 14% 0%, rgba(31, 103, 84, 0.24), transparent 38%),
-                radial-gradient(ellipse at 86% 8%, rgba(88, 28, 72, 0.17), transparent 34%),
-                repeating-linear-gradient(90deg, rgba(223, 244, 236, 0.025) 0 1px, transparent 1px 14px);
+                linear-gradient(180deg, rgba(2, 7, 10, 0.55), rgba(3, 8, 8, 0.72) 50%, rgba(1, 4, 7, 0.86)),
+                radial-gradient(ellipse at 14% 0%, rgba(31, 103, 84, 0.22), transparent 40%),
+                radial-gradient(ellipse at 86% 8%, rgba(88, 28, 72, 0.20), transparent 38%),
+                url('tentacouilles.jpg');
+            background-position: center, center, center, center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #02070a;
             color: var(--ink);
         }
 
@@ -495,6 +509,14 @@
                 <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Fonction / Profession</label>
                 <input type="text" id="char_profession" placeholder="Journaliste, Détective..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Sexe</label>
+                <input type="text" id="char_sexe" placeholder="Homme, Femme…" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Âge</label>
+                <input type="text" id="char_age" placeholder="Ex : 36 ans (né en 1955)" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -665,11 +687,17 @@
         </div>
 
         <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b border-slate-800 pb-2 gap-2">
                 <h2 class="text-xl font-bold text-emerald-400">Gestion des Inventaires</h2>
-                <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
-                    <label class="text-xs font-bold text-emerald-400 uppercase">Monnaie :</label>
-                    <input type="text" id="inv_money" placeholder="Ex: 150$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
+                        <label class="text-xs font-bold text-emerald-400 uppercase">Argent local :</label>
+                        <input type="text" id="inv_money" placeholder="Ex: 150$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
+                        <label class="text-xs font-bold text-emerald-400 uppercase">Argent global :</label>
+                        <input type="text" id="inv_money_global" placeholder="Ex: 500$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
+                    </div>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -749,8 +777,8 @@
             <button id="btnGenererPrompt" class="bg-emerald-600 hover:bg-emerald-500 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
                 GÉNÉRER MA FICHE
             </button>
-            <button id="btnExporterPDF" onclick="window.print()" class="bg-slate-700 hover:bg-slate-600 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
-                EXPORTER / IMPRIMER (PDF)
+            <button id="btnExporterPDF" onclick="exporterPDF()" class="bg-slate-700 hover:bg-slate-600 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
+                TÉLÉCHARGER LE PDF
             </button>
         </div>
 
@@ -1210,6 +1238,8 @@
                 avatar: document.getElementById('char_avatar').value,
                 nom: document.getElementById('char_name').value,
                 profession: document.getElementById('char_profession').value,
+                sexe: document.getElementById('char_sexe').value,
+                age: document.getElementById('char_age').value,
                 stats: {
                     force: document.getElementById('stat_force').value,
                     dex: document.getElementById('stat_dex').value,
@@ -1222,6 +1252,7 @@
                 afflictions: afflictionsChoisies,
                 inventaires: {
                     monnaie: document.getElementById('inv_money').value,
+                    monnaieGlobal: document.getElementById('inv_money_global').value,
                     personnel: stockerInventaireTableau('container_perso'),
                     global: stockerInventaireTableau('container_global')
                 },
@@ -1281,6 +1312,8 @@
                 const charName = document.getElementById('char_name').value || "[Sans Nom]";
                 const charProfession = document.getElementById('char_profession').value || "Inconnue";
                 const charAvatar = document.getElementById('char_avatar').value || "Aucun";
+                const charSexe = document.getElementById('char_sexe').value || "Non précisé";
+                const charAge = document.getElementById('char_age').value || "Non précisé";
                 
                 const stringStats = "Force (STR): " + document.getElementById('display_force').textContent + 
                                     ", Dextérité (DEX): " + document.getElementById('display_dex').textContent + 
@@ -1297,6 +1330,7 @@
                 let totalQuotaMaxAutorise = parseInt(document.getElementById('comp_max_limit').value) + totalBonusComp;
                 const deductions = document.getElementById('pts_deduction').value;
                 const monnaie = document.getElementById('inv_money').value || "0$";
+                const monnaieGlobal = document.getElementById('inv_money_global').value || "0$";
                 const peurs = document.getElementById('lore_peurs').value || "Aucune";
                 const vaillance = document.getElementById('lore_vaillance').value || "Aucune";
                 const bg = document.getElementById('lore_background').value || "Non rédigé";
@@ -1315,8 +1349,8 @@
                 }).join('\n');
 
                 const separateur = "--------------------------------------------------";
-                const superPrompt = "Voici mon enquêteur prêt pour l'aventure :\n" + separateur + "\n" +
-                    "Nom de l'Enquêteur : " + charName + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
+                const superPrompt = "Voici mon enquêteur optimisé selon le framework d'Azpartam :\n" + separateur + "\n" +
+                    "Nom de l'Enquêteur : " + charName + "\nSexe : " + charSexe + " | Âge : " + charAge + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
                     "Caractéristiques modifiées : " + stringStats + "\n" +
                     "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
                     "Points de déductions (MJ) : " + deductions + "\n\n" +
@@ -1327,7 +1361,7 @@
                     "Points de Compétences : Réserve " + pcMaxInitial + " PC (+" + totalGainPC + " généré par Afflictions) | Solde disponible : " + pcRestant + " PC\n" +
                     "Nombre de compétences : " + compCount + " utilisées / " + totalQuotaMaxAutorise + " autorisées au maximum\n\n" +
                     "Afflictions Actives enregistrées :\n" + (affText || "Aucune affliction active.") + "\n" + separateur + "\n" +
-                    "Monnaie : " + monnaie + "\n\n" +
+                    "Argent local : " + monnaie + " | Argent global : " + monnaieGlobal + "\n\n" +
                     "Inventaire Global :\n" + invGlobalListText + "\n\nInventaire Personnel :\n" + invPersoListText + "\n" + separateur + "\n" +
                     "Background : \n" + bg;
 
@@ -1340,6 +1374,207 @@
                 console.error(err);
             }
         });
+
+        // ============================================================
+        //  EXPORT PDF — Fiche imprimable simple (fond blanc, texte noir)
+        // ============================================================
+        function exporterPDF() {
+            if (typeof html2pdf === 'undefined') {
+                toast("Librairie PDF non chargée (vérifiez votre connexion internet).", "error", 6000);
+                return;
+            }
+            let wrap;
+            try {
+                wrap = construireFichePDF();
+                document.body.appendChild(wrap);
+            } catch (err) {
+                console.error(err);
+                toast("Erreur lors de la préparation du PDF (voir console).", "error", 6000);
+                return;
+            }
+            const nomBrut = (document.getElementById('char_name').value || 'Enqueteur').trim();
+            const nomFichier = 'Fiche_' + (nomBrut.replace(/[^a-z0-9]/gi, '_') || 'Enqueteur') + '.pdf';
+            const opt = {
+                margin: [10, 10, 12, 10],
+                filename: nomFichier,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['css', 'legacy'], avoid: '.pdf-block' }
+            };
+            toast("Génération du PDF en cours…", "info", 2500);
+            // html2canvas ne capture correctement que si la page n'est pas scrollée :
+            // on remonte en haut le temps de la capture, puis on restaure la position.
+            const scrollX0 = window.scrollX, scrollY0 = window.scrollY;
+            window.scrollTo(0, 0);
+            const cible = wrap.querySelector('.pdf-sheet');
+            html2pdf().set(opt).from(cible).save()
+                .then(() => toast("PDF téléchargé.", "success"))
+                .catch(err => { console.error(err); toast("Erreur lors de la génération du PDF (voir console).", "error", 6000); })
+                .finally(() => {
+                    if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
+                    window.scrollTo(scrollX0, scrollY0);
+                });
+        }
+
+        // Construit (hors écran) le DOM de la fiche en tableaux noir/blanc, à partir des champs courants.
+        function construireFichePDF() {
+            const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+            const txt = id => { const e = document.getElementById(id); return e ? (e.textContent || '').trim() : ''; };
+            const val = id => { const e = document.getElementById(id); return e ? (e.value || '').trim() : ''; };
+            const ou = (s, repl) => (s && s.length) ? s : (repl || '');
+
+            // --- Identité ---
+            const nom = ou(val('char_name'), 'Sans nom');
+            const profession = ou(val('char_profession'), '—');
+            const sexe = ou(val('char_sexe'), '—');
+            const age = ou(val('char_age'), '—');
+            const avatar = val('char_avatar');
+            const pcMax = ou(val('pc_max'), '0');
+            const pcRest = ou(txt('pc_restants_global'), '0');
+            const deductions = ou(val('pts_deduction'), '0');
+            const totalPts = ou(txt('totalPoints'), '0');
+
+            // --- Statistiques (Actuel calculé / Saisie) ---
+            const stats = [
+                ['Force (STR)', 'display_force', 'stat_force'],
+                ['Dextérité (DEX)', 'display_dex', 'stat_dex'],
+                ['Charisme (CHA)', 'display_cha', 'stat_cha'],
+                ['Perception (PER)', 'display_per', 'stat_per'],
+                ['Éducation (EDU)', 'display_edu', 'stat_edu'],
+                ['Chance (LUCK)', 'display_chance', 'stat_chance']
+            ];
+            const statsRows = stats.map(([lib, dId, sId]) =>
+                `<tr><td>${esc(lib)}</td><td style="text-align:center">${esc(ou(txt(dId), '—'))}</td><td style="text-align:center">${esc(ou(val(sId), '—'))}</td></tr>`
+            ).join('');
+
+            // --- Santé : Courage / Résistance + grilles à cocher (toutes les options affichées) ---
+            const courage = ou(txt('val_courage'), '—');
+            const resistance = ou(txt('val_resistance'), '—');
+            const selMentale = mt_getRadioValue('san_mentale');
+            const selPhysique = mt_getRadioValue('san_physique');
+            const mentaleOpts = ['Aucune instabilité', 'Instabilité Légère', 'Instabilité Modérée', 'Instabilité Lourde', 'Instabilité Grave', 'Folie'];
+            const physiqueOpts = ['Aucune blessure', 'Blessure(s) Légère(s)', 'Blessure(s) Modérée(s)', 'Blessure(s) Lourde(s)', 'Blessure(s) Grave(s)', 'Blessure(s) Mortelle(s)'];
+            const box = on => `<span class="pdf-box">${on ? 'X' : ''}</span>`;
+            let santeRows = '';
+            for (let i = 0; i < 6; i++) {
+                santeRows += `<tr>` +
+                    `<td style="text-align:center;width:26px">${box(mentaleOpts[i] === selMentale)}</td><td>${esc(mentaleOpts[i])}</td>` +
+                    `<td style="text-align:center;width:26px">${box(physiqueOpts[i] === selPhysique)}</td><td>${esc(physiqueOpts[i])}</td>` +
+                    `</tr>`;
+            }
+
+            // --- Afflictions (3 max, lignes vides complétées) ---
+            const consignesAff = "Voir doc « JDR – Les Afflictions ». Vous pouvez choisir jusqu'à 3 afflictions initiales. Elles ne sont pas obligatoires et doivent être cohérentes avec les statistiques, les compétences, l'histoire et les autres afflictions du personnage. Les Afflictions permettent, en échange de Points de Statistiques (300 initialement) et d'une limitation de certaines statistiques, d'obtenir des points de compétences et, parfois, une nouvelle compétence jusqu'à un maximum de 5.";
+            const affData = (typeof afflictionsChoisies !== 'undefined' ? afflictionsChoisies : []).map(a => {
+                const rep = Object.entries(a.repartition || {}).filter(([k, v]) => v > 0).map(([k, v]) => `-${v} ${k}`).join(', ');
+                return {
+                    nom: a.nom || '', stade: a.stade || '',
+                    malus: (a.cout_ps != null ? a.cout_ps : ''),
+                    gain: (a.gain_pc != null ? a.gain_pc : ''),
+                    bonus: (a.bonus_comp != null ? a.bonus_comp : ''),
+                    rep: rep || '—'
+                };
+            });
+            let affRows = '';
+            for (let i = 0; i < Math.max(affData.length, 3); i++) {
+                const a = affData[i];
+                affRows += a
+                    ? `<tr><td>${esc(a.nom)}</td><td>${esc(a.stade)}</td><td style="text-align:center">${esc(a.malus)}</td><td style="text-align:center">+${esc(a.gain)}</td><td style="text-align:center">+${esc(a.bonus)}</td><td>${esc(a.rep)}</td></tr>`
+                    : `<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+
+            // --- Compétences (lignes vides complétées) ---
+            const compMax = ou(val('comp_max_limit'), '—');
+            const compData = (typeof competencesChoisies !== 'undefined' ? competencesChoisies : []).map(c => {
+                const baseId = (typeof displayMapping !== 'undefined') ? displayMapping[c.statChoisie] : null;
+                const elBase = baseId ? document.getElementById(baseId) : null;
+                const base = elBase ? (parseInt(elBase.textContent) || 0) : 0;
+                const bonus = c.bonus || 0;
+                return { nom: c.nom || '', niveau: c.niveau || '', stat: c.statChoisie || '', bonus: bonus, total: base + bonus };
+            });
+            let compRows = '';
+            for (let i = 0; i < Math.max(compData.length, 6); i++) {
+                const c = compData[i];
+                compRows += c
+                    ? `<tr><td>${esc(c.nom)}</td><td>${esc(c.niveau)}</td><td>${esc(c.stat)}</td><td style="text-align:center">+${esc(c.bonus)}</td><td style="text-align:center">${esc(c.total)}</td></tr>`
+                    : `<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>`;
+            }
+
+            // --- Inventaire (2 colonnes, lignes vides complétées) ---
+            const monnaie = ou(val('inv_money'), '—');
+            const monnaieGlobal = ou(val('inv_money_global'), '—');
+            const invPerso = Array.from(document.querySelectorAll('#container_perso input')).map(i => i.value.trim()).filter(Boolean);
+            const invGlobal = Array.from(document.querySelectorAll('#container_global input')).map(i => i.value.trim()).filter(Boolean);
+            let invRows = '';
+            for (let i = 0; i < Math.max(invPerso.length, invGlobal.length, 8); i++) {
+                invRows += `<tr><td>${esc(invPerso[i] || '')}&nbsp;</td><td>${esc(invGlobal[i] || '')}&nbsp;</td></tr>`;
+            }
+
+            // --- Histoire ---
+            const peurs = ou(val('lore_peurs'), '—');
+            const vaillance = ou(val('lore_vaillance'), '—');
+            const background = val('lore_background');
+
+            const html =
+                `<h1>Fiche de Personnage</h1>` +
+                `<p class="pdf-sub">Système JDR Custom basé sur Cthulhu Dark — ${esc(nom)}</p>` +
+
+                `<div class="pdf-block"><h2>Informations générales</h2><table>` +
+                `<tr><th style="width:38%">Nom &amp; Prénom</th><td>${esc(nom)}</td></tr>` +
+                `<tr><th>Sexe</th><td>${esc(sexe)}</td></tr>` +
+                `<tr><th>Âge</th><td>${esc(age)}</td></tr>` +
+                `<tr><th>Fonction / Profession</th><td>${esc(profession)}</td></tr>` +
+                (avatar ? `<tr><th>Avatar (lien)</th><td>${esc(avatar)}</td></tr>` : '') +
+                `<tr><th>Points de compétences</th><td>${esc(pcRest)} restants / ${esc(pcMax)} initiaux</td></tr>` +
+                `<tr><th>Points de déduction</th><td>${esc(deductions)}</td></tr>` +
+                `</table></div>` +
+
+                `<div class="pdf-block"><h2>Statistiques</h2><table>` +
+                `<tr><th>Statistique</th><th style="width:22%;text-align:center">Actuel</th><th style="width:22%;text-align:center">Saisie</th></tr>` +
+                statsRows +
+                `<tr><th>Total des points</th><td colspan="2" style="text-align:center">${esc(totalPts)} / 300</td></tr>` +
+                `</table></div>` +
+
+                `<div class="pdf-block"><h2>Santé mentale &amp; physique</h2>` +
+                `<table><tr><th style="width:25%">Courage</th><td style="width:25%;text-align:center">${esc(courage)}</td><th style="width:25%">Résistance</th><td style="text-align:center">${esc(resistance)}</td></tr></table>` +
+                `<table><tr><th colspan="2">État mental</th><th colspan="2">Blessures physiques</th></tr>${santeRows}</table>` +
+                `</div>` +
+
+                `<div class="pdf-block"><h2>Afflictions (3 max)</h2>` +
+                `<p class="pdf-note">${esc(consignesAff)}</p>` +
+                `<table><tr><th style="width:22%">Affliction</th><th style="width:16%">Stade</th><th style="width:11%;text-align:center">Malus PS</th><th style="width:11%;text-align:center">Gain PC</th><th style="width:9%;text-align:center">+PC</th><th>Répartition malus</th></tr>${affRows}</table>` +
+                `</div>` +
+
+                `<div class="pdf-block"><h2>Compétences (${esc(compMax)} max autorisées par le MJ)</h2>` +
+                `<table><tr><th style="width:34%">Compétence</th><th style="width:18%">Niveau</th><th style="width:22%">Statistique</th><th style="width:13%;text-align:center">Bonus</th><th style="width:13%;text-align:center">Total</th></tr>${compRows}</table>` +
+                `</div>` +
+
+                `<div class="pdf-block"><h2>Inventaire</h2>` +
+                `<table><tr><th style="width:38%">Argent local (sur soi)</th><td>${esc(monnaie)}</td></tr>` +
+                `<tr><th>Argent global (planque)</th><td>${esc(monnaieGlobal)}</td></tr></table>` +
+                `<table><tr><th style="width:50%">Sur soi (Locale)</th><th>Coffre / Planque (Global)</th></tr>${invRows}</table>` +
+                `</div>` +
+
+                `<div class="pdf-block"><h2>Histoire du personnage</h2>` +
+                `<table><tr><th style="width:38%">Peurs profondes</th><td>${esc(peurs)}</td></tr><tr><th>Vaillance</th><td>${esc(vaillance)}</td></tr></table>` +
+                `</div>` +
+
+                `<h2>Background</h2>` +
+                `<div class="pdf-bg">${background ? esc(background) : '(Non rédigé)'}</div>`;
+
+            // Overlay plein écran au premier plan : html2canvas ne capture correctement
+            // qu'un élément visible dans le viewport, page non scrollée (cf. exporterPDF).
+            const wrap = document.createElement('div');
+            wrap.id = 'pdfSheetTemp';
+            wrap.style.cssText = 'position:fixed;inset:0;background:#ffffff;z-index:2147483647;overflow:auto;margin:0;';
+            const sheet = document.createElement('div');
+            sheet.className = 'pdf-sheet';
+            sheet.style.margin = '0 auto';
+            sheet.innerHTML = html;
+            wrap.appendChild(sheet);
+            return wrap;
+        }
 
         // ============================================================
         //  NOTIFICATIONS (toasts)
@@ -1392,6 +1627,8 @@
                 avatar: val('char_avatar'),
                 nom: val('char_name'),
                 profession: val('char_profession'),
+                sexe: val('char_sexe'),
+                age: val('char_age'),
                 stats: {
                     force: val('stat_force'), dex: val('stat_dex'), cha: val('stat_cha'),
                     per: val('stat_per'), edu: val('stat_edu'), chance: val('stat_chance')
@@ -1400,6 +1637,7 @@
                 afflictions: afflictionsChoisies.map(a => ({ nom: a.nom, stade: a.stade, repartition: a.repartition })),
                 inventaires: {
                     monnaie: val('inv_money'),
+                    monnaieGlobal: val('inv_money_global'),
                     personnel: stockerInventaireTableau('container_perso'),
                     global: stockerInventaireTableau('container_global')
                 },
@@ -1452,6 +1690,8 @@
             document.getElementById('char_avatar').value = data.avatar || "";
             document.getElementById('char_name').value = data.nom || "";
             document.getElementById('char_profession').value = data.profession || "";
+            document.getElementById('char_sexe').value = data.sexe || "";
+            document.getElementById('char_age').value = data.age || "";
             if (data.stats) {
                 document.getElementById('stat_force').value = data.stats.force || 50;
                 document.getElementById('stat_dex').value = data.stats.dex || 50;
@@ -1471,6 +1711,7 @@
                 document.getElementById('lore_background').value = data.lore.background || "";
             }
             document.getElementById('inv_money').value = (data.inventaires && data.inventaires.monnaie) || "";
+            document.getElementById('inv_money_global').value = (data.inventaires && data.inventaires.monnaieGlobal) || "";
             const cPerso = document.getElementById('container_perso'); cPerso.innerHTML = "";
             const itemsPerso = (data.inventaires && data.inventaires.personnel) || [];
             itemsPerso.forEach(it => ajouterLigneInventaire('container_perso', 'Objet sur soi...', it));
