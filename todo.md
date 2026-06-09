@@ -1,6 +1,6 @@
 # A faire
 
-Il faudrait  modifier la sauvegarde (SAUVEGARDER MA FICHE) pour faire correspondre le formatage du Jon avec celui des prétirés, prend prétirés.json en référence pour "sauvegarder ma fiche" et fait en sorte que ca se passe bien quand j'importe avec le bouton "IMPORTER UNE SAUVEGARDE". Le but c'est que je puisse facilement intégrer mes conceptions dans les prétirés.
+Il faudrait  modifier la sauvegarde (SAUVEGARDER MA FICHE) pour faire correspondre le formatage du Json avec celui des prétirés, prend prétirés.json en référence pour "sauvegarder ma fiche" et fait en sorte que ca se passe bien quand j'importe avec le bouton "IMPORTER UNE SAUVEGARDE". Le but c'est que je puisse facilement intégrer mes conceptions dans les prétirés.
 Il faudra prévoir pour les pré-tiré ajouté le sex et l'age pour faire correspondre les champs.
 J'adore le pdf modifiable, parcontre il y a quelques bugs d'affichage:
 - "Fonction /Profession" est sur deux ligne, il faudrait que ce soit sur une seul ligne (ca déborde en dessous).
