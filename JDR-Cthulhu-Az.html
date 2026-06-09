@@ -6,7 +6,7 @@
     <title>Créateur de Personnage Cthulhu - Azpartam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.3/dist/html2pdf.bundle.min.js" integrity="sha384-1Rq385dzyHeeImKREXc2dTf1lhBKJHL8YR6phOUkikTCsUwGgDyWRoGv8KVG2+qY" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js" integrity="sha384-weMABwrltA6jWR8DDe9Jp5blk+tZQh7ugpCsF3JwSA53WZM9/14PjS5LAJNHNjAI" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         /* Impression directe (Ctrl+P de secours) : fond blanc, texte noir, peu d'encre */
         @media print {
@@ -18,7 +18,7 @@
                 print-color-adjust: exact !important;
             }
             body::before, body::after { display: none !important; }
-            #btnGenererPrompt, #btnExporterPDF, .gestion-donnees-bloc { display: none !important; }
+            #btnGenererPrompt, #btnExporterPDF, #btnRoll20, .gestion-donnees-bloc { display: none !important; }
             @page { size: A4; margin: 12mm; }
         }
 
@@ -319,15 +319,11 @@
         .hdr-banner {
             position: relative;
             overflow: hidden;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(53, 196, 165, 0.22);
-            background:
-                radial-gradient(120% 140% at 15% -20%, rgba(53, 196, 165, 0.10), transparent 60%),
-                radial-gradient(130% 160% at 100% 120%, rgba(214, 178, 94, 0.06), transparent 55%),
-                linear-gradient(180deg, #061015 0%, var(--abyss) 100%);
-            box-shadow:
-                inset 0 0 60px rgba(0, 0, 0, 0.55),
-                0 8px 30px rgba(0, 0, 0, 0.45);
+            border-radius: 0.75rem;
+            /* Même fond que les autres sections (.bg-slate-900) */
+            border: 1px solid rgba(79, 112, 103, 0.36);
+            background: linear-gradient(145deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98));
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .hdr-banner::after {
             content: "";
@@ -779,6 +775,9 @@
             </button>
             <button id="btnExporterPDF" onclick="exporterPDF()" class="bg-slate-700 hover:bg-slate-600 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
                 TÉLÉCHARGER LE PDF
+            </button>
+            <button id="btnRoll20" onclick="copierRoll20()" class="bg-slate-700 hover:bg-slate-600 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
+                COPIER POUR ROLL20
             </button>
         </div>
 
@@ -1378,64 +1377,32 @@
         // ============================================================
         //  EXPORT PDF — Fiche imprimable simple (fond blanc, texte noir)
         // ============================================================
-        function exporterPDF() {
-            if (typeof html2pdf === 'undefined') {
+        async function exporterPDF() {
+            if (!window.PDFLib) {
                 toast("Librairie PDF non chargée (vérifiez votre connexion internet).", "error", 6000);
                 return;
             }
-            let wrap;
             try {
-                wrap = construireFichePDF();
-                document.body.appendChild(wrap);
+                toast("Génération du PDF éditable…", "info", 2000);
+                const bytes = await construirePDFEditable();
+                const blob = new Blob([bytes], { type: 'application/pdf' });
+                const nomBrut = (document.getElementById('char_name').value || 'Enqueteur').trim();
+                const nomFichier = 'Fiche_' + (nomBrut.replace(/[^a-z0-9]/gi, '_') || 'Enqueteur') + '.pdf';
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = nomFichier;
+                document.body.appendChild(a); a.click(); a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1500);
+                toast("PDF éditable téléchargé.", "success");
             } catch (err) {
                 console.error(err);
-                toast("Erreur lors de la préparation du PDF (voir console).", "error", 6000);
-                return;
+                toast("Erreur lors de la génération du PDF (voir console).", "error", 6000);
             }
-            const nomBrut = (document.getElementById('char_name').value || 'Enqueteur').trim();
-            const nomFichier = 'Fiche_' + (nomBrut.replace(/[^a-z0-9]/gi, '_') || 'Enqueteur') + '.pdf';
-            const opt = {
-                margin: [10, 10, 12, 10],
-                filename: nomFichier,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['css', 'legacy'], avoid: '.pdf-block' }
-            };
-            toast("Génération du PDF en cours…", "info", 2500);
-            // html2canvas ne capture correctement que si la page n'est pas scrollée :
-            // on remonte en haut le temps de la capture, puis on restaure la position.
-            const scrollX0 = window.scrollX, scrollY0 = window.scrollY;
-            window.scrollTo(0, 0);
-            const cible = wrap.querySelector('.pdf-sheet');
-            html2pdf().set(opt).from(cible).save()
-                .then(() => toast("PDF téléchargé.", "success"))
-                .catch(err => { console.error(err); toast("Erreur lors de la génération du PDF (voir console).", "error", 6000); })
-                .finally(() => {
-                    if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
-                    window.scrollTo(scrollX0, scrollY0);
-                });
         }
 
-        // Construit (hors écran) le DOM de la fiche en tableaux noir/blanc, à partir des champs courants.
-        function construireFichePDF() {
-            const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        // Collecte toutes les valeurs courantes de la fiche (réutilisé par PDF + Roll20).
+        function collecterFichePourSortie() {
             const txt = id => { const e = document.getElementById(id); return e ? (e.textContent || '').trim() : ''; };
             const val = id => { const e = document.getElementById(id); return e ? (e.value || '').trim() : ''; };
-            const ou = (s, repl) => (s && s.length) ? s : (repl || '');
-
-            // --- Identité ---
-            const nom = ou(val('char_name'), 'Sans nom');
-            const profession = ou(val('char_profession'), '—');
-            const sexe = ou(val('char_sexe'), '—');
-            const age = ou(val('char_age'), '—');
-            const avatar = val('char_avatar');
-            const pcMax = ou(val('pc_max'), '0');
-            const pcRest = ou(txt('pc_restants_global'), '0');
-            const deductions = ou(val('pts_deduction'), '0');
-            const totalPts = ou(txt('totalPoints'), '0');
-
-            // --- Statistiques (Actuel calculé / Saisie) ---
             const stats = [
                 ['Force (STR)', 'display_force', 'stat_force'],
                 ['Dextérité (DEX)', 'display_dex', 'stat_dex'],
@@ -1443,137 +1410,227 @@
                 ['Perception (PER)', 'display_per', 'stat_per'],
                 ['Éducation (EDU)', 'display_edu', 'stat_edu'],
                 ['Chance (LUCK)', 'display_chance', 'stat_chance']
-            ];
-            const statsRows = stats.map(([lib, dId, sId]) =>
-                `<tr><td>${esc(lib)}</td><td style="text-align:center">${esc(ou(txt(dId), '—'))}</td><td style="text-align:center">${esc(ou(val(sId), '—'))}</td></tr>`
-            ).join('');
+            ].map(([lib, d, s]) => ({ lib, actuel: txt(d), saisie: val(s) }));
+            const comp = (typeof competencesChoisies !== 'undefined' ? competencesChoisies : []).map(c => {
+                const baseId = (typeof displayMapping !== 'undefined') ? displayMapping[c.statChoisie] : null;
+                const el = baseId ? document.getElementById(baseId) : null;
+                const base = el ? (parseInt(el.textContent) || 0) : 0;
+                return { nom: c.nom || '', niveau: c.niveau || '', stat: c.statChoisie || '', bonus: (c.bonus || 0), total: base + (c.bonus || 0) };
+            });
+            const aff = (typeof afflictionsChoisies !== 'undefined' ? afflictionsChoisies : []).map(a => {
+                const rep = Object.entries(a.repartition || {}).filter(([k, v]) => v > 0).map(([k, v]) => `-${v} ${k}`).join(', ');
+                return { nom: a.nom || '', stade: a.stade || '', malus: (a.cout_ps != null ? a.cout_ps : ''), gain: (a.gain_pc != null ? a.gain_pc : ''), bonus: (a.bonus_comp != null ? a.bonus_comp : ''), rep: rep || '—' };
+            });
+            return {
+                nom: val('char_name'), sexe: val('char_sexe'), age: val('char_age'), profession: val('char_profession'),
+                pcMax: val('pc_max'), pcRest: txt('pc_restants_global'), deductions: val('pts_deduction'), totalPts: txt('totalPoints'),
+                stats, courage: txt('val_courage'), resistance: txt('val_resistance'),
+                selMentale: mt_getRadioValue('san_mentale'), selPhysique: mt_getRadioValue('san_physique'),
+                compMax: val('comp_max_limit'), comp, aff,
+                monnaie: val('inv_money'), monnaieGlobal: val('inv_money_global'),
+                invPerso: Array.from(document.querySelectorAll('#container_perso input')).map(i => i.value.trim()).filter(Boolean),
+                invGlobal: Array.from(document.querySelectorAll('#container_global input')).map(i => i.value.trim()).filter(Boolean),
+                peurs: val('lore_peurs'), vaillance: val('lore_vaillance'), background: val('lore_background')
+            };
+        }
 
-            // --- Santé : Courage / Résistance + grilles à cocher (toutes les options affichées) ---
-            const courage = ou(txt('val_courage'), '—');
-            const resistance = ou(txt('val_resistance'), '—');
-            const selMentale = mt_getRadioValue('san_mentale');
-            const selPhysique = mt_getRadioValue('san_physique');
+        // Construit un VRAI PDF éditable (champs saisissables + cases à cocher) via pdf-lib.
+        // pdf-lib génère les apparences -> les valeurs sont visibles dans TOUS les lecteurs.
+        async function construirePDFEditable() {
+            const { PDFDocument, StandardFonts, rgb } = window.PDFLib;
+            const D = collecterFichePourSortie();
+            const doc = await PDFDocument.create();
+            const fN = await doc.embedFont(StandardFonts.Helvetica);
+            const fB = await doc.embedFont(StandardFonts.HelveticaBold);
+            const form = doc.getForm();
+
+            const MM = 2.834645;
+            const PW = 210 * MM, PH = 297 * MM;
+            const M = 12, W = 186, BOT = 285;
+            const BLACK = rgb(0, 0, 0), GREY = rgb(0.925, 0.925, 0.925), HEADG = rgb(0.96, 0.96, 0.96);
+            let page = doc.addPage([PW, PH]);
+            let y = M, fc = 0;
             const mentaleOpts = ['Aucune instabilité', 'Instabilité Légère', 'Instabilité Modérée', 'Instabilité Lourde', 'Instabilité Grave', 'Folie'];
             const physiqueOpts = ['Aucune blessure', 'Blessure(s) Légère(s)', 'Blessure(s) Modérée(s)', 'Blessure(s) Lourde(s)', 'Blessure(s) Grave(s)', 'Blessure(s) Mortelle(s)'];
-            const box = on => `<span class="pdf-box">${on ? 'X' : ''}</span>`;
-            let santeRows = '';
+            const mm = v => v * MM;
+            const safe = s => String(s == null ? '' : s).replace(/[^ -~ -ÿ–—‘’“”…€Œœ\n\t]/g, '');
+
+            function need(h) { if (y + h > BOT) { page = doc.addPage([PW, PH]); y = M; } }
+            function rect(x, yt, w, h, fill) {
+                page.drawRectangle({ x: mm(x), y: PH - mm(yt + h), width: mm(w), height: mm(h), borderColor: BLACK, borderWidth: 0.5, color: fill || undefined });
+            }
+            function text(t, x, ytBase, size, font, maxW) {
+                page.drawText(safe(t), { x: mm(x), y: PH - mm(ytBase), size, font: font || fN, color: BLACK, maxWidth: maxW ? mm(maxW) : undefined, lineHeight: size * 1.15 });
+            }
+            function textCenter(t, ytBase, size, font) {
+                const ft = font || fN, s = safe(t), w = ft.widthOfTextAtSize(s, size);
+                page.drawText(s, { x: (PW - w) / 2, y: PH - mm(ytBase), size, font: ft, color: BLACK });
+            }
+            function band(t) { need(9); rect(M, y, W, 7, GREY); text(t.toUpperCase(), M + 2, y + 4.9, 10.5, fB); y += 7; }
+            function label(x, yt, w, h, t, size) { rect(x, yt, w, h); text(t, x + 1.5, yt + h / 2 + 1.2, size || 8.5, fB, w - 3); }
+            function head(x, yt, w, h, t) { rect(x, yt, w, h, HEADG); text(t, x + 1.5, yt + h / 2 + 1.2, 8.5, fB, w - 3); }
+            function field(x, yt, w, h, value, opts) {
+                opts = opts || {};
+                rect(x, yt, w, h);
+                const f = form.createTextField('f' + (fc++));
+                if (opts.multiline) f.enableMultiline();
+                f.setText(safe(value));
+                f.addToPage(page, { x: mm(x) + 0.6, y: PH - mm(yt + h) + 0.6, width: mm(w) - 1.2, height: mm(h) - 1.2, font: fN, borderWidth: 0, backgroundColor: undefined });
+                try { f.setFontSize(opts.fontSize || 9); } catch (e) {}
+            }
+            function check(x, yt, sz, checked) {
+                const cb = form.createCheckBox('c' + (fc++));
+                cb.addToPage(page, { x: mm(x), y: PH - mm(yt + sz), width: mm(sz), height: mm(sz), borderColor: BLACK, borderWidth: 0.5 });
+                if (checked) cb.check(); else cb.uncheck();
+            }
+
+            // ----- Titre + sous-titre -----
+            textCenter('FICHE DE PERSONNAGE', y + 6, 18, fB);
+            textCenter('Système JDR Custom basé sur Cthulhu Dark — Pensé et conçu par Azpartam — Développé par Vinthos', y + 11, 7.5, fN);
+            y += 16;
+
+            // ----- INFORMATIONS GÉNÉRALES -----
+            band('Informations générales');
+            const h1 = 8; need(h1);
+            let x = M;
+            const wNomL = 14, wNomF = 56, wAgeL = 11, wAgeF = 46, wSexeL = 13, wSexeF = W - (wNomL + wNomF + wAgeL + wAgeF + wSexeL);
+            label(x, y, wNomL, h1, 'Nom'); x += wNomL; field(x, y, wNomF, h1, D.nom); x += wNomF;
+            label(x, y, wAgeL, h1, 'Âge'); x += wAgeL; field(x, y, wAgeF, h1, D.age); x += wAgeF;
+            label(x, y, wSexeL, h1, 'Sexe'); x += wSexeL; field(x, y, wSexeF, h1, D.sexe);
+            y += h1;
+            need(h1); const wProfL = 26; label(M, y, wProfL, h1, 'Fonction / Profession'); field(M + wProfL, y, W - wProfL, h1, D.profession); y += h1;
+            need(h1); const half = W / 2;
+            label(M, y, 44, h1, 'Points de compétences'); field(M + 44, y, half - 44, h1, (D.pcRest || '') + ' / ' + (D.pcMax || ''));
+            label(M + half, y, 40, h1, 'Points de déduction'); field(M + half + 40, y, half - 40, h1, D.deductions); y += h1;
+
+            // ----- STATISTIQUES -----
+            band('Statistiques');
+            const cs1 = W * 0.5, cs2 = W * 0.25, cs3 = W - cs1 - cs2, rs = 6.6;
+            need(rs); head(M, y, cs1, rs, 'Statistique'); head(M + cs1, y, cs2, rs, 'Actuel'); head(M + cs1 + cs2, y, cs3, rs, 'Saisie'); y += rs;
+            D.stats.forEach(s => { need(rs); label(M, y, cs1, rs, s.lib, 8.5); field(M + cs1, y, cs2, rs, s.actuel); field(M + cs1 + cs2, y, cs3, rs, s.saisie); y += rs; });
+            need(rs); label(M, y, cs1, rs, 'Total des points'); field(M + cs1, y, cs2 + cs3, rs, (D.totalPts || '') + ' / 300'); y += rs;
+
+            // ----- SANTÉ MENTALE & PHYSIQUE -----
+            band('Santé mentale & physique');
+            const hw = W / 2; need(h1);
+            label(M, y, 24, h1, 'Courage'); field(M + 24, y, hw - 24, h1, D.courage);
+            label(M + hw, y, 26, h1, 'Résistance'); field(M + hw + 26, y, hw - 26, h1, D.resistance); y += h1;
+            need(6); head(M, y, hw, 6, 'État mental'); head(M + hw, y, hw, 6, 'Blessures physiques'); y += 6;
             for (let i = 0; i < 6; i++) {
-                santeRows += `<tr>` +
-                    `<td style="text-align:center;width:26px">${box(mentaleOpts[i] === selMentale)}</td><td>${esc(mentaleOpts[i])}</td>` +
-                    `<td style="text-align:center;width:26px">${box(physiqueOpts[i] === selPhysique)}</td><td>${esc(physiqueOpts[i])}</td>` +
-                    `</tr>`;
+                const rh = 6.4; need(rh);
+                rect(M, y, hw, rh); rect(M + hw, y, hw, rh);
+                check(M + 2, y + (rh - 3.6) / 2, 3.6, mentaleOpts[i] === D.selMentale);
+                check(M + hw + 2, y + (rh - 3.6) / 2, 3.6, physiqueOpts[i] === D.selPhysique);
+                text(mentaleOpts[i], M + 7.5, y + rh / 2 + 1.1, 8.5, fN);
+                text(physiqueOpts[i], M + hw + 7.5, y + rh / 2 + 1.1, 8.5, fN);
+                y += rh;
             }
 
-            // --- Afflictions (3 max, lignes vides complétées) ---
-            const consignesAff = "Voir doc « JDR – Les Afflictions ». Vous pouvez choisir jusqu'à 3 afflictions initiales. Elles ne sont pas obligatoires et doivent être cohérentes avec les statistiques, les compétences, l'histoire et les autres afflictions du personnage. Les Afflictions permettent, en échange de Points de Statistiques (300 initialement) et d'une limitation de certaines statistiques, d'obtenir des points de compétences et, parfois, une nouvelle compétence jusqu'à un maximum de 5.";
-            const affData = (typeof afflictionsChoisies !== 'undefined' ? afflictionsChoisies : []).map(a => {
-                const rep = Object.entries(a.repartition || {}).filter(([k, v]) => v > 0).map(([k, v]) => `-${v} ${k}`).join(', ');
-                return {
-                    nom: a.nom || '', stade: a.stade || '',
-                    malus: (a.cout_ps != null ? a.cout_ps : ''),
-                    gain: (a.gain_pc != null ? a.gain_pc : ''),
-                    bonus: (a.bonus_comp != null ? a.bonus_comp : ''),
-                    rep: rep || '—'
-                };
-            });
-            let affRows = '';
-            for (let i = 0; i < Math.max(affData.length, 3); i++) {
-                const a = affData[i];
-                affRows += a
-                    ? `<tr><td>${esc(a.nom)}</td><td>${esc(a.stade)}</td><td style="text-align:center">${esc(a.malus)}</td><td style="text-align:center">+${esc(a.gain)}</td><td style="text-align:center">+${esc(a.bonus)}</td><td>${esc(a.rep)}</td></tr>`
-                    : `<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            // ----- COMPÉTENCES (avant les afflictions : page la plus utilisée en jeu) -----
+            band('Compétences (' + (D.compMax || '—') + ' max autorisées par le MJ)');
+            const k1 = W * 0.34, k2 = W * 0.18, k3 = W * 0.22, k4 = W * 0.13, k5 = W - k1 - k2 - k3 - k4;
+            need(rs); head(M, y, k1, rs, 'Compétence'); head(M + k1, y, k2, rs, 'Niveau'); head(M + k1 + k2, y, k3, rs, 'Statistique'); head(M + k1 + k2 + k3, y, k4, rs, 'Bonus'); head(M + k1 + k2 + k3 + k4, y, k5, rs, 'Total'); y += rs;
+            for (let i = 0; i < Math.max(D.comp.length, 6); i++) {
+                const c = D.comp[i]; need(rs);
+                field(M, y, k1, rs, c ? c.nom : '');
+                field(M + k1, y, k2, rs, c ? c.niveau : '');
+                field(M + k1 + k2, y, k3, rs, c ? c.stat : '');
+                field(M + k1 + k2 + k3, y, k4, rs, c ? ('+' + c.bonus) : '');
+                field(M + k1 + k2 + k3 + k4, y, k5, rs, c ? String(c.total) : '');
+                y += rs;
             }
 
-            // --- Compétences (lignes vides complétées) ---
-            const compMax = ou(val('comp_max_limit'), '—');
-            const compData = (typeof competencesChoisies !== 'undefined' ? competencesChoisies : []).map(c => {
-                const baseId = (typeof displayMapping !== 'undefined') ? displayMapping[c.statChoisie] : null;
-                const elBase = baseId ? document.getElementById(baseId) : null;
-                const base = elBase ? (parseInt(elBase.textContent) || 0) : 0;
-                const bonus = c.bonus || 0;
-                return { nom: c.nom || '', niveau: c.niveau || '', stat: c.statChoisie || '', bonus: bonus, total: base + bonus };
-            });
-            let compRows = '';
-            for (let i = 0; i < Math.max(compData.length, 6); i++) {
-                const c = compData[i];
-                compRows += c
-                    ? `<tr><td>${esc(c.nom)}</td><td>${esc(c.niveau)}</td><td>${esc(c.stat)}</td><td style="text-align:center">+${esc(c.bonus)}</td><td style="text-align:center">${esc(c.total)}</td></tr>`
-                    : `<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>`;
+            // ----- AFFLICTIONS -----
+            band('Afflictions (3 max)');
+            const consignes = "Voir doc « JDR – Les Afflictions ». Jusqu'à 3 afflictions initiales, cohérentes avec les statistiques, les compétences et l'histoire. Elles octroient des points de compétences (en échange de Points de Statistiques et d'une limitation de certaines stats) et parfois une nouvelle compétence (max 5).";
+            const cw = (() => { const words = consignes.split(' '); const lines = []; let cur = ''; for (const wd of words) { const t = cur ? cur + ' ' + wd : wd; if (fN.widthOfTextAtSize(safe(t), 7.5) > mm(W) && cur) { lines.push(cur); cur = wd; } else cur = t; } if (cur) lines.push(cur); return lines; })();
+            need(cw.length * 3.3 + 2);
+            cw.forEach((ln, i) => text(ln, M, y + 3 + i * 3.3, 7.5, fN));
+            y += cw.length * 3.3 + 2;
+            const a1 = W * 0.22, a2 = W * 0.16, a3 = W * 0.11, a4 = W * 0.11, a5 = W * 0.09, a6 = W - a1 - a2 - a3 - a4 - a5;
+            need(rs); head(M, y, a1, rs, 'Affliction'); head(M + a1, y, a2, rs, 'Stade'); head(M + a1 + a2, y, a3, rs, 'Malus PS'); head(M + a1 + a2 + a3, y, a4, rs, 'Gain PC'); head(M + a1 + a2 + a3 + a4, y, a5, rs, '+PC'); head(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, 'Répartition'); y += rs;
+            for (let i = 0; i < Math.max(D.aff.length, 3); i++) {
+                const a = D.aff[i]; need(rs);
+                field(M, y, a1, rs, a ? a.nom : '');
+                field(M + a1, y, a2, rs, a ? a.stade : '');
+                field(M + a1 + a2, y, a3, rs, a ? String(a.malus) : '');
+                field(M + a1 + a2 + a3, y, a4, rs, a ? ('+' + a.gain) : '');
+                field(M + a1 + a2 + a3 + a4, y, a5, rs, a ? ('+' + a.bonus) : '');
+                field(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, a ? a.rep : '');
+                y += rs;
             }
 
-            // --- Inventaire (2 colonnes, lignes vides complétées) ---
-            const monnaie = ou(val('inv_money'), '—');
-            const monnaieGlobal = ou(val('inv_money_global'), '—');
-            const invPerso = Array.from(document.querySelectorAll('#container_perso input')).map(i => i.value.trim()).filter(Boolean);
-            const invGlobal = Array.from(document.querySelectorAll('#container_global input')).map(i => i.value.trim()).filter(Boolean);
-            let invRows = '';
-            for (let i = 0; i < Math.max(invPerso.length, invGlobal.length, 8); i++) {
-                invRows += `<tr><td>${esc(invPerso[i] || '')}&nbsp;</td><td>${esc(invGlobal[i] || '')}&nbsp;</td></tr>`;
+            // ----- INVENTAIRE -----
+            band('Inventaire');
+            need(h1);
+            label(M, y, 30, h1, 'Argent local (sur soi)'); field(M + 30, y, hw - 30, h1, D.monnaie);
+            label(M + hw, y, 32, h1, 'Argent global (planque)'); field(M + hw + 32, y, hw - 32, h1, D.monnaieGlobal); y += h1;
+            need(6); head(M, y, hw, 6, 'Sur soi (Locale)'); head(M + hw, y, hw, 6, 'Coffre / Planque (Global)'); y += 6;
+            for (let i = 0; i < Math.max(D.invPerso.length, D.invGlobal.length, 6); i++) {
+                need(rs); field(M, y, hw, rs, D.invPerso[i] || ''); field(M + hw, y, hw, rs, D.invGlobal[i] || ''); y += rs;
             }
 
-            // --- Histoire ---
-            const peurs = ou(val('lore_peurs'), '—');
-            const vaillance = ou(val('lore_vaillance'), '—');
-            const background = val('lore_background');
+            // ----- HISTOIRE -----
+            band('Histoire du personnage');
+            need(h1); label(M, y, 30, h1, 'Peurs profondes'); field(M + 30, y, W - 30, h1, D.peurs); y += h1;
+            need(h1); label(M, y, 30, h1, 'Vaillance'); field(M + 30, y, W - 30, h1, D.vaillance); y += h1;
+            need(45);
+            const bgH = Math.max(40, BOT - y);
+            field(M, y, W, bgH, D.background, { multiline: true, fontSize: 9 });
+            y += bgH;
 
-            const html =
-                `<h1>Fiche de Personnage</h1>` +
-                `<p class="pdf-sub">Système JDR Custom basé sur Cthulhu Dark — ${esc(nom)}</p>` +
+            return await doc.save();
+        }
 
-                `<div class="pdf-block"><h2>Informations générales</h2><table>` +
-                `<tr><th style="width:38%">Nom &amp; Prénom</th><td>${esc(nom)}</td></tr>` +
-                `<tr><th>Sexe</th><td>${esc(sexe)}</td></tr>` +
-                `<tr><th>Âge</th><td>${esc(age)}</td></tr>` +
-                `<tr><th>Fonction / Profession</th><td>${esc(profession)}</td></tr>` +
-                (avatar ? `<tr><th>Avatar (lien)</th><td>${esc(avatar)}</td></tr>` : '') +
-                `<tr><th>Points de compétences</th><td>${esc(pcRest)} restants / ${esc(pcMax)} initiaux</td></tr>` +
-                `<tr><th>Points de déduction</th><td>${esc(deductions)}</td></tr>` +
-                `</table></div>` +
+        // Copie la fiche (HTML riche + texte) dans le presse-papier pour coller dans Roll20 (Bio & Info).
+        function copierRoll20() {
+            const D = collecterFichePourSortie();
+            const esc = s => String(s == null ? '' : s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+            const TB = 'border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse"';
+            const kv = (a, b) => `<tr><td><strong>${esc(a)}</strong></td><td>${esc(b)}</td></tr>`;
+            let h = `<h2>${esc(D.nom || 'Sans nom')}</h2>`;
+            h += `<table ${TB}>${kv('Sexe', D.sexe)}${kv('Âge', D.age)}${kv('Fonction / Profession', D.profession)}${kv('Points de compétences', (D.pcRest || '') + ' / ' + (D.pcMax || ''))}${kv('Points de déduction', D.deductions)}</table>`;
+            h += `<h3>Statistiques</h3><table ${TB}><tr><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Saisie</strong></td></tr>`;
+            D.stats.forEach(s => h += `<tr><td>${esc(s.lib)}</td><td>${esc(s.actuel)}</td><td>${esc(s.saisie)}</td></tr>`);
+            h += `<tr><td><strong>Total</strong></td><td colspan="2">${esc((D.totalPts || '') + ' / 300')}</td></tr></table>`;
+            h += `<h3>Santé mentale &amp; physique</h3><p><strong>Courage :</strong> ${esc(D.courage)} &nbsp;|&nbsp; <strong>Résistance :</strong> ${esc(D.resistance)}<br><strong>État mental :</strong> ${esc(D.selMentale)} &nbsp;|&nbsp; <strong>Blessures :</strong> ${esc(D.selPhysique)}</p>`;
+            h += `<h3>Compétences</h3><table ${TB}><tr><td><strong>Compétence</strong></td><td><strong>Niveau</strong></td><td><strong>Stat</strong></td><td><strong>Bonus</strong></td><td><strong>Total</strong></td></tr>`;
+            if (D.comp.length) D.comp.forEach(c => h += `<tr><td>${esc(c.nom)}</td><td>${esc(c.niveau)}</td><td>${esc(c.stat)}</td><td>+${esc(c.bonus)}</td><td>${esc(c.total)}</td></tr>`);
+            else h += `<tr><td colspan="5"><em>Aucune</em></td></tr>`;
+            h += `</table>`;
+            h += `<h3>Afflictions</h3>`;
+            if (D.aff.length) {
+                h += `<table ${TB}><tr><td><strong>Affliction</strong></td><td><strong>Stade</strong></td><td><strong>Malus PS</strong></td><td><strong>Gain PC</strong></td><td><strong>+PC</strong></td><td><strong>Répartition</strong></td></tr>`;
+                D.aff.forEach(a => h += `<tr><td>${esc(a.nom)}</td><td>${esc(a.stade)}</td><td>${esc(a.malus)}</td><td>+${esc(a.gain)}</td><td>+${esc(a.bonus)}</td><td>${esc(a.rep)}</td></tr>`);
+                h += `</table>`;
+            } else h += `<p><em>Aucune</em></p>`;
+            h += `<h3>Inventaire</h3><p><strong>Argent local :</strong> ${esc(D.monnaie)} &nbsp;|&nbsp; <strong>Argent global :</strong> ${esc(D.monnaieGlobal)}</p>`;
+            h += `<table ${TB}><tr><td><strong>Sur soi (Locale)</strong></td><td><strong>Coffre / Planque (Global)</strong></td></tr>`;
+            const ni = Math.max(D.invPerso.length, D.invGlobal.length, 1);
+            for (let i = 0; i < ni; i++) h += `<tr><td>${esc(D.invPerso[i] || '')}</td><td>${esc(D.invGlobal[i] || '')}</td></tr>`;
+            h += `</table>`;
+            h += `<h3>Histoire</h3><p><strong>Peurs profondes :</strong> ${esc(D.peurs)}<br><strong>Vaillance :</strong> ${esc(D.vaillance)}</p>`;
+            if (D.background) h += `<p>${esc(D.background).replace(/\n/g, '<br>')}</p>`;
 
-                `<div class="pdf-block"><h2>Statistiques</h2><table>` +
-                `<tr><th>Statistique</th><th style="width:22%;text-align:center">Actuel</th><th style="width:22%;text-align:center">Saisie</th></tr>` +
-                statsRows +
-                `<tr><th>Total des points</th><td colspan="2" style="text-align:center">${esc(totalPts)} / 300</td></tr>` +
-                `</table></div>` +
+            const sep = '----------------------------------------';
+            let t = D.nom + '\n' + sep + '\n';
+            t += 'Sexe : ' + D.sexe + ' | Âge : ' + D.age + '\nFonction : ' + D.profession + '\n';
+            t += 'Points de compétences : ' + D.pcRest + ' / ' + D.pcMax + ' | Points de déduction : ' + D.deductions + '\n' + sep + '\n';
+            t += 'STATISTIQUES (Actuel / Saisie)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\nTotal : ' + D.totalPts + ' / 300\n' + sep + '\n';
+            t += 'SANTÉ — Courage : ' + D.courage + ' | Résistance : ' + D.resistance + '\nÉtat mental : ' + D.selMentale + ' | Blessures : ' + D.selPhysique + '\n' + sep + '\n';
+            t += 'COMPÉTENCES\n' + (D.comp.length ? D.comp.map(c => '- ' + c.nom + ' [' + c.niveau + '] ' + c.stat + ' +' + c.bonus + ' = ' + c.total).join('\n') : 'Aucune') + '\n' + sep + '\n';
+            t += 'AFFLICTIONS\n' + (D.aff.length ? D.aff.map(a => '- ' + a.nom + ' [' + a.stade + '] malus ' + a.malus + ', +' + a.gain + ' PC, +' + a.bonus + ' PC bonus (' + a.rep + ')').join('\n') : 'Aucune') + '\n' + sep + '\n';
+            t += 'INVENTAIRE — Argent local : ' + D.monnaie + ' | Argent global : ' + D.monnaieGlobal + '\nSur soi : ' + (D.invPerso.join(', ') || '—') + '\nPlanque : ' + (D.invGlobal.join(', ') || '—') + '\n' + sep + '\n';
+            t += 'HISTOIRE — Peurs : ' + D.peurs + ' | Vaillance : ' + D.vaillance + '\n' + (D.background || '');
 
-                `<div class="pdf-block"><h2>Santé mentale &amp; physique</h2>` +
-                `<table><tr><th style="width:25%">Courage</th><td style="width:25%;text-align:center">${esc(courage)}</td><th style="width:25%">Résistance</th><td style="text-align:center">${esc(resistance)}</td></tr></table>` +
-                `<table><tr><th colspan="2">État mental</th><th colspan="2">Blessures physiques</th></tr>${santeRows}</table>` +
-                `</div>` +
-
-                `<div class="pdf-block"><h2>Afflictions (3 max)</h2>` +
-                `<p class="pdf-note">${esc(consignesAff)}</p>` +
-                `<table><tr><th style="width:22%">Affliction</th><th style="width:16%">Stade</th><th style="width:11%;text-align:center">Malus PS</th><th style="width:11%;text-align:center">Gain PC</th><th style="width:9%;text-align:center">+PC</th><th>Répartition malus</th></tr>${affRows}</table>` +
-                `</div>` +
-
-                `<div class="pdf-block"><h2>Compétences (${esc(compMax)} max autorisées par le MJ)</h2>` +
-                `<table><tr><th style="width:34%">Compétence</th><th style="width:18%">Niveau</th><th style="width:22%">Statistique</th><th style="width:13%;text-align:center">Bonus</th><th style="width:13%;text-align:center">Total</th></tr>${compRows}</table>` +
-                `</div>` +
-
-                `<div class="pdf-block"><h2>Inventaire</h2>` +
-                `<table><tr><th style="width:38%">Argent local (sur soi)</th><td>${esc(monnaie)}</td></tr>` +
-                `<tr><th>Argent global (planque)</th><td>${esc(monnaieGlobal)}</td></tr></table>` +
-                `<table><tr><th style="width:50%">Sur soi (Locale)</th><th>Coffre / Planque (Global)</th></tr>${invRows}</table>` +
-                `</div>` +
-
-                `<div class="pdf-block"><h2>Histoire du personnage</h2>` +
-                `<table><tr><th style="width:38%">Peurs profondes</th><td>${esc(peurs)}</td></tr><tr><th>Vaillance</th><td>${esc(vaillance)}</td></tr></table>` +
-                `</div>` +
-
-                `<h2>Background</h2>` +
-                `<div class="pdf-bg">${background ? esc(background) : '(Non rédigé)'}</div>`;
-
-            // Overlay plein écran au premier plan : html2canvas ne capture correctement
-            // qu'un élément visible dans le viewport, page non scrollée (cf. exporterPDF).
-            const wrap = document.createElement('div');
-            wrap.id = 'pdfSheetTemp';
-            wrap.style.cssText = 'position:fixed;inset:0;background:#ffffff;z-index:2147483647;overflow:auto;margin:0;';
-            const sheet = document.createElement('div');
-            sheet.className = 'pdf-sheet';
-            sheet.style.margin = '0 auto';
-            sheet.innerHTML = html;
-            wrap.appendChild(sheet);
-            return wrap;
+            const okMsg = () => toast("Mise en page copiée ! Collez-la dans Roll20 → onglet « Bio & Info ».", "success", 6000);
+            const fallback = () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); okMsg(); } catch (e) { toast("Copie impossible.", "error"); } ta.remove(); };
+            if (navigator.clipboard && window.ClipboardItem) {
+                try {
+                    navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([h], { type: 'text/html' }), 'text/plain': new Blob([t], { type: 'text/plain' }) })])
+                        .then(okMsg).catch(() => fallback());
+                } catch (e) { fallback(); }
+            } else fallback();
         }
 
         // ============================================================
@@ -1863,7 +1920,8 @@
             const dejaRempli = (val('char_name').trim() !== "" || competencesChoisies.length > 0);
             if (dejaRempli && !confirm("Remplacer la fiche en cours par un enquêteur tiré au hasard ?")) return;
 
-            const prenoms = ["Arthur","Eleanor","Howard","Margaret","Walter","Iris","Edgar","Cordelia","Vincent","Beatrice","Oscar","Lavinia","Clarence","Agatha","Ambrose","Wilhelmina","Silas","Rosalind"];
+            const prenomsH = ["Arthur","Howard","Walter","Edgar","Vincent","Oscar","Clarence","Ambrose","Silas"];
+            const prenomsF = ["Eleanor","Margaret","Iris","Cordelia","Beatrice","Lavinia","Agatha","Wilhelmina","Rosalind"];
             const noms = ["Calloway","Ashcroft","Whateley","Marsh","Pickman","Derleth","Lowell","Carter","Blackwood","Thorne","Wexley","Harrow","Vance","Sallow","Gantry","Amherst"];
             const professions = ["Journaliste","Antiquaire","Médecin","Professeur","Détective privé","Bibliothécaire","Archéologue","Marin au long cours","Prêtre défroqué","Occultiste","Photographe","Notaire","Infirmière","Explorateur"];
             const peursL = ["L'obscurité totale","Les espaces clos","Les profondeurs marines","Être oublié de tous","Les murmures sans source","La folie héréditaire","Les miroirs au crépuscule","Le grand large"];
@@ -1920,14 +1978,21 @@
                 return { nom: x.cle, niveau: niveau, statChoisie: statChoisie };
             });
 
+            const estHomme = Math.random() < 0.5;
+            const prenom = _rand(estHomme ? prenomsH : prenomsF);
+            const ageNum = 22 + Math.floor(Math.random() * 34); // 22 à 55 ans
+            const ageStr = ageNum + " ans (" + (estHomme ? "né" : "née") + " en " + (1925 - ageNum) + ")";
+
             const data = {
                 avatar: "",
-                nom: _rand(prenoms) + " " + _rand(noms),
+                nom: prenom + " " + _rand(noms),
+                sexe: estHomme ? "Homme" : "Femme",
+                age: ageStr,
                 profession: _rand(professions),
                 stats: stats,
                 competences: competences,
                 afflictions: [],
-                inventaires: { monnaie: (10 + Math.floor(Math.random() * 40) * 5) + "$", personnel: [], global: [] },
+                inventaires: { monnaie: (10 + Math.floor(Math.random() * 40) * 5) + "$", monnaieGlobal: (Math.floor(Math.random() * 20) * 50) + "$", personnel: [], global: [] },
                 lore: { peurs: _rand(peursL), vaillance: _rand(vaillancesL), background: "" },
                 etats: { mentale: "Aucune instabilité", physique: "Aucune blessure" },
                 regles: {
