@@ -1373,7 +1373,7 @@
                 const base = el ? (parseInt(el.textContent) || 0) : 0;
                 return { nom: c.nom || '', niveau: c.niveau || '', stat: c.statChoisie || '', bonus: (c.bonus || 0), total: base + (c.bonus || 0) };
             });
-            const abrevStat = { "Force": "For", "Dextérité": "Dex", "Charisme": "Cha", "Perception": "Per", "Éducation": "Édu", "Chance": "Chc" };
+            const abrevStat = { "Force": "For", "Dextérité": "Dex", "Charisme": "Char", "Perception": "Per", "Éducation": "Édu", "Chance": "Chance" };
             const aff = (typeof afflictionsChoisies !== 'undefined' ? afflictionsChoisies : []).map(a => {
                 const ents = Object.entries(a.repartition || {}).filter(([k, v]) => v > 0);
                 const rep = ents.map(([k, v]) => `-${v} ${k}`).join(', ');
@@ -1432,16 +1432,23 @@
                 page.drawText(s, { x: (PW - w) / 2, y: PH - mm(ytBase), size, font: ft, color: BLACK });
             }
             function band(t) { need(9); rect(M, y, W, 7, GREY); text(t.toUpperCase(), M + 2, y + 4.9, 10.5, fB); y += 7; }
-            function label(x, yt, w, h, t, size) { rect(x, yt, w, h); textFit(t, x + 1.5, yt + h / 2 + 1.2, size || 8.5, fB, w - 3); }
-            function head(x, yt, w, h, t) { rect(x, yt, w, h, HEADG); textFit(t, x + 1.5, yt + h / 2 + 1.2, 8.5, fB, w - 3); }
+            function label(x, yt, w, h, t, size) { rect(x, yt, w, h); textFit(t, x + 2, yt + h / 2 + 1.2, size || 8.5, fB, w - 3.5); }
+            function head(x, yt, w, h, t) { rect(x, yt, w, h, HEADG); textFit(t, x + 2, yt + h / 2 + 1.2, 8.5, fB, w - 3.5); }
             function field(x, yt, w, h, value, opts) {
                 opts = opts || {};
                 rect(x, yt, w, h);
                 const f = form.createTextField('f' + (fc++));
                 if (opts.multiline) f.enableMultiline();
                 f.setText(safe(value));
-                f.addToPage(page, { x: mm(x) + 0.6, y: PH - mm(yt + h) + 0.6, width: mm(w) - 1.2, height: mm(h) - 1.2, font: fN, borderWidth: 0, backgroundColor: undefined });
+                f.addToPage(page, { x: mm(x) + 1.8, y: PH - mm(yt + h) + 0.6, width: mm(w) - 2.4, height: mm(h) - 1.2, font: fN, borderWidth: 0, backgroundColor: undefined });
                 try { f.setFontSize(opts.fontSize || 9); } catch (e) {}
+            }
+            // Deux champs éditables séparés par un « / » (une case par valeur, ex : 23 / 25).
+            function fieldPair(x, yt, w, h, v1, v2, opts) {
+                const sep = 4, fw = (w - sep) / 2;
+                field(x, yt, fw, h, v1, opts);
+                text('/', x + fw + sep / 2 - 0.7, yt + h / 2 + 1.6, 10, fB);
+                field(x + fw + sep, yt, fw, h, v2, opts);
             }
             function check(x, yt, sz, checked) {
                 const cb = form.createCheckBox('c' + (fc++));
@@ -1465,15 +1472,24 @@
             y += h1;
             need(h1); const wProfL = 36; label(M, y, wProfL, h1, 'Fonction / Profession'); field(M + wProfL, y, W - wProfL, h1, D.profession); y += h1;
             need(h1); const half = W / 2;
-            label(M, y, 44, h1, 'Points de compétences'); field(M + 44, y, half - 44, h1, (D.pcRest || '') + ' / ' + (D.pcMax || ''));
+            label(M, y, 44, h1, 'Points de compétences'); fieldPair(M + 44, y, half - 44, h1, D.pcRest, D.pcMax);
             label(M + half, y, 40, h1, 'Points de déduction'); field(M + half + 40, y, half - 40, h1, D.deductions); y += h1;
 
             // ----- STATISTIQUES -----
             band('Statistiques');
-            const cs1 = W * 0.5, cs2 = W * 0.25, cs3 = W - cs1 - cs2, rs = 6.6;
-            need(rs); head(M, y, cs1, rs, 'Statistique'); head(M + cs1, y, cs2, rs, 'Actuel'); head(M + cs1 + cs2, y, cs3, rs, 'Saisie'); y += rs;
-            D.stats.forEach(s => { need(rs); label(M, y, cs1, rs, s.lib, 8.5); field(M + cs1, y, cs2, rs, s.actuel); field(M + cs1 + cs2, y, cs3, rs, s.saisie); y += rs; });
-            need(rs); label(M, y, cs1, rs, 'Total des points'); field(M + cs1, y, cs2 + cs3, rs, (D.totalPts || '') + ' / 300'); y += rs;
+            const rs = 6.2;
+            const bw = W / 2, sc1 = bw * 0.5, sc2 = bw * 0.25, sc3 = bw - sc1 - sc2;
+            need(rs);
+            head(M, y, sc1, rs, 'Statistique'); head(M + sc1, y, sc2, rs, 'Actuel'); head(M + sc1 + sc2, y, sc3, rs, 'Saisie');
+            head(M + bw, y, sc1, rs, 'Statistique'); head(M + bw + sc1, y, sc2, rs, 'Actuel'); head(M + bw + sc1 + sc2, y, sc3, rs, 'Saisie');
+            y += rs;
+            for (let i = 0; i < 3; i++) {
+                const sg = D.stats[i * 2], sd = D.stats[i * 2 + 1]; need(rs);
+                label(M, y, sc1, rs, sg.lib, 8.5); field(M + sc1, y, sc2, rs, sg.actuel); field(M + sc1 + sc2, y, sc3, rs, sg.saisie);
+                if (sd) { label(M + bw, y, sc1, rs, sd.lib, 8.5); field(M + bw + sc1, y, sc2, rs, sd.actuel); field(M + bw + sc1 + sc2, y, sc3, rs, sd.saisie); }
+                y += rs;
+            }
+            need(rs); label(M, y, sc1, rs, 'Total des points'); fieldPair(M + sc1, y, sc2 + sc3, rs, D.totalPts, '300'); y += rs;
 
             // ----- SANTÉ MENTALE & PHYSIQUE -----
             band('Santé mentale & physique');
@@ -1495,7 +1511,7 @@
             band('Compétences (' + (D.compMax || '—') + ' max autorisées par le MJ)');
             const k1 = W * 0.34, k2 = W * 0.18, k3 = W * 0.22, k4 = W * 0.13, k5 = W - k1 - k2 - k3 - k4;
             need(rs); head(M, y, k1, rs, 'Compétence'); head(M + k1, y, k2, rs, 'Niveau'); head(M + k1 + k2, y, k3, rs, 'Statistique'); head(M + k1 + k2 + k3, y, k4, rs, 'Bonus'); head(M + k1 + k2 + k3 + k4, y, k5, rs, 'Total'); y += rs;
-            for (let i = 0; i < Math.max(D.comp.length, 6); i++) {
+            for (let i = 0; i < Math.max(D.comp.length, 9); i++) {
                 const c = D.comp[i]; need(rs);
                 field(M, y, k1, rs, c ? c.nom : '');
                 field(M + k1, y, k2, rs, c ? c.niveau : '');
@@ -1507,13 +1523,8 @@
 
             // ----- AFFLICTIONS -----
             band('Afflictions (3 max)');
-            const consignes = "Voir doc « JDR – Les Afflictions ». Jusqu'à 3 afflictions initiales, cohérentes avec les statistiques, les compétences et l'histoire. Elles octroient des points de compétences (en échange de Points de Statistiques et d'une limitation de certaines stats) et parfois une nouvelle compétence (max 5).";
-            const cw = (() => { const words = consignes.split(' '); const lines = []; let cur = ''; for (const wd of words) { const t = cur ? cur + ' ' + wd : wd; if (fN.widthOfTextAtSize(safe(t), 7.5) > mm(W) && cur) { lines.push(cur); cur = wd; } else cur = t; } if (cur) lines.push(cur); return lines; })();
-            need(cw.length * 3.3 + 2);
-            cw.forEach((ln, i) => text(ln, M, y + 3 + i * 3.3, 7.5, fN));
-            y += cw.length * 3.3 + 2;
             const a1 = W * 0.20, a2 = W * 0.12, a3 = W * 0.09, a4 = W * 0.09, a5 = W * 0.07, a6 = W - a1 - a2 - a3 - a4 - a5;
-            need(rs); head(M, y, a1, rs, 'Affliction'); head(M + a1, y, a2, rs, 'Stade'); head(M + a1 + a2, y, a3, rs, 'Malus'); head(M + a1 + a2 + a3, y, a4, rs, 'Gain'); head(M + a1 + a2 + a3 + a4, y, a5, rs, '+PC'); head(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, 'Répartition (For/Dex/Cha/Per/Édu/Chc)'); y += rs;
+            need(rs); head(M, y, a1, rs, 'Affliction'); head(M + a1, y, a2, rs, 'Stade'); head(M + a1 + a2, y, a3, rs, 'Perte PS'); head(M + a1 + a2 + a3, y, a4, rs, 'Gain PC'); head(M + a1 + a2 + a3 + a4, y, a5, rs, 'Comp'); head(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, 'Répartition de perte de PS (For/Dex/Char/Per/Édu/Chance)'); y += rs;
             for (let i = 0; i < Math.max(D.aff.length, 3); i++) {
                 const a = D.aff[i]; need(rs);
                 field(M, y, a1, rs, a ? a.nom : '', { fontSize: 8 });
@@ -1524,6 +1535,12 @@
                 field(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, a ? a.repCourt : '', { fontSize: 7.5 });
                 y += rs;
             }
+            // Consigne SOUS le tableau, précédée d'une étoile.
+            const consignes = "*  Choisissez jusqu'à trois afflictions initiales en accord avec votre personnage. Cela impacte vos statistiques et le nombre de compétences/points de compétence (maximum 5 compétences au total). PS=Points de statistique, PC=Points de compétence, Comp=Nombre de compétences supplémentaires.";
+            const cw = (() => { const words = consignes.split(' '); const lines = []; let cur = ''; for (const wd of words) { const t = cur ? cur + ' ' + wd : wd; if (fN.widthOfTextAtSize(safe(t), 7.5) > mm(W) && cur) { lines.push(cur); cur = wd; } else cur = t; } if (cur) lines.push(cur); return lines; })();
+            need(cw.length * 3.3 + 3);
+            cw.forEach((ln, i) => text(ln, M, y + 3 + i * 3.3, 7.5, fN));
+            y += cw.length * 3.3 + 3;
 
             // ----- INVENTAIRE (forcé en haut d'une nouvelle page : plus propre) -----
             page = doc.addPage([PW, PH]); y = M;
@@ -1532,7 +1549,7 @@
             label(M, y, 24, h1, 'Argent local'); field(M + 24, y, hw - 24, h1, D.monnaie);
             label(M + hw, y, 24, h1, 'Argent global'); field(M + hw + 24, y, hw - 24, h1, D.monnaieGlobal); y += h1;
             need(6); head(M, y, hw, 6, 'Sur soi (Locale)'); head(M + hw, y, hw, 6, 'Coffre / Planque (Global)'); y += 6;
-            for (let i = 0; i < Math.max(D.invPerso.length, D.invGlobal.length, 6); i++) {
+            for (let i = 0; i < Math.max(D.invPerso.length, D.invGlobal.length, 9); i++) {
                 need(rs); field(M, y, hw, rs, D.invPerso[i] || ''); field(M + hw, y, hw, rs, D.invGlobal[i] || ''); y += rs;
             }
 
