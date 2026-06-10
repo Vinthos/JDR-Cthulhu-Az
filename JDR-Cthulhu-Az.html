@@ -1188,50 +1188,49 @@
             return "Aucun";
         }
 
-        // --- SAUVEGARDER LA FICHE (Format JSON) ---
+        // --- SAUVEGARDER LA FICHE (format IDENTIQUE à pretires.json) ---
+        // Même structure, même ordre de clés, stats en nombres, compétences/afflictions
+        // au format minimal -> il suffit de copier-coller l'objet dans pretires.json sous une clé.
         function sauvegarderFiche() {
+            const num = id => { const v = parseInt((document.getElementById(id) || {}).value, 10); return isNaN(v) ? 0 : v; };
             const data = {
-                avatar: document.getElementById('char_avatar').value,
-                nom: document.getElementById('char_name').value,
-                profession: document.getElementById('char_profession').value,
-                sexe: document.getElementById('char_sexe').value,
-                age: document.getElementById('char_age').value,
+                nom: val('char_name'),
+                profession: val('char_profession'),
+                sexe: val('char_sexe'),
+                age: val('char_age'),
+                avatar: val('char_avatar'),
                 stats: {
-                    force: document.getElementById('stat_force').value,
-                    dex: document.getElementById('stat_dex').value,
-                    cha: document.getElementById('stat_cha').value,
-                    per: document.getElementById('stat_per').value,
-                    edu: document.getElementById('stat_edu').value,
-                    chance: document.getElementById('stat_chance').value
+                    force: num('stat_force'), dex: num('stat_dex'), cha: num('stat_cha'),
+                    per: num('stat_per'), edu: num('stat_edu'), chance: num('stat_chance')
                 },
-                competences: competencesChoisies,
-                afflictions: afflictionsChoisies,
+                competences: competencesChoisies.map(c => ({ nom: c.nom, niveau: c.niveau, statChoisie: c.statChoisie })),
+                afflictions: afflictionsChoisies.map(a => ({ nom: a.nom, stade: a.stade, repartition: a.repartition })),
                 inventaires: {
-                    monnaie: document.getElementById('inv_money').value,
-                    monnaieGlobal: document.getElementById('inv_money_global').value,
+                    monnaie: val('inv_money'),
+                    monnaieGlobal: val('inv_money_global'),
                     personnel: stockerInventaireTableau('container_perso'),
                     global: stockerInventaireTableau('container_global')
                 },
                 lore: {
-                    peurs: document.getElementById('lore_peurs').value,
-                    vaillance: document.getElementById('lore_vaillance').value,
-                    background: document.getElementById('lore_background').value
+                    peurs: val('lore_peurs'),
+                    vaillance: val('lore_vaillance'),
+                    background: val('lore_background')
                 },
                 etats: {
                     mentale: mt_getRadioValue('san_mentale'),
                     physique: mt_getRadioValue('san_physique')
                 },
                 regles: {
-                    pc_max: document.getElementById('pc_max').value,
-                    comp_max_limit: document.getElementById('comp_max_limit').value,
-                    pts_deduction: document.getElementById('pts_deduction').value
+                    pc_max: val('pc_max'),
+                    comp_max_limit: val('comp_max_limit'),
+                    pts_deduction: val('pts_deduction')
                 }
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Sauvegarde_${data.nom.replace(/[^a-z0-9]/gi, '_') || 'Enqueteur'}.json`;
+            a.download = `Sauvegarde_${(data.nom || 'Enqueteur').replace(/[^a-z0-9]/gi, '_') || 'Enqueteur'}.json`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -1374,9 +1373,12 @@
                 const base = el ? (parseInt(el.textContent) || 0) : 0;
                 return { nom: c.nom || '', niveau: c.niveau || '', stat: c.statChoisie || '', bonus: (c.bonus || 0), total: base + (c.bonus || 0) };
             });
+            const abrevStat = { "Force": "For", "Dextérité": "Dex", "Charisme": "Cha", "Perception": "Per", "Éducation": "Édu", "Chance": "Chc" };
             const aff = (typeof afflictionsChoisies !== 'undefined' ? afflictionsChoisies : []).map(a => {
-                const rep = Object.entries(a.repartition || {}).filter(([k, v]) => v > 0).map(([k, v]) => `-${v} ${k}`).join(', ');
-                return { nom: a.nom || '', stade: a.stade || '', malus: (a.cout_ps != null ? a.cout_ps : ''), gain: (a.gain_pc != null ? a.gain_pc : ''), bonus: (a.bonus_comp != null ? a.bonus_comp : ''), rep: rep || '—' };
+                const ents = Object.entries(a.repartition || {}).filter(([k, v]) => v > 0);
+                const rep = ents.map(([k, v]) => `-${v} ${k}`).join(', ');
+                const repCourt = ents.map(([k, v]) => `${abrevStat[k] || k} -${v}`).join('  ');
+                return { nom: a.nom || '', stade: a.stade || '', malus: (a.cout_ps != null ? a.cout_ps : ''), gain: (a.gain_pc != null ? a.gain_pc : ''), bonus: (a.bonus_comp != null ? a.bonus_comp : ''), rep: rep || '—', repCourt: repCourt || '—' };
             });
             return {
                 nom: val('char_name'), sexe: val('char_sexe'), age: val('char_age'), profession: val('char_profession'),
@@ -1419,13 +1421,19 @@
             function text(t, x, ytBase, size, font, maxW) {
                 page.drawText(safe(t), { x: mm(x), y: PH - mm(ytBase), size, font: font || fN, color: BLACK, maxWidth: maxW ? mm(maxW) : undefined, lineHeight: size * 1.15 });
             }
+            // Texte sur UNE seule ligne : réduit la police si besoin pour tenir dans maxWmm (pas de débordement).
+            function textFit(t, x, ytBase, maxSize, font, maxWmm) {
+                const ft = font || fN, ss = safe(t); let size = maxSize; const mw = mm(maxWmm);
+                while (size > 4.5 && ft.widthOfTextAtSize(ss, size) > mw) size -= 0.25;
+                page.drawText(ss, { x: mm(x), y: PH - mm(ytBase), size, font: ft, color: BLACK });
+            }
             function textCenter(t, ytBase, size, font) {
                 const ft = font || fN, s = safe(t), w = ft.widthOfTextAtSize(s, size);
                 page.drawText(s, { x: (PW - w) / 2, y: PH - mm(ytBase), size, font: ft, color: BLACK });
             }
             function band(t) { need(9); rect(M, y, W, 7, GREY); text(t.toUpperCase(), M + 2, y + 4.9, 10.5, fB); y += 7; }
-            function label(x, yt, w, h, t, size) { rect(x, yt, w, h); text(t, x + 1.5, yt + h / 2 + 1.2, size || 8.5, fB, w - 3); }
-            function head(x, yt, w, h, t) { rect(x, yt, w, h, HEADG); text(t, x + 1.5, yt + h / 2 + 1.2, 8.5, fB, w - 3); }
+            function label(x, yt, w, h, t, size) { rect(x, yt, w, h); textFit(t, x + 1.5, yt + h / 2 + 1.2, size || 8.5, fB, w - 3); }
+            function head(x, yt, w, h, t) { rect(x, yt, w, h, HEADG); textFit(t, x + 1.5, yt + h / 2 + 1.2, 8.5, fB, w - 3); }
             function field(x, yt, w, h, value, opts) {
                 opts = opts || {};
                 rect(x, yt, w, h);
@@ -1455,7 +1463,7 @@
             label(x, y, wAgeL, h1, 'Âge'); x += wAgeL; field(x, y, wAgeF, h1, D.age); x += wAgeF;
             label(x, y, wSexeL, h1, 'Sexe'); x += wSexeL; field(x, y, wSexeF, h1, D.sexe);
             y += h1;
-            need(h1); const wProfL = 26; label(M, y, wProfL, h1, 'Fonction / Profession'); field(M + wProfL, y, W - wProfL, h1, D.profession); y += h1;
+            need(h1); const wProfL = 36; label(M, y, wProfL, h1, 'Fonction / Profession'); field(M + wProfL, y, W - wProfL, h1, D.profession); y += h1;
             need(h1); const half = W / 2;
             label(M, y, 44, h1, 'Points de compétences'); field(M + 44, y, half - 44, h1, (D.pcRest || '') + ' / ' + (D.pcMax || ''));
             label(M + half, y, 40, h1, 'Points de déduction'); field(M + half + 40, y, half - 40, h1, D.deductions); y += h1;
@@ -1504,24 +1512,25 @@
             need(cw.length * 3.3 + 2);
             cw.forEach((ln, i) => text(ln, M, y + 3 + i * 3.3, 7.5, fN));
             y += cw.length * 3.3 + 2;
-            const a1 = W * 0.22, a2 = W * 0.16, a3 = W * 0.11, a4 = W * 0.11, a5 = W * 0.09, a6 = W - a1 - a2 - a3 - a4 - a5;
-            need(rs); head(M, y, a1, rs, 'Affliction'); head(M + a1, y, a2, rs, 'Stade'); head(M + a1 + a2, y, a3, rs, 'Malus PS'); head(M + a1 + a2 + a3, y, a4, rs, 'Gain PC'); head(M + a1 + a2 + a3 + a4, y, a5, rs, '+PC'); head(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, 'Répartition'); y += rs;
+            const a1 = W * 0.20, a2 = W * 0.12, a3 = W * 0.09, a4 = W * 0.09, a5 = W * 0.07, a6 = W - a1 - a2 - a3 - a4 - a5;
+            need(rs); head(M, y, a1, rs, 'Affliction'); head(M + a1, y, a2, rs, 'Stade'); head(M + a1 + a2, y, a3, rs, 'Malus'); head(M + a1 + a2 + a3, y, a4, rs, 'Gain'); head(M + a1 + a2 + a3 + a4, y, a5, rs, '+PC'); head(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, 'Répartition (For/Dex/Cha/Per/Édu/Chc)'); y += rs;
             for (let i = 0; i < Math.max(D.aff.length, 3); i++) {
                 const a = D.aff[i]; need(rs);
-                field(M, y, a1, rs, a ? a.nom : '');
-                field(M + a1, y, a2, rs, a ? a.stade : '');
+                field(M, y, a1, rs, a ? a.nom : '', { fontSize: 8 });
+                field(M + a1, y, a2, rs, a ? a.stade : '', { fontSize: 8 });
                 field(M + a1 + a2, y, a3, rs, a ? String(a.malus) : '');
                 field(M + a1 + a2 + a3, y, a4, rs, a ? ('+' + a.gain) : '');
                 field(M + a1 + a2 + a3 + a4, y, a5, rs, a ? ('+' + a.bonus) : '');
-                field(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, a ? a.rep : '');
+                field(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, a ? a.repCourt : '', { fontSize: 7.5 });
                 y += rs;
             }
 
-            // ----- INVENTAIRE -----
+            // ----- INVENTAIRE (forcé en haut d'une nouvelle page : plus propre) -----
+            page = doc.addPage([PW, PH]); y = M;
             band('Inventaire');
             need(h1);
-            label(M, y, 30, h1, 'Argent local (sur soi)'); field(M + 30, y, hw - 30, h1, D.monnaie);
-            label(M + hw, y, 32, h1, 'Argent global (planque)'); field(M + hw + 32, y, hw - 32, h1, D.monnaieGlobal); y += h1;
+            label(M, y, 24, h1, 'Argent local'); field(M + 24, y, hw - 24, h1, D.monnaie);
+            label(M + hw, y, 24, h1, 'Argent global'); field(M + hw + 24, y, hw - 24, h1, D.monnaieGlobal); y += h1;
             need(6); head(M, y, hw, 6, 'Sur soi (Locale)'); head(M + hw, y, hw, 6, 'Coffre / Planque (Global)'); y += 6;
             for (let i = 0; i < Math.max(D.invPerso.length, D.invGlobal.length, 6); i++) {
                 need(rs); field(M, y, hw, rs, D.invPerso[i] || ''); field(M + hw, y, hw, rs, D.invGlobal[i] || ''); y += rs;
