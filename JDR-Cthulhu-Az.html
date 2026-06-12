@@ -821,7 +821,7 @@
             document.getElementById('compStats').textContent = "Stats liées : " + comp.stats;
 
             const container = document.getElementById('niveauxList'); container.innerHTML = '';
-            const ordreNiveaux = ["Basique", "Confirmé", "Avancé", "Expert"];
+            const ordreNiveaux = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"];
             let malusRapporte = null; 
             let descriptionRapportee = "";
 
@@ -1914,7 +1914,7 @@
             const courtParStat = { "Force": "force", "Dextérité": "dex", "Charisme": "cha", "Perception": "per", "Éducation": "edu", "Chance": "chance" };
 
             // Compétences : TOUJOURS 3, en consommant au mieux le budget PC disponible
-            const niveauxAffichables = ["Basique", "Confirmé", "Avancé", "Expert"]; // ordre croissant de coût
+            const niveauxAffichables = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"]; // ordre croissant de coût
             const coutNiveau = (comp, niv) => (comp.niveaux[niv] ? comp.niveaux[niv].cout : Infinity);
             const NB_CIBLE = 3;
             const budgetTotal = parseInt(document.getElementById('pc_max').value) || 25;
