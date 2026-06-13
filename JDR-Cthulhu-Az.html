@@ -477,7 +477,7 @@
                 <div>
                     <h2 class="text-xl font-bold text-emerald-400 mb-2">Statistiques Principales</h2>
                     <p class="text-xs text-slate-400 mb-4 italic">
-                        La valeur d'une statistique doit être comprise entre 20 et 70 (sauf exception). Modifiez vos valeurs via la case "Saisie" à droite ; le score « Actuel » à gauche est recalculé automatiquement en fonction de vos malus d'afflictions et des points saisis.
+                        La valeur d'une statistique est normalement comprise entre 20 et 70; la saisie reste possible de 0 à 100. Sous 20 le score s'affiche en <span class="text-blue-400 font-bold">bleu</span>, au-dessus de 70 en <span class="text-fuchsia-400 font-bold">violet</span>. Modifiez vos valeurs via la case "Saisie" à droite ; le score « Actuel » à gauche est recalculé automatiquement en fonction de vos malus d'afflictions et des points saisis.
                     </p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
@@ -488,7 +488,7 @@
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_force" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
                                     <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_force" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                    <input type="number" id="stat_force" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_dex">
@@ -498,7 +498,7 @@
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_dex" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
                                     <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_dex" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                    <input type="number" id="stat_dex" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_cha">
@@ -508,7 +508,7 @@
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_cha" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
                                     <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_cha" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                    <input type="number" id="stat_cha" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_per">
@@ -518,7 +518,7 @@
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_per" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
                                     <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_per" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                    <input type="number" id="stat_per" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_edu">
@@ -528,7 +528,7 @@
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_edu" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
                                     <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_edu" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                    <input type="number" id="stat_edu" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>                        </div>
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_chance">
@@ -538,7 +538,7 @@
                                     <span class="text-[10px] uppercase text-slate-500">Actuel</span>
                                     <span id="display_chance" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
                                     <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_chance" min="20" max="70" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                    <input type="number" id="stat_chance" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
                                 </div>
                             </div>                        </div>
                     </div>
@@ -762,12 +762,13 @@
             "Force": "display_force", "Dextérité": "display_dex", "Charisme": "display_cha", "Perception": "display_per", "Éducation": "display_edu", "Chance": "display_chance"
         };
         
-        const shortStatMapping = {
-            "Force": "STR", "Dextérité": "DEX", "Charisme": "CHA", "Perception": "PER", "Éducation": "EDU", "Chance": "LUK"
-        };
-
         document.querySelectorAll('.stat-input').forEach(input => {
             input.addEventListener('input', travaillerCalculsEtRendu);
+            // au blur/Entrée : applique le plancher si la saisie clavier est passée sous le malus
+            // d'affliction (re-rendu conditionnel pour ne pas avaler le clic qui suit le blur)
+            input.addEventListener('change', () => {
+                if ((parseInt(input.value) || 0) < (parseInt(input.min) || 0)) travaillerCalculsEtRendu();
+            });
         });
 
         document.getElementById('pc_max').addEventListener('input', travaillerCalculsEtRendu);
@@ -946,15 +947,31 @@
             
             let resteMaximumPossible = aff.cout_ps - totalRepartiAilleurs;
 
+            // Plancher : la répartition ne doit jamais faire descendre le score actuel de la stat sous 0
+            let displayEl = document.getElementById(displayMapping[statKey]);
+            let scoreActuel = displayEl ? (parseInt(displayEl.textContent) || 0) : 0;
+            let plafondStat = valActuelle + Math.max(0, scoreActuel);
+
             if (valDirecte !== null) {
                 let nVal = Math.max(0, Math.min(resteMaximumPossible, parseInt(valDirecte) || 0));
+                if (nVal > plafondStat) {
+                    toast(statKey + " ne peut pas descendre sous 0.", "error");
+                    nVal = plafondStat;
+                }
                 aff.repartition[statKey] = nVal;
             } else if (action === 'plus') {
-                if (valActuelle < resteMaximumPossible) aff.repartition[statKey] += 1;
+                if (valActuelle + 1 > plafondStat) {
+                    toast(statKey + " ne peut pas descendre sous 0.", "error");
+                } else if (valActuelle < resteMaximumPossible) {
+                    aff.repartition[statKey] += 1;
+                }
             } else if (action === 'moins') {
                 if (valActuelle > 0) aff.repartition[statKey] -= 1;
             } else if (action === 'max') {
-                aff.repartition[statKey] = resteMaximumPossible;
+                if (resteMaximumPossible > plafondStat) {
+                    toast("Répartition limitée : " + statKey + " ne peut pas descendre sous 0.", "error");
+                }
+                aff.repartition[statKey] = Math.min(resteMaximumPossible, plafondStat);
             } else if (action === 'reset') {
                 aff.repartition[statKey] = 0;
             }
@@ -984,14 +1001,30 @@
                 }
             });
 
+            // Repère visuel : valeur sous 20 en bleu, au-dessus de 70 en violet ;
+            // dès qu'une affliction modifie la stat, le score actuel passe en rouge quoi qu'il arrive
+            const couleurZone = v => v < 20 ? "text-blue-400" : (v > 70 ? "text-fuchsia-400" : null);
+
             Object.keys(statMapping).forEach(key => {
                 let inputEl = document.getElementById(statMapping[key]);
                 let wrapperEl = document.getElementById("wrapper_" + statMapping[key]);
                 let displayEl = document.getElementById(displayMapping[key]);
-                
+
                 let baseSaisie = parseInt(inputEl.value) || 0;
+
+                // Plancher : la saisie ne peut pas descendre sous le malus d'affliction,
+                // sinon le score actuel deviendrait négatif. Les flèches sont bloquées via min,
+                // la saisie clavier est corrigée une fois le champ quitté.
+                const minSaisie = malusCumules[key];
+                inputEl.min = minSaisie;
+                if (baseSaisie < minSaisie && document.activeElement !== inputEl) {
+                    baseSaisie = minSaisie;
+                    inputEl.value = minSaisie;
+                    toast(key + " ne peut pas descendre sous 0.", "error");
+                }
+
                 totalSaisi += baseSaisie;
-                
+
                 let scoreCalculeFinal = baseSaisie - malusCumules[key];
                 if (displayEl) displayEl.textContent = scoreCalculeFinal;
 
@@ -999,9 +1032,12 @@
                     if (displayEl) displayEl.className = "text-red-500 font-black text-lg bg-slate-900 border border-red-700 px-1.5 py-0.5 rounded";
                     if (wrapperEl) wrapperEl.className = "bg-slate-950 p-3 rounded-lg border border-red-900/60 shadow-inner";
                 } else {
-                    if (displayEl) displayEl.className = "text-white font-bold bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded";
+                    const zoneScore = couleurZone(scoreCalculeFinal);
+                    if (displayEl) displayEl.className = (zoneScore ? zoneScore + " font-black" : "text-white font-bold") + " bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded";
                     if (wrapperEl) wrapperEl.className = "bg-slate-950 p-3 rounded-lg border border-slate-800";
                 }
+
+                if (inputEl) inputEl.className = "stat-input w-16 bg-slate-900 text-center font-bold " + (couleurZone(baseSaisie) || "text-white") + " rounded border border-slate-700 outline-none p-0.5";
             });
 
             document.getElementById('totalPoints').textContent = totalSaisi;
@@ -1079,10 +1115,9 @@
                     let repartitionHtml = '<div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-red-900/40">';
                     Object.keys(statMapping).forEach(stat => {
                         let val = rep[stat] || 0;
-                        let shortStat = shortStatMapping[stat];
                         repartitionHtml += `
                             <div class="flex flex-col items-center bg-slate-900 rounded border border-slate-800 p-2" onclick="event.stopPropagation()">
-                                <span class="text-[11px] text-slate-300 font-bold mb-1">${shortStat}</span>
+                                <span class="text-[11px] text-slate-300 font-bold mb-1 truncate max-w-full" title="${stat}">${stat}</span>
                                 <div class="flex items-center space-x-1">
                                     <button onclick="actionModifierAffStat('${escName}', '${stat}', 'moins')" class="bg-slate-950 hover:bg-slate-800 text-red-400 font-bold text-xs w-5 h-5 flex items-center justify-center rounded border border-slate-700">-</button>
                                     <input type="number" min="0" value="${val}" onchange="actionModifierAffStat('${escName}', '${stat}', 'direct', this.value)" class="no-spinners w-7 bg-slate-950 text-red-400 font-mono text-xs text-center rounded border border-slate-700 outline-none py-0.5">
@@ -1142,7 +1177,7 @@
                     return '<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
                            '<div class="font-bold text-white truncate">' + item.nom + '</div>' +
                            '<div class="flex items-center justify-between"><select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
-                           '<div class="font-mono ' + (totalScore > 70 ? 'text-fuchsia-400 font-black' : 'text-emerald-400') + '">Total = ' + totalScore + '</div></div></div>';
+                           '<div class="font-mono ' + (totalScore > 70 ? 'text-fuchsia-400 font-black' : (totalScore < 20 ? 'text-blue-400 font-black' : 'text-emerald-400')) + '">Total = ' + totalScore + '</div></div></div>';
                 }).join('');
             }
 
@@ -1440,7 +1475,7 @@
                 const f = form.createTextField('f' + (fc++));
                 if (opts.multiline) f.enableMultiline();
                 f.setText(safe(value));
-                f.addToPage(page, { x: mm(x) + 1.8, y: PH - mm(yt + h) + 0.6, width: mm(w) - 2.4, height: mm(h) - 1.2, font: fN, borderWidth: 0, backgroundColor: undefined });
+                f.addToPage(page, { x: mm(x), y: PH - mm(yt + h), width: mm(w), height: mm(h), font: fN, borderWidth: 0, backgroundColor: undefined });
                 try { f.setFontSize(opts.fontSize || 9); } catch (e) {}
             }
             // Deux champs éditables séparés par un « / » (une case par valeur, ex : 23 / 25).
@@ -1571,40 +1606,50 @@
             const esc = s => String(s == null ? '' : s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
             const TB = 'border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse"';
             const kv = (a, b) => `<tr><td><strong>${esc(a)}</strong></td><td>${esc(b)}</td></tr>`;
+            // Mise en page calquée sur le PDF : mêmes sections, mêmes intitulés de colonnes
             let h = `<h2>${esc(D.nom || 'Sans nom')}</h2>`;
-            h += `<table ${TB}>${kv('Sexe', D.sexe)}${kv('Âge', D.age)}${kv('Fonction / Profession', D.profession)}${kv('Points de compétences', (D.pcRest || '') + ' / ' + (D.pcMax || ''))}${kv('Points de déduction', D.deductions)}</table>`;
-            h += `<h3>Statistiques</h3><table ${TB}><tr><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Saisie</strong></td></tr>`;
-            D.stats.forEach(s => h += `<tr><td>${esc(s.lib)}</td><td>${esc(s.actuel)}</td><td>${esc(s.saisie)}</td></tr>`);
-            h += `<tr><td><strong>Total</strong></td><td colspan="2">${esc((D.totalPts || '') + ' / 300')}</td></tr></table>`;
-            h += `<h3>Santé mentale &amp; physique</h3><p><strong>Courage :</strong> ${esc(D.courage)} &nbsp;|&nbsp; <strong>Résistance :</strong> ${esc(D.resistance)}<br><strong>État mental :</strong> ${esc(D.selMentale)} &nbsp;|&nbsp; <strong>Blessures :</strong> ${esc(D.selPhysique)}</p>`;
-            h += `<h3>Compétences</h3><table ${TB}><tr><td><strong>Compétence</strong></td><td><strong>Niveau</strong></td><td><strong>Stat</strong></td><td><strong>Bonus</strong></td><td><strong>Total</strong></td></tr>`;
-            if (D.comp.length) D.comp.forEach(c => h += `<tr><td>${esc(c.nom)}</td><td>${esc(c.niveau)}</td><td>${esc(c.stat)}</td><td>+${esc(c.bonus)}</td><td>${esc(c.total)}</td></tr>`);
+            h += `<h3>Informations générales</h3>`;
+            h += `<table ${TB}>${kv('Âge', D.age)}${kv('Sexe', D.sexe)}${kv('Fonction / Profession', D.profession)}${kv('Points de compétences (restants / initiaux)', (D.pcRest || '') + ' / ' + (D.pcMax || ''))}${kv('Points de déduction', D.deductions)}</table>`;
+            h += `<h3>Statistiques</h3><table ${TB}><tr><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Saisie</strong></td><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Saisie</strong></td></tr>`;
+            for (let i = 0; i < D.stats.length; i += 2) {
+                const sg = D.stats[i], sd = D.stats[i + 1];
+                h += `<tr><td>${esc(sg.lib)}</td><td>${esc(sg.actuel)}</td><td>${esc(sg.saisie)}</td>` +
+                     (sd ? `<td>${esc(sd.lib)}</td><td>${esc(sd.actuel)}</td><td>${esc(sd.saisie)}</td>` : `<td></td><td></td><td></td>`) + `</tr>`;
+            }
+            h += `<tr><td><strong>Total des points</strong></td><td colspan="5">${esc((D.totalPts || '') + ' / 300')}</td></tr></table>`;
+            h += `<h3>Santé mentale &amp; physique</h3><table ${TB}>`;
+            h += `<tr><td><strong>Courage</strong></td><td>${esc(D.courage)}</td><td><strong>Résistance</strong></td><td>${esc(D.resistance)}</td></tr>`;
+            h += `<tr><td><strong>État mental</strong></td><td>${esc(D.selMentale)}</td><td><strong>Blessures physiques</strong></td><td>${esc(D.selPhysique)}</td></tr></table>`;
+            h += `<h3>Compétences (${esc(D.compMax || '—')} max autorisées par le MJ)</h3><table ${TB}><tr><td><strong>Compétence</strong></td><td><strong>Niveau</strong></td><td><strong>Statistique</strong></td><td><strong>Bonus</strong></td><td><strong>Total</strong></td></tr>`;
+            if (D.comp.length) D.comp.forEach(c => h += `<tr><td>${esc(c.nom)}</td><td>${esc(c.niveau)}</td><td>${esc(c.stat)}</td><td>+${esc(c.bonus)}</td><td><strong>${esc(c.total)}</strong></td></tr>`);
             else h += `<tr><td colspan="5"><em>Aucune</em></td></tr>`;
             h += `</table>`;
-            h += `<h3>Afflictions</h3>`;
+            h += `<h3>Afflictions (3 max)</h3>`;
             if (D.aff.length) {
-                h += `<table ${TB}><tr><td><strong>Affliction</strong></td><td><strong>Stade</strong></td><td><strong>Malus PS</strong></td><td><strong>Gain PC</strong></td><td><strong>+PC</strong></td><td><strong>Répartition</strong></td></tr>`;
-                D.aff.forEach(a => h += `<tr><td>${esc(a.nom)}</td><td>${esc(a.stade)}</td><td>${esc(a.malus)}</td><td>+${esc(a.gain)}</td><td>+${esc(a.bonus)}</td><td>${esc(a.rep)}</td></tr>`);
+                h += `<table ${TB}><tr><td><strong>Affliction</strong></td><td><strong>Stade</strong></td><td><strong>Perte PS</strong></td><td><strong>Gain PC</strong></td><td><strong>Comp</strong></td><td><strong>Répartition de perte de PS</strong></td></tr>`;
+                D.aff.forEach(a => h += `<tr><td>${esc(a.nom)}</td><td>${esc(a.stade)}</td><td>-${esc(a.malus)}</td><td>+${esc(a.gain)}</td><td>+${esc(a.bonus)}</td><td>${esc(a.rep)}</td></tr>`);
                 h += `</table>`;
             } else h += `<p><em>Aucune</em></p>`;
-            h += `<h3>Inventaire</h3><p><strong>Argent local :</strong> ${esc(D.monnaie)} &nbsp;|&nbsp; <strong>Argent global :</strong> ${esc(D.monnaieGlobal)}</p>`;
+            h += `<h3>Inventaire</h3><table ${TB}><tr><td><strong>Argent local</strong></td><td>${esc(D.monnaie)}</td><td><strong>Argent global</strong></td><td>${esc(D.monnaieGlobal)}</td></tr></table>`;
             h += `<table ${TB}><tr><td><strong>Sur soi (Locale)</strong></td><td><strong>Coffre / Planque (Global)</strong></td></tr>`;
             const ni = Math.max(D.invPerso.length, D.invGlobal.length, 1);
             for (let i = 0; i < ni; i++) h += `<tr><td>${esc(D.invPerso[i] || '')}</td><td>${esc(D.invGlobal[i] || '')}</td></tr>`;
             h += `</table>`;
-            h += `<h3>Histoire</h3><p><strong>Peurs profondes :</strong> ${esc(D.peurs)}<br><strong>Vaillance :</strong> ${esc(D.vaillance)}</p>`;
-            if (D.background) h += `<p>${esc(D.background).replace(/\n/g, '<br>')}</p>`;
+            h += `<h3>Histoire du personnage</h3><table ${TB}>${kv('Peurs profondes', D.peurs)}${kv('Vaillance', D.vaillance)}`;
+            if (D.background) h += `<tr><td><strong>Background</strong></td><td>${esc(D.background).replace(/\n/g, '<br>')}</td></tr>`;
+            h += `</table>`;
 
             const sep = '----------------------------------------';
-            let t = D.nom + '\n' + sep + '\n';
-            t += 'Sexe : ' + D.sexe + ' | Âge : ' + D.age + '\nFonction : ' + D.profession + '\n';
-            t += 'Points de compétences : ' + D.pcRest + ' / ' + D.pcMax + ' | Points de déduction : ' + D.deductions + '\n' + sep + '\n';
-            t += 'STATISTIQUES (Actuel / Saisie)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\nTotal : ' + D.totalPts + ' / 300\n' + sep + '\n';
-            t += 'SANTÉ — Courage : ' + D.courage + ' | Résistance : ' + D.resistance + '\nÉtat mental : ' + D.selMentale + ' | Blessures : ' + D.selPhysique + '\n' + sep + '\n';
-            t += 'COMPÉTENCES\n' + (D.comp.length ? D.comp.map(c => '- ' + c.nom + ' [' + c.niveau + '] ' + c.stat + ' +' + c.bonus + ' = ' + c.total).join('\n') : 'Aucune') + '\n' + sep + '\n';
-            t += 'AFFLICTIONS\n' + (D.aff.length ? D.aff.map(a => '- ' + a.nom + ' [' + a.stade + '] malus ' + a.malus + ', +' + a.gain + ' PC, +' + a.bonus + ' PC bonus (' + a.rep + ')').join('\n') : 'Aucune') + '\n' + sep + '\n';
-            t += 'INVENTAIRE — Argent local : ' + D.monnaie + ' | Argent global : ' + D.monnaieGlobal + '\nSur soi : ' + (D.invPerso.join(', ') || '—') + '\nPlanque : ' + (D.invGlobal.join(', ') || '—') + '\n' + sep + '\n';
-            t += 'HISTOIRE — Peurs : ' + D.peurs + ' | Vaillance : ' + D.vaillance + '\n' + (D.background || '');
+            let t = (D.nom || 'Sans nom') + '\n' + sep + '\n';
+            t += 'INFORMATIONS GÉNÉRALES\n';
+            t += '- Âge : ' + D.age + ' | Sexe : ' + D.sexe + '\n- Fonction / Profession : ' + D.profession + '\n';
+            t += '- Points de compétences (restants / initiaux) : ' + D.pcRest + ' / ' + D.pcMax + '\n- Points de déduction : ' + D.deductions + '\n' + sep + '\n';
+            t += 'STATISTIQUES (Actuel / Saisie)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\n- Total des points : ' + D.totalPts + ' / 300\n' + sep + '\n';
+            t += 'SANTÉ MENTALE & PHYSIQUE\n- Courage : ' + D.courage + ' | Résistance : ' + D.resistance + '\n- État mental : ' + D.selMentale + '\n- Blessures physiques : ' + D.selPhysique + '\n' + sep + '\n';
+            t += 'COMPÉTENCES (' + (D.compMax || '—') + ' max autorisées par le MJ)\n' + (D.comp.length ? D.comp.map(c => '- ' + c.nom + ' [' + c.niveau + '] ' + c.stat + ' +' + c.bonus + ' = ' + c.total).join('\n') : 'Aucune') + '\n' + sep + '\n';
+            t += 'AFFLICTIONS (3 max)\n' + (D.aff.length ? D.aff.map(a => '- ' + a.nom + ' [' + a.stade + '] perte ' + a.malus + ' PS, gain +' + a.gain + ' PC, +' + a.bonus + ' compétence(s) — répartition : ' + a.rep).join('\n') : 'Aucune') + '\n' + sep + '\n';
+            t += 'INVENTAIRE\n- Argent local : ' + D.monnaie + ' | Argent global : ' + D.monnaieGlobal + '\n- Sur soi (Locale) : ' + (D.invPerso.join(', ') || '—') + '\n- Coffre / Planque (Global) : ' + (D.invGlobal.join(', ') || '—') + '\n' + sep + '\n';
+            t += 'HISTOIRE DU PERSONNAGE\n- Peurs profondes : ' + D.peurs + '\n- Vaillance : ' + D.vaillance + (D.background ? '\n\n' + D.background : '');
 
             const okMsg = () => toast("Mise en page copiée ! Collez-la dans Roll20 → onglet « Bio & Info ».", "success", 6000);
             const fallback = () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); okMsg(); } catch (e) { toast("Copie impossible.", "error"); } ta.remove(); };
