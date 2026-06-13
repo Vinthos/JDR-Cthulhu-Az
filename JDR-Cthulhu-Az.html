@@ -828,21 +828,28 @@
                 if (isNaN(v)) return false;
                 const prev = parseInt(input.dataset.prev);
                 const old = isNaN(prev) ? v : prev;
+                const fl = plancher();
+                const ca = plafondAff();
+                // Plafond effectif unifié : le plafond dur (100) ET le plafond d'affliction sont pris en
+                // compte ensemble. On ne dépasse pas max(ca, old) — on ne force jamais à redescendre une
+                // Base déjà au-dessus — le tout borné à 100. (Bug corrigé : avant, v > 100 court-circuitait
+                // la vérification du plafond d'affliction et l'ACTUEL pouvait repasser au-dessus de N.)
+                const plafondAffEffectif = (ca != null) ? Math.max(ca, old) : Infinity;
+                const plafondEffectif = Math.min(100, plafondAffEffectif);
+
                 let corrige = true;
-                if (v < plancher()) {
-                    input.value = plancher();
+                if (v < fl) {
+                    input.value = fl;
                     toast(nomStat() + " ne peut pas descendre sous 0.", "error");
-                } else if (v > 100) {
-                    input.value = 100;
-                    toast(nomStat() + " ne peut pas dépasser 100.", "error");
-                } else {
-                    const ca = plafondAff();
-                    if (ca != null && v > ca && v > old) {
-                        input.value = Math.max(ca, old);
+                } else if (v > plafondEffectif) {
+                    input.value = plafondEffectif;
+                    if (ca != null && plafondAffEffectif < 100) {
                         toast("Vos afflictions actuelles ne permettent pas d'augmenter cette valeur.", "error");
                     } else {
-                        corrige = false;
+                        toast(nomStat() + " ne peut pas dépasser 100.", "error");
                     }
+                } else {
+                    corrige = false;
                 }
                 input.dataset.prev = input.value;
                 return corrige;
