@@ -1624,6 +1624,22 @@
                 const ft = font || fN, s = safe(t), w = ft.widthOfTextAtSize(s, size);
                 page.drawText(s, { x: (PW - w) / 2, y: PH - mm(ytBase), size, font: ft, color: BLACK });
             }
+            // Pré-découpe un texte multiligne en insérant les retours à la ligne nous-mêmes (passage O(n)).
+            // pdf-lib n'a alors plus qu'à respecter ces \n au lieu de chercher les coupures sur tout le
+            // paragraphe — ce qui était quadratique et faisait planter le navigateur sur les longs textes.
+            function preWrap(value, ft, size, maxWmm) {
+                const mw = mm(maxWmm), lignes = [];
+                for (const para of String(value == null ? '' : value).split('\n')) {
+                    let cur = '';
+                    for (const mot of para.split(' ')) {
+                        const test = cur ? cur + ' ' + mot : mot;
+                        if (cur && ft.widthOfTextAtSize(test, size) > mw) { lignes.push(cur); cur = mot; }
+                        else cur = test;
+                    }
+                    lignes.push(cur);
+                }
+                return lignes.join('\n');
+            }
             function band(t) { need(9); rect(M, y, W, 7, GREY); text(t.toUpperCase(), M + 2, y + 4.9, 10.5, fB); y += 7; }
             function label(x, yt, w, h, t, size) { rect(x, yt, w, h); textFit(t, x + 2, yt + h / 2 + 1.2, size || 8.5, fB, w - 3.5); }
             function head(x, yt, w, h, t) { rect(x, yt, w, h, HEADG); textFit(t, x + 2, yt + h / 2 + 1.2, 8.5, fB, w - 3.5); }
@@ -1631,11 +1647,15 @@
                 opts = opts || {};
                 rect(x, yt, w, h);
                 const f = form.createTextField('f' + (fc++));
-                if (opts.multiline) f.enableMultiline();
+                const taille = opts.fontSize || 9;
+                let contenu = safe(value);
+                // Champs multilignes (background…) : on pré-découpe le texte pour éviter le word-wrap
+                // quadratique de pdf-lib qui faisait planter le navigateur sur les longs textes.
+                if (opts.multiline) { f.enableMultiline(); contenu = preWrap(contenu, fN, taille, w - 4); }
                 // Espace de tête : petite marge avant le texte dans la zone de saisie (le widget reste aligné sur la case)
-                f.setText(' ' + safe(value));
+                f.setText(' ' + contenu);
                 f.addToPage(page, { x: mm(x), y: PH - mm(yt + h), width: mm(w), height: mm(h), font: fN, borderWidth: 0, backgroundColor: undefined });
-                try { f.setFontSize(opts.fontSize || 9); } catch (e) {}
+                try { f.setFontSize(taille); } catch (e) {}
             }
             // Deux champs éditables séparés par un « / » (une case par valeur, ex : 23 / 25).
             function fieldPair(x, yt, w, h, v1, v2, opts) {
