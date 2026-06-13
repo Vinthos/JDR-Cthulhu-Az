@@ -214,7 +214,7 @@
         }
 
         #statsContainerGrid .stat-input {
-            width: 3rem !important;
+            width: 5.5rem !important; /* assez large pour « 100 » + le spinner natif, sans troncature */
         }
 
         #statsContainerGrid .text-yellow-200 {
@@ -477,7 +477,7 @@
                 <div>
                     <h2 class="text-xl font-bold text-emerald-400 mb-2">Statistiques Principales</h2>
                     <p class="text-xs text-slate-400 mb-4 italic">
-                        La valeur d'une statistique est normalement comprise entre 20 et 70; la saisie reste possible de 0 à 100. Sous 20 le score s'affiche en <span class="text-blue-400 font-bold">bleu</span>, au-dessus de 70 en <span class="text-fuchsia-400 font-bold">violet</span>. Modifiez vos valeurs via la case "Saisie" à droite ; le score « Actuel » à gauche est recalculé automatiquement en fonction de vos malus d'afflictions et des points saisis et s'affiche en <span class="text-red-500 font-bold">rouge</span>.
+                        La valeur d'une statistique est normalement comprise entre 20 et 70 ; la saisie reste possible de 0 à 100. Sous 10 ou au-dessus de 70, le score s'affiche en <span class="text-orange-400 font-bold">orange</span>. Modifiez vos valeurs via la case « Base » à droite ; le score « Actuel » à gauche est recalculé automatiquement en fonction de vos malus d'afflictions et des points saisis, et s'affiche en <span class="text-red-500 font-bold">rouge</span> dès qu'une affliction le modifie.
                     </p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
@@ -490,8 +490,8 @@
                                 </div>
                                 <span class="text-slate-600 font-bold pb-1.5">/</span>
                                 <div class="flex flex-col items-center">
-                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
-                                    <input type="number" id="stat_force" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_force" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
                             </div>
                         </div>
@@ -504,8 +504,8 @@
                                 </div>
                                 <span class="text-slate-600 font-bold pb-1.5">/</span>
                                 <div class="flex flex-col items-center">
-                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
-                                    <input type="number" id="stat_dex" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_dex" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
                             </div>
                         </div>
@@ -518,8 +518,8 @@
                                 </div>
                                 <span class="text-slate-600 font-bold pb-1.5">/</span>
                                 <div class="flex flex-col items-center">
-                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
-                                    <input type="number" id="stat_cha" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_cha" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
                             </div>
                         </div>
@@ -532,8 +532,8 @@
                                 </div>
                                 <span class="text-slate-600 font-bold pb-1.5">/</span>
                                 <div class="flex flex-col items-center">
-                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
-                                    <input type="number" id="stat_per" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_per" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
                             </div>
                         </div>
@@ -546,8 +546,8 @@
                                 </div>
                                 <span class="text-slate-600 font-bold pb-1.5">/</span>
                                 <div class="flex flex-col items-center">
-                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
-                                    <input type="number" id="stat_edu" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_edu" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
                             </div>
                         </div>
@@ -560,8 +560,8 @@
                                 </div>
                                 <span class="text-slate-600 font-bold pb-1.5">/</span>
                                 <div class="flex flex-col items-center">
-                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
-                                    <input type="number" id="stat_chance" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_chance" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
                             </div>
                         </div>
@@ -600,11 +600,11 @@
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="bg-slate-950 p-2 rounded border border-slate-800">
                         <span class="text-slate-400 block">Courage :</span>
-                        <span id="val_courage" class="text-emerald-400 font-bold text-sm font-mono">-</span>
+                        <span id="val_courage" class="text-fuchsia-400 font-bold text-sm font-mono">-</span>
                     </div>
                     <div class="bg-slate-950 p-2 rounded border border-slate-800">
                         <span class="text-slate-400 block">Résistance :</span>
-                        <span id="val_resistance" class="text-emerald-400 font-bold text-sm font-mono">-</span>
+                        <span id="val_resistance" class="text-orange-500 font-bold text-sm font-mono">-</span>
                     </div>
                 </div>
 
@@ -740,7 +740,7 @@
                 <input type="text" id="lore_peurs" placeholder="L'isolement..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
             <div>
-                <label class="block text-xl font-bold text-emerald-400 tracking-wider mb-2">Vaillance (Résistance concrète)</label>
+                <label class="block text-xl font-bold text-emerald-400 tracking-wider mb-2">Motivations</label>
                 <input type="text" id="lore_vaillance" placeholder="Peur surmontée..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
             </div>
         </div>
@@ -790,27 +790,73 @@
         const statLabelMapping = {
             "Force": "Force (STR)", "Dextérité": "Dextérité (DEX)", "Charisme": "Charisme (CHA)", "Perception": "Perception (PER)", "Éducation": "Éducation (EDU)", "Chance": "Chance (LUCK)"
         };
+
+        // Conditions de sortie des afflictions : toujours "Stat < N" -> { stat, seuil }
+        function parseCondition(cond) {
+            if (!cond || typeof cond !== 'string') return null;
+            const m = cond.match(/^\s*(.+?)\s*<\s*(\d+)\s*$/);
+            if (!m) return null;
+            return { stat: m[1].trim(), seuil: parseInt(m[2]) };
+        }
+        // Seuil le plus contraignant (le plus bas) imposé sur une stat par les afflictions actives, ou null
+        function seuilAfflictionPourStat(statKey) {
+            let n = null;
+            afflictionsChoisies.forEach(a => {
+                const c = parseCondition(a.condition);
+                if (c && c.stat === statKey) n = (n === null) ? c.seuil : Math.min(n, c.seuil);
+            });
+            return n;
+        }
+        // Affichage du prérequis : on note « ≤ » (le seuil est inclus : ACTUEL doit rester ≤ N)
+        function prereqAffichage(cond) {
+            return cond ? cond.replace('<', '≤') : '';
+        }
         
         document.querySelectorAll('.stat-input').forEach(input => {
             const nomStat = () => Object.keys(statMapping).find(k => statMapping[k] === input.id) || "Cette statistique";
-            // Plancher = malus d'affliction cumulé (stocké à chaque rendu), pour que le score ACTUEL reste ≥ 0.
+            // Bornes stockées à chaque rendu :
+            //  - data-floor : malus d'affliction cumulé (pour que le score ACTUEL reste ≥ 0)
+            //  - data-ceilaff : plafond mou imposé par une condition d'affliction (N + malus), '' si aucun
             const plancher = () => parseInt(input.dataset.floor) || 0;
-            input.addEventListener('input', (e) => {
-                // Un "step" (flèche clavier OU clic sur le spinner souris) émet un event input SANS inputType.
-                // À ce moment on applique le plancher et on prévient, exactement comme pour les afflictions.
-                if (e.inputType == null && (parseInt(input.value) || 0) < plancher()) {
+            const plafondAff = () => (input.dataset.ceilaff === '' || input.dataset.ceilaff == null) ? null : parseInt(input.dataset.ceilaff);
+
+            // Applique plancher / plafond 100 / plafond d'affliction et notifie. Renvoie true si corrigé.
+            // old = valeur avant l'interaction (capturée au focus) : on ne fait jamais redescendre la Base
+            // existante, on bloque seulement les augmentations qui feraient repasser l'ACTUEL au-dessus de N.
+            function appliquerBornes() {
+                let v = parseInt(input.value);
+                if (isNaN(v)) return false;
+                const prev = parseInt(input.dataset.prev);
+                const old = isNaN(prev) ? v : prev;
+                let corrige = true;
+                if (v < plancher()) {
                     input.value = plancher();
                     toast(nomStat() + " ne peut pas descendre sous 0.", "error");
+                } else if (v > 100) {
+                    input.value = 100;
+                    toast(nomStat() + " ne peut pas dépasser 100.", "error");
+                } else {
+                    const ca = plafondAff();
+                    if (ca != null && v > ca && v > old) {
+                        input.value = Math.max(ca, old);
+                        toast("Vos afflictions actuelles ne permettent pas d'augmenter cette valeur.", "error");
+                    } else {
+                        corrige = false;
+                    }
                 }
+                input.dataset.prev = input.value;
+                return corrige;
+            }
+
+            input.addEventListener('focus', () => { input.dataset.prev = input.value; });
+            input.addEventListener('input', (e) => {
+                // Un "step" (flèche clavier OU clic sur le spinner souris) émet un event input SANS inputType :
+                // on applique les bornes immédiatement. La frappe (inputType défini) reste libre jusqu'au blur.
+                if (e.inputType == null) appliquerBornes();
                 travaillerCalculsEtRendu();
             });
-            // Frappe clavier passée sous le plancher : corrigée + signalée à la sortie du champ
             input.addEventListener('change', () => {
-                if ((parseInt(input.value) || 0) < plancher()) {
-                    input.value = plancher();
-                    toast(nomStat() + " ne peut pas descendre sous 0.", "error");
-                    travaillerCalculsEtRendu();
-                }
+                if (appliquerBornes()) travaillerCalculsEtRendu();
             });
         });
 
@@ -867,29 +913,23 @@
 
             const container = document.getElementById('niveauxList'); container.innerHTML = '';
             const ordreNiveaux = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"];
-            let malusRapporte = null; 
             let descriptionRapportee = "";
 
             ordreNiveaux.forEach(nomNiveau => {
                 if (comp.niveaux && comp.niveaux[nomNiveau]) {
                     const d = comp.niveaux[nomNiveau];
-                    if (d.malus !== undefined && d.malus !== null && d.malus !== "") {
-                        malusRapporte = d.malus;
-                    }
                     if (d.description !== undefined && d.description !== null && d.description !== "") {
                         descriptionRapportee = d.description;
                     } else if (nomNiveau === "Basique") {
-                        descriptionRapportee = ""; 
+                        descriptionRapportee = "";
                     }
 
                     const div = document.createElement('div');
                     div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
-                    
-                    let htmlContenu = '<div><div class="font-bold text-white">' + nomNiveau + ' <span class="text-slate-500">(Coût: ' + d.cout + ' PC)</span></div>';
+
+                    let htmlContenu = '<div><div class="font-bold text-white">' + nomNiveau + '</div>';
+                    htmlContenu += '<div class="text-orange-400 text-[10px]">Coût: ' + d.cout + ' PC</div>';
                     if (d.bonus) htmlContenu += '<div class="text-emerald-400 text-[10px]">Bonus : +' + d.bonus + '</div>';
-                    if (malusRapporte) {
-                        htmlContenu += '<div class="text-red-400 text-[10px] font-mono italic">Malus appliqué : ' + malusRapporte + '</div>';
-                    }
                     if (descriptionRapportee) htmlContenu += '<div class="text-slate-400 italic mt-1 text-[11px]">' + descriptionRapportee + '</div>';
                     htmlContenu += '</div>';
                     
@@ -918,6 +958,7 @@
                 const div = document.createElement('div');
                 div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
                 div.innerHTML = '<div><div class="font-bold text-white">' + nomStade + '</div>' +
+                               (d.condition ? '<div class="text-[10px] text-orange-400">Prérequis : ' + prereqAffichage(d.condition) + '</div>' : '') +
                                '<div class="text-[10px] text-red-400">Coût : ' + d.cout_ps + ' PS</div>' +
                                '<div class="text-[10px] text-emerald-400">Gain : +' + d.gain_pc + ' PC</div>' +
                                '<div class="text-purple-400 text-[10px]">Points de Compétence bonus : +' + (d.bonus_comp || 0) + '</div></div>';
@@ -971,6 +1012,23 @@
             }
 
             afflictionsChoisies = afflictionsChoisies.filter(item => item.nom !== nom);
+
+            // Auto-remplissage selon la condition de sortie (ex : « Éducation < 55 ») :
+            // si le score ACTUEL de la stat dépasse le seuil N, on pré-répartit les PS de cette
+            // affliction sur cette stat pour ramener l'ACTUEL exactement à N (borné par le budget PS).
+            const cond = parseCondition(condition);
+            if (cond && (cond.stat in repartition)) {
+                const inputStat = document.getElementById(statMapping[cond.stat]);
+                const baseStat = inputStat ? (parseInt(inputStat.value) || 0) : 0;
+                const autresPS = afflictionsChoisies.reduce((s, a) => s + ((a.repartition && a.repartition[cond.stat]) || 0), 0);
+                const besoin = baseStat - autresPS - cond.seuil; // PS à poser ici pour ACTUEL = N
+                if (besoin > 0) {
+                    const psAilleurs = Object.keys(repartition).reduce((s, k) => s + (k !== cond.stat ? (repartition[k] || 0) : 0), 0);
+                    const budget = Math.max(0, cout_ps - psAilleurs);
+                    repartition[cond.stat] = Math.min(besoin, budget);
+                }
+            }
+
             afflictionsChoisies.push({ nom, stade, cout_ps, gain_pc, bonus_comp, condition, definition, repartition: repartition });
             travaillerCalculsEtRendu();
         }
@@ -996,11 +1054,28 @@
             let scoreActuel = displayEl ? (parseInt(displayEl.textContent) || 0) : 0;
             let plafondStat = valActuelle + Math.max(0, scoreActuel);
 
+            // Prérequis : si cette stat porte la condition de l'affliction, on ne peut pas réduire ses PS
+            // sous le minimum qui maintient l'ACTUEL ≤ N (sinon le prérequis n'est plus respecté).
+            let minPSCondition = 0;
+            const condAff = parseCondition(aff.condition);
+            if (condAff && condAff.stat === statKey) {
+                const inputStat = document.getElementById(statMapping[statKey]);
+                const baseStat = inputStat ? (parseInt(inputStat.value) || 0) : 0;
+                const autresAffPS = afflictionsChoisies
+                    .filter(a => a !== aff)
+                    .reduce((s, a) => s + ((a.repartition && a.repartition[statKey]) || 0), 0);
+                minPSCondition = Math.max(0, baseStat - condAff.seuil - autresAffPS);
+            }
+
             if (valDirecte !== null) {
                 let nVal = Math.max(0, Math.min(resteMaximumPossible, parseInt(valDirecte) || 0));
                 if (nVal > plafondStat) {
                     toast(statKey + " ne peut pas descendre sous 0.", "error");
                     nVal = plafondStat;
+                }
+                if (nVal < minPSCondition) {
+                    toast("Il faut respecter le prérequis de l'affliction.", "error");
+                    nVal = minPSCondition;
                 }
                 aff.repartition[statKey] = nVal;
             } else if (action === 'plus') {
@@ -1010,14 +1085,21 @@
                     aff.repartition[statKey] += 1;
                 }
             } else if (action === 'moins') {
-                if (valActuelle > 0) aff.repartition[statKey] -= 1;
+                if (valActuelle - 1 < minPSCondition) {
+                    toast("Il faut respecter le prérequis de l'affliction.", "error");
+                } else if (valActuelle > 0) {
+                    aff.repartition[statKey] -= 1;
+                }
             } else if (action === 'max') {
                 if (resteMaximumPossible > plafondStat) {
                     toast("Répartition limitée : " + statKey + " ne peut pas descendre sous 0.", "error");
                 }
                 aff.repartition[statKey] = Math.min(resteMaximumPossible, plafondStat);
             } else if (action === 'reset') {
-                aff.repartition[statKey] = 0;
+                if (minPSCondition > 0) {
+                    toast("Il faut respecter le prérequis de l'affliction.", "error");
+                }
+                aff.repartition[statKey] = minPSCondition;
             }
 
             travaillerCalculsEtRendu();
@@ -1045,9 +1127,9 @@
                 }
             });
 
-            // Repère visuel : valeur sous 20 en bleu, au-dessus de 70 en violet ;
-            // dès qu'une affliction modifie la stat, le score actuel passe en rouge quoi qu'il arrive
-            const couleurZone = v => v < 20 ? "text-blue-400" : (v > 70 ? "text-fuchsia-400" : null);
+            // Repère visuel : sous 10 ou au-dessus de 70, le score s'affiche en orange ;
+            // dès qu'une affliction modifie la stat, le score ACTUEL passe en rouge quoi qu'il arrive.
+            const couleurZone = v => (v < 10 || v > 70) ? "text-orange-400" : null;
 
             Object.keys(statMapping).forEach(key => {
                 let inputEl = document.getElementById(statMapping[key]);
@@ -1056,17 +1138,28 @@
 
                 let baseSaisie = parseInt(inputEl.value) || 0;
 
-                // Plancher : la saisie ne peut pas descendre sous le malus d'affliction,
-                // sinon le score ACTUEL deviendrait négatif. On retire la borne native `min`
-                // (sinon le spinner au plancher est un no-op silencieux, sans notification possible) :
-                // le plancher est appliqué dans les écouteurs input/change via dataset.floor.
+                // Bornes : on retire `min`/`max` natifs (sinon un step au bord est un no-op silencieux,
+                // sans notification possible). Tout est appliqué dans les écouteurs via dataset.
+                //  - floor   : malus d'affliction cumulé (score ACTUEL ≥ 0)
+                //  - ceilaff : plafond mou d'une condition d'affliction = N + malus (ACTUEL ≤ N), '' si aucun
                 const minSaisie = malusCumules[key];
+                const seuilCond = seuilAfflictionPourStat(key);
                 inputEl.removeAttribute('min');
+                inputEl.removeAttribute('max');
                 inputEl.dataset.floor = minSaisie;
-                if (baseSaisie < minSaisie && document.activeElement !== inputEl) {
-                    baseSaisie = minSaisie;
-                    inputEl.value = minSaisie;
-                    toast(key + " ne peut pas descendre sous 0.", "error");
+                inputEl.dataset.ceilaff = (seuilCond === null) ? '' : (seuilCond + malusCumules[key]);
+
+                // Clamp des bornes DURES pour une valeur chargée/générée hors focus (plancher + plafond 100).
+                // Le plafond d'affliction est "mou" : on ne fait jamais redescendre la Base existante.
+                if (document.activeElement !== inputEl) {
+                    if (baseSaisie < minSaisie) {
+                        baseSaisie = minSaisie; inputEl.value = minSaisie;
+                        toast(key + " ne peut pas descendre sous 0.", "error");
+                    } else if (baseSaisie > 100) {
+                        baseSaisie = 100; inputEl.value = 100;
+                        toast(key + " ne peut pas dépasser 100.", "error");
+                    }
+                    inputEl.dataset.prev = inputEl.value;
                 }
 
                 totalSaisi += baseSaisie;
@@ -1087,7 +1180,7 @@
                     if (wrapperEl) wrapperEl.className = wrapBase + " border-slate-800";
                 }
 
-                if (inputEl) inputEl.className = "stat-input w-16 bg-slate-900 text-center font-black text-lg " + (couleurZone(baseSaisie) || "text-white") + " rounded border border-slate-700 outline-none p-1";
+                if (inputEl) inputEl.className = "stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg " + (couleurZone(baseSaisie) || "text-white") + " rounded border border-slate-700 outline-none p-1";
             });
 
             document.getElementById('totalPoints').textContent = totalSaisi;
@@ -1144,7 +1237,7 @@
                         : '';
                     return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2.5 rounded border border-slate-800 flex flex-col cursor-pointer hover:bg-slate-800 transition">' +
                            '<div class="flex justify-between items-center w-full">' +
-                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ') · ' + item.cout + ' PC]</span></div>' +
+                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ') · <span class="text-orange-400">' + item.cout + ' PC</span>]</span></div>' +
                            '<button onclick="event.stopPropagation(); supprimerComp(\'' + escName + '\')" class="text-red-400 font-bold text-xs px-2">✕</button></div>' +
                            descHtml +
                            '</div>';
@@ -1194,7 +1287,7 @@
                         : '';
 
                     return '<div class="bg-slate-950 p-4 rounded-lg border border-red-950 flex flex-col space-y-2 cursor-pointer hover:border-red-900 transition" onclick="chargerDetailsAffliction(\'' + escName + '\')">' +
-                           '<div class="flex justify-between items-center"><div><span class="font-bold text-red-400 text-sm">' + item.nom + '</span><span class="text-purple-400 text-xs"> [' + item.stade + ']</span></div>' +
+                           '<div class="flex justify-between items-center"><div><span class="font-bold text-red-400 text-sm">' + item.nom + '</span><span class="text-purple-400 text-xs"> [' + item.stade + ']</span>' + (item.condition ? '<span class="text-orange-400 text-[11px] ml-2 font-mono">' + prereqAffichage(item.condition) + '</span>' : '') + '</div>' +
                            '<button onclick="event.stopPropagation(); supprimerAffliction(\'' + escName + '\')" class="text-red-400 font-bold px-1">✕</button></div>' +
                            '<p class="text-[11px] text-slate-400 italic font-sans leading-relaxed">' + (item.definition || "Pas de définition.") + '</p>' +
                            '<div class="flex items-center justify-between gap-1 text-[11px] font-mono mt-1">' +
@@ -1226,7 +1319,7 @@
                     let totalScore = valBaseCalculée + item.bonus;
                     let escName = item.nom.replace(/'/g, "\\'");
                     
-                    let couleurTotal = totalScore > 70 ? 'text-fuchsia-400 font-black' : (totalScore < 20 ? 'text-blue-400 font-black' : 'text-emerald-400');
+                    let couleurTotal = (totalScore > 70 || totalScore < 10) ? 'text-orange-400 font-black' : 'text-emerald-400';
                     return '<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
                            '<div class="font-bold text-white truncate">' + item.nom + '</div>' +
                            '<div class="flex items-center justify-between gap-2"><select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
@@ -1402,7 +1495,7 @@
                     "Caractéristiques modifiées : " + stringStats + "\n" +
                     "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
                     "Points de déductions (MJ) : " + deductions + "\n\n" +
-                    "Peurs Profondes : " + peurs + "\nVaillance : " + vaillance + "\n\n" +
+                    "Peurs Profondes : " + peurs + "\nMotivations : " + vaillance + "\n\n" +
                     "STATUT SANTE MENTALE : " + stateMentale + "\n" +
                     "STATUT BLESSURES PHYSIQUES : " + statePhysique + "\n" + separateur + "\n" +
                     "Compétences Actives configurées :\n" + (compText || "Aucune compétence rattachée.") + "\n\n" +
@@ -1574,8 +1667,8 @@
             const rs = 6.2;
             const bw = W / 2, sc1 = bw * 0.5, sc2 = bw * 0.25, sc3 = bw - sc1 - sc2;
             need(rs);
-            head(M, y, sc1, rs, 'Statistique'); head(M + sc1, y, sc2, rs, 'Actuel'); head(M + sc1 + sc2, y, sc3, rs, 'Saisie');
-            head(M + bw, y, sc1, rs, 'Statistique'); head(M + bw + sc1, y, sc2, rs, 'Actuel'); head(M + bw + sc1 + sc2, y, sc3, rs, 'Saisie');
+            head(M, y, sc1, rs, 'Statistique'); head(M + sc1, y, sc2, rs, 'Actuel'); head(M + sc1 + sc2, y, sc3, rs, 'Base');
+            head(M + bw, y, sc1, rs, 'Statistique'); head(M + bw + sc1, y, sc2, rs, 'Actuel'); head(M + bw + sc1 + sc2, y, sc3, rs, 'Base');
             y += rs;
             for (let i = 0; i < 3; i++) {
                 const sg = D.stats[i * 2], sd = D.stats[i * 2 + 1]; need(rs);
@@ -1650,7 +1743,7 @@
             // ----- HISTOIRE -----
             band('Histoire du personnage');
             need(h1); label(M, y, 30, h1, 'Peurs profondes'); field(M + 30, y, W - 30, h1, D.peurs); y += h1;
-            need(h1); label(M, y, 30, h1, 'Vaillance'); field(M + 30, y, W - 30, h1, D.vaillance); y += h1;
+            need(h1); label(M, y, 30, h1, 'Motivations'); field(M + 30, y, W - 30, h1, D.vaillance); y += h1;
             need(45);
             const bgH = Math.max(40, BOT - y);
             field(M, y, W, bgH, D.background, { multiline: true, fontSize: 9 });
@@ -1669,7 +1762,7 @@
             let h = `<h2>${esc(D.nom || 'Sans nom')}</h2>`;
             h += `<h3>Informations générales</h3>`;
             h += `<table ${TB}>${kv('Âge', D.age)}${kv('Sexe', D.sexe)}${kv('Fonction / Profession', D.profession)}${kv('Points de compétences (restants / initiaux)', (D.pcRest || '') + ' / ' + (D.pcMax || ''))}${kv('Points de déduction', D.deductions)}</table>`;
-            h += `<h3>Statistiques</h3><table ${TB}><tr><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Saisie</strong></td><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Saisie</strong></td></tr>`;
+            h += `<h3>Statistiques</h3><table ${TB}><tr><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Base</strong></td><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Base</strong></td></tr>`;
             for (let i = 0; i < D.stats.length; i += 2) {
                 const sg = D.stats[i], sd = D.stats[i + 1];
                 h += `<tr><td>${esc(sg.lib)}</td><td>${esc(sg.actuel)}</td><td>${esc(sg.saisie)}</td>` +
@@ -1694,8 +1787,8 @@
             const ni = Math.max(D.invPerso.length, D.invGlobal.length, 1);
             for (let i = 0; i < ni; i++) h += `<tr><td>${esc(D.invPerso[i] || '')}</td><td>${esc(D.invGlobal[i] || '')}</td></tr>`;
             h += `</table>`;
-            h += `<h3>Histoire du personnage</h3><table ${TB}>${kv('Peurs profondes', D.peurs)}${kv('Vaillance', D.vaillance)}`;
-            if (D.background) h += `<tr><td><strong>Background</strong></td><td>${esc(D.background).replace(/\n/g, '<br>')}</td></tr>`;
+            h += `<h3>Histoire du personnage</h3><table ${TB}>${kv('Peurs profondes', D.peurs)}${kv('Motivations', D.vaillance)}`;
+            if (D.background) h += `<tr><td colspan="2">${esc(D.background).replace(/\n/g, '<br>')}</td></tr>`;
             h += `</table>`;
 
             const sep = '----------------------------------------';
@@ -1703,12 +1796,12 @@
             t += 'INFORMATIONS GÉNÉRALES\n';
             t += '- Âge : ' + D.age + ' | Sexe : ' + D.sexe + '\n- Fonction / Profession : ' + D.profession + '\n';
             t += '- Points de compétences (restants / initiaux) : ' + D.pcRest + ' / ' + D.pcMax + '\n- Points de déduction : ' + D.deductions + '\n' + sep + '\n';
-            t += 'STATISTIQUES (Actuel / Saisie)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\n- Total des points : ' + D.totalPts + ' / ' + D.statMax + '\n' + sep + '\n';
+            t += 'STATISTIQUES (Actuel / Base)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\n- Total des points : ' + D.totalPts + ' / ' + D.statMax + '\n' + sep + '\n';
             t += 'SANTÉ MENTALE & PHYSIQUE\n- Courage : ' + D.courage + ' | Résistance : ' + D.resistance + '\n- État mental : ' + D.selMentale + '\n- Blessures physiques : ' + D.selPhysique + '\n' + sep + '\n';
             t += 'COMPÉTENCES (' + (D.compMax || '—') + ' max autorisées par le MJ)\n' + (D.comp.length ? D.comp.map(c => '- ' + c.nom + ' [' + c.niveau + '] ' + c.stat + ' +' + c.bonus + ' = ' + c.total).join('\n') : 'Aucune') + '\n' + sep + '\n';
             t += 'AFFLICTIONS (3 max)\n' + (D.aff.length ? D.aff.map(a => '- ' + a.nom + ' [' + a.stade + '] perte ' + a.malus + ' PS, gain +' + a.gain + ' PC, +' + a.bonus + ' compétence(s) — répartition : ' + a.rep).join('\n') : 'Aucune') + '\n' + sep + '\n';
             t += 'INVENTAIRE\n- Argent local : ' + D.monnaie + ' | Argent global : ' + D.monnaieGlobal + '\n- Sur soi (Locale) : ' + (D.invPerso.join(', ') || '—') + '\n- Coffre / Planque (Global) : ' + (D.invGlobal.join(', ') || '—') + '\n' + sep + '\n';
-            t += 'HISTOIRE DU PERSONNAGE\n- Peurs profondes : ' + D.peurs + '\n- Vaillance : ' + D.vaillance + (D.background ? '\n\n' + D.background : '');
+            t += 'HISTOIRE DU PERSONNAGE\n- Peurs profondes : ' + D.peurs + '\n- Motivations : ' + D.vaillance + (D.background ? '\n\n' + D.background : '');
 
             const okMsg = () => toast("Mise en page copiée ! Collez-la dans Roll20 → onglet « Bio & Info ».", "success", 6000);
             const fallback = () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); okMsg(); } catch (e) { toast("Copie impossible.", "error"); } ta.remove(); };
@@ -1990,11 +2083,11 @@
 
         function _rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-        // 6 stats dans [0,100] dont la somme vaut exactement le maximum configuré (300 par défaut).
+        // 6 stats dans [10,70] dont la somme vaut exactement le maximum configuré (300 par défaut).
         // On part de 50/50/... (somme 300), on ajuste vers la cible, puis on brasse pour la variété.
         function genererStatsAleatoires() {
             const cles = ["force", "dex", "cha", "per", "edu", "chance"];
-            const LO = 0, HI = 100;
+            const LO = 10, HI = 70;
             const cible = Math.max(cles.length * LO, Math.min(cles.length * HI,
                 parseInt(document.getElementById('stat_max_pts').value) || 300));
             const s = { force: 50, dex: 50, cha: 50, per: 50, edu: 50, chance: 50 };
