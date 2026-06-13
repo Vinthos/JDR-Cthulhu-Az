@@ -1,0 +1,2268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créateur de Personnage Cthulhu - Azpartam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js" integrity="sha384-weMABwrltA6jWR8DDe9Jp5blk+tZQh7ugpCsF3JwSA53WZM9/14PjS5LAJNHNjAI" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        /* Impression directe (Ctrl+P de secours) : fond blanc, texte noir, peu d'encre */
+        @media print {
+            body {
+                background: #fff !important;
+                color: #000 !important;
+                background-image: none !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body::before, body::after { display: none !important; }
+            #btnGenererPrompt, #btnExporterPDF, #btnRoll20, .gestion-donnees-bloc { display: none !important; }
+            @page { size: A4; margin: 12mm; }
+        }
+
+        /* ============================================================
+           FICHE PDF (générée par html2pdf) — tableau simple noir/blanc
+           ============================================================ */
+        .pdf-sheet { width: 720px; box-sizing: border-box; background: #fff; color: #000; padding: 6px 10px 14px; font-family: Arial, Helvetica, sans-serif; }
+        .pdf-sheet, .pdf-sheet * { color: #000 !important; }
+        .pdf-sheet h1 { font-size: 19px; margin: 4px 0 2px; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
+        .pdf-sheet .pdf-sub { text-align: center; font-size: 10px; margin: 0 0 12px; }
+        .pdf-sheet h2 { font-size: 13px; margin: 14px 0 5px; padding: 4px 7px; background: #ececec; border: 1px solid #000; text-transform: uppercase; letter-spacing: .5px; }
+        .pdf-sheet table { border-collapse: collapse; width: 100%; margin-bottom: 5px; }
+        .pdf-sheet th, .pdf-sheet td { border: 1px solid #000; padding: 3px 6px; font-size: 11px; text-align: left; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
+        .pdf-sheet th { font-weight: bold; background: #f5f5f5; }
+        .pdf-sheet .pdf-note { font-size: 10px; font-style: italic; margin: 3px 0 7px; line-height: 1.35; }
+        .pdf-sheet .pdf-bg { font-size: 11px; line-height: 1.5; white-space: pre-wrap; border: 1px solid #000; padding: 7px; }
+        .pdf-sheet .pdf-box { display: inline-block; width: 12px; height: 12px; line-height: 12px; border: 1px solid #000; text-align: center; font-size: 10px; font-weight: bold; }
+        .pdf-block { page-break-inside: avoid; break-inside: avoid; }
+        .no-spinners::-webkit-outer-spin-button,
+        .no-spinners::-webkit-inner-spin-button {
+            -webkit-appearance: none; margin: 0;
+        }
+        .no-spinners { -moz-appearance: textfield; }
+
+        :root {
+            color-scheme: dark;
+            --abyss: #02070a;
+            --ink: #d7e2df;
+            --verdigris: #35c4a5;
+            --old-gold: #d6b25e;
+        }
+
+        body {
+            min-height: 100vh;
+            /* Fond de page : grimoire « tentacouilles » sous un voile sombre (lisibilité). */
+            background:
+                linear-gradient(180deg, rgba(2, 7, 10, 0.55), rgba(3, 8, 8, 0.72) 50%, rgba(1, 4, 7, 0.86)),
+                radial-gradient(ellipse at 14% 0%, rgba(31, 103, 84, 0.22), transparent 40%),
+                radial-gradient(ellipse at 86% 8%, rgba(88, 28, 72, 0.20), transparent 38%),
+                url('tentacouilles.jpg');
+            background-position: center, center, center, center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #02070a;
+            color: var(--ink);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+                radial-gradient(ellipse at center, transparent 44%, rgba(0, 0, 0, 0.58) 100%);
+            background-size: 42px 42px, 42px 42px, 100% 100%;
+            mix-blend-mode: screen;
+            opacity: 0.45;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 5px);
+            opacity: 0.08;
+        }
+
+        body > .max-w-6xl {
+            position: relative;
+            z-index: 1;
+        }
+
+        body .bg-slate-900 {
+            background:
+                linear-gradient(145deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98)) !important;
+            border-color: rgba(79, 112, 103, 0.36) !important;
+            box-shadow:
+                0 24px 55px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(214, 178, 94, 0.07),
+                inset 0 0 28px rgba(53, 196, 165, 0.025) !important;
+        }
+
+        body .bg-slate-950 {
+            background:
+                linear-gradient(145deg, rgba(2, 7, 10, 0.96), rgba(7, 13, 14, 0.98)) !important;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.38);
+        }
+
+        body .border-slate-800 { border-color: rgba(79, 112, 103, 0.38) !important; }
+        body .border-emerald-950 { border-color: rgba(34, 127, 104, 0.54) !important; }
+        body .border-emerald-900 { border-color: rgba(53, 196, 165, 0.43) !important; }
+        body .border-red-950 { border-color: rgba(143, 37, 37, 0.58) !important; }
+        body .border-purple-900 { border-color: rgba(159, 106, 216, 0.42) !important; }
+        body .border-orange-800 { border-color: rgba(184, 92, 40, 0.42) !important; }
+
+        h1, h2, h3,
+        .text-emerald-400,
+        .text-purple-400,
+        .text-red-400 {
+            text-shadow: 0 0 18px currentColor;
+        }
+
+        h1 {
+            color: #c8a3ff !important;
+            letter-spacing: 0;
+        }
+
+        h2 {
+            letter-spacing: 0;
+        }
+
+        label {
+            letter-spacing: 0.03em;
+        }
+
+        input, select, textarea {
+            border-color: rgba(115, 139, 131, 0.4) !important;
+            box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.42);
+            transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: rgba(53, 196, 165, 0.75) !important;
+            box-shadow:
+                0 0 0 1px rgba(53, 196, 165, 0.3),
+                0 0 22px rgba(53, 196, 165, 0.13),
+                inset 0 0 16px rgba(0, 0, 0, 0.44);
+        }
+
+        select {
+            background-color: #02070a !important;
+            color: #d7e2df !important;
+            scrollbar-color: rgba(53, 196, 165, 0.55) #02070a;
+        }
+
+        select option,
+        select optgroup {
+            background-color: #02070a !important;
+            color: #d7e2df !important;
+        }
+
+        select option:checked {
+            background-color: #123c35 !important;
+            color: #f5f0d0 !important;
+        }
+
+        button {
+            box-shadow:
+                0 10px 22px rgba(0, 0, 0, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        body .rounded-xl,
+        body .rounded-lg {
+            border-radius: 0.5rem !important;
+        }
+
+        #statsContainerGrid {
+            grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            gap: 0.85rem !important;
+        }
+
+        #statsContainerGrid > div {
+            position: relative;
+            overflow: hidden;
+            min-height: 118px;
+            border-color: rgba(214, 178, 94, 0.22) !important;
+            box-shadow:
+                0 15px 28px rgba(0, 0, 0, 0.32),
+                inset 0 0 24px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        #statsContainerGrid > div::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-left: 2px solid rgba(214, 178, 94, 0.42);
+            background: linear-gradient(90deg, rgba(214, 178, 94, 0.06), transparent 42%);
+            pointer-events: none;
+        }
+
+        #statsContainerGrid > div > div:first-child {
+            position: relative;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 0.45rem;
+        }
+
+        #statsContainerGrid .stat-input {
+            width: 5.5rem !important; /* assez large pour « 100 » + le spinner natif, sans troncature */
+        }
+
+        #statsContainerGrid .text-yellow-200 {
+            color: var(--old-gold) !important;
+        }
+
+        #blocCompetencesStats {
+            border-color: rgba(53, 196, 165, 0.32) !important;
+            background: linear-gradient(180deg, rgba(53, 196, 165, 0.055), transparent);
+            margin-top: 0.2rem;
+            padding: 0.95rem;
+            border-radius: 0.5rem;
+        }
+
+        #panierAfflictions > div,
+        #panierList > div,
+        #details,
+        #afflictionDetailPanel {
+            box-shadow:
+                0 14px 28px rgba(0, 0, 0, 0.34),
+                inset 0 0 22px rgba(0, 0, 0, 0.34);
+        }
+
+        #panierAfflictions .grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        }
+
+        #btnGenererPrompt, .btn-save-design {
+            background: linear-gradient(135deg, #126954, #2bb894) !important;
+            border: 1px solid rgba(107, 236, 201, 0.42) !important;
+        }
+
+        #btnExporterPDF, .btn-import-design {
+            background: linear-gradient(135deg, #2a3033, #11181b) !important;
+            border: 1px solid rgba(159, 106, 216, 0.3) !important;
+        }
+
+        @media (min-width: 640px) {
+            #statsContainerGrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #statsContainerGrid {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+        }
+
+        /* --- Notifications (toasts) --- */
+        #toastZone {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+            max-width: min(92vw, 360px);
+        }
+        .toast {
+            pointer-events: auto;
+            font-family: ui-monospace, monospace;
+            font-size: 0.78rem;
+            line-height: 1.3;
+            padding: 0.7rem 0.95rem;
+            border-radius: 0.6rem;
+            color: #eafff7;
+            background: linear-gradient(135deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98));
+            border: 1px solid rgba(53, 196, 165, 0.45);
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(214, 178, 94, 0.08);
+            transform: translateX(120%);
+            opacity: 0;
+            transition: transform 280ms cubic-bezier(.2,.8,.2,1), opacity 280ms ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+        }
+        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast.toast-success { border-color: rgba(53, 196, 165, 0.6); }
+        .toast.toast-error { border-color: rgba(218, 72, 72, 0.7); color: #ffe3e3; }
+        .toast.toast-info { border-color: rgba(159, 106, 216, 0.6); }
+        .toast .toast-ico { font-size: 0.95rem; line-height: 1; margin-top: 0.05rem; }
+
+        /* --- Aperçu avatar --- */
+        #avatarPreviewWrap { margin-top: 0.6rem; }
+        #avatarPreview {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(53, 196, 165, 0.35);
+            box-shadow: inset 0 0 16px rgba(0,0,0,0.5);
+        }
+
+        @media print {
+            #toastZone, #avatarPreviewWrap { display: none !important; }
+        }
+
+        /* ===== Bandeau d'en-tête "abyssal" — préfixe hdr- ===== */
+        .hdr-banner {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            /* Même fond que les autres sections (.bg-slate-900) */
+            border: 1px solid rgba(79, 112, 103, 0.36);
+            background: linear-gradient(145deg, rgba(13, 22, 25, 0.97), rgba(5, 11, 14, 0.98));
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+        }
+        .hdr-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(90% 120% at 50% 110%, rgba(53, 196, 165, 0.09), transparent 60%);
+            opacity: 0.35;
+            z-index: 1;
+        }
+        @keyframes hdr-breathe {
+            0%, 100% { opacity: 0.35; }
+            50%      { opacity: 0.75; }
+        }
+        .hdr-tentacles {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;               /* derrière le texte du bandeau */
+            pointer-events: none;     /* ne bloque jamais les clics */
+            display: block;
+            overflow: visible;
+            opacity: 0.2;             /* discret, en filigrane */
+        }
+        .hdr-tentacle {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: url(#hdr-glow);   /* halo teal atmosphérique */
+        }
+        .hdr-tentacles-group { transform-origin: center; }
+        .hdr-sucker { opacity: 0.5; }
+        .hdr-content { position: relative; z-index: 2; }
+        .hdr-content::before {
+            content: "";
+            position: absolute;
+            inset: -0.75rem -1rem;
+            z-index: -1;
+            background: radial-gradient(120% 120% at 25% 50%, rgba(2, 7, 10, 0.78), rgba(2, 7, 10, 0.25) 75%, transparent);
+            border-radius: 0.5rem;
+        }
+        .hdr-title {
+            color: var(--ink);
+            text-shadow: 0 0 18px rgba(53, 196, 165, 0.35), 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        .hdr-title .hdr-accent { color: var(--verdigris); }
+        .hdr-subtitle { color: rgba(215, 226, 223, 0.6); }
+        .hdr-subtitle b { color: var(--old-gold); font-weight: 600; }
+        .hdr-rule {
+            border: 1px solid rgba(214, 178, 94, 0.35);
+            background: rgba(2, 7, 10, 0.55);
+        }
+        .hdr-rule-label { color: var(--old-gold); }
+        .hdr-rule-text { color: rgba(215, 226, 223, 0.85); }
+        @media (prefers-reduced-motion: reduce) {
+            .hdr-banner::after,
+            .hdr-tentacles-group,
+            .hdr-sucker { animation: none !important; }
+            /* fige le morphing SMIL : les tentacules restent visibles mais immobiles */
+            .hdr-tentacles animate { display: none; }
+        }
+        @media print {
+            .hdr-tentacles, .hdr-banner::after { display: none !important; }
+            .hdr-banner {
+                box-shadow: none;
+                background: var(--abyss);
+                border-color: rgba(53, 196, 165, 0.4);
+            }
+            .hdr-title, .hdr-subtitle, .hdr-rule-text { text-shadow: none; }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 p-4 md:p-8 font-sans">
+    <div id="toastZone" aria-live="polite"></div>
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <div class="hdr-banner px-5 py-5 md:px-7 md:py-6">
+            <div class="hdr-content flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-wide">
+                        Fiche de <span class="text-emerald-400">Création</span> de Personnage
+                    </h1>
+                    <p class="hdr-subtitle text-xs mt-1 font-mono">
+                        Système JDR Custom basé sur Cthulhu Dark — Pensé et conçu par <b>Azpartam</b> — Développé par <b>Vinthos</b>
+                    </p>
+                </div>
+                <div class="hdr-rule shrink-0 px-4 py-2 rounded text-xs">
+                    <span class="hdr-rule-label font-bold">Règle MJ :</span>
+                    <span class="hdr-rule-text">De haut en bas, pas d'impasse.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gestion-donnees-bloc flex flex-col sm:flex-row justify-center items-center gap-4 p-4 bg-slate-900 border border-slate-800 rounded-xl shadow-xl">
+            <button onclick="sauvegarderFiche()" class="btn-save-design font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl">
+                SAUVEGARDER MA FICHE
+            </button>
+            <label class="btn-import-design font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase text-center cursor-pointer shadow-2xl">
+                IMPORTER UNE SAUVEGARDE
+                <input type="file" id="importFile" onchange="importerFiche(event)" class="hidden" accept=".json">
+            </label>
+            <button onclick="partagerParURL()" class="btn-share-url font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl" style="background:linear-gradient(135deg,#3a2a6e,#6d4bb8);border:1px solid rgba(159,106,216,0.45);">
+                PARTAGER PAR URL
+            </button>
+            <button onclick="reinitialiserFiche()" class="btn-reset-fiche font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl" style="background:linear-gradient(135deg,#3a1414,#7c2222);border:1px solid rgba(218,72,72,0.5);">
+                RÉINITIALISER
+            </button>
+        </div>
+
+        <div class="gestion-donnees-bloc flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-4 p-4 bg-slate-900 border border-slate-800 rounded-xl shadow-xl">
+            <button onclick="genererAleatoire()" class="font-mono tracking-wide text-white font-bold px-8 py-3 rounded-xl transition duration-200 w-full sm:w-auto text-sm uppercase shadow-2xl" style="background:linear-gradient(135deg,#126954,#2bb894);border:1px solid rgba(107,236,201,0.42);">
+                🎲 Tirer au hasard
+            </button>
+            <div class="flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 w-full sm:w-auto">
+                <label class="text-xs font-bold text-emerald-400 uppercase tracking-wide whitespace-nowrap">Pré-tiré :</label>
+                <select id="selectPretire" onchange="chargerPretire(this.value)" class="flex-grow bg-slate-900 border border-slate-700 rounded p-2 text-sm text-white outline-none min-w-0">
+                    <option value="">— Choisir un archétype —</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Avatar (Lien Photo)</label>
+                <input type="text" id="char_avatar" placeholder="https://..." oninput="rafraichirApercuAvatar()" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+                <div id="avatarPreviewWrap" class="hidden">
+                    <img id="avatarPreview" alt="Aperçu de l'avatar" onerror="this.parentElement.classList.add('hidden')">
+                </div>
+            </div>
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Nom & Prénom de l'Enquêteur</label>
+                <input type="text" id="char_name" placeholder="Clark Ashton Derleth" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Fonction / Profession</label>
+                <input type="text" id="char_profession" placeholder="Journaliste, Détective..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Sexe</label>
+                <input type="text" id="char_sexe" placeholder="Homme, Femme…" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Âge</label>
+                <input type="text" id="char_age" placeholder="Ex : 36 ans (né en 1955)" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl lg:col-span-2 flex flex-col justify-between space-y-4">
+                <div>
+                    <h2 class="text-xl font-bold text-emerald-400 mb-2">Statistiques Principales</h2>
+                    <p class="text-xs text-slate-400 mb-4 italic">
+                        La valeur d'une statistique est normalement comprise entre 20 et 70 ; la saisie reste possible de 0 à 100. Sous 10 ou au-dessus de 70, le score s'affiche en <span class="text-orange-400 font-bold">orange</span>. Modifiez vos valeurs via la case « Base » à droite ; le score « Actuel » à gauche est recalculé automatiquement en fonction de vos malus d'afflictions et des points saisis, et s'affiche en <span class="text-red-500 font-bold">rouge</span> dès qu'une affliction le modifie.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_force">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Force (STR)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_force" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_force" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_dex">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Dextérité (DEX)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_dex" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_dex" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_cha">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Charisme (CHA)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_cha" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_cha" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_per">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Perception (PER)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_per" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_per" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_edu">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Éducation (EDU)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_edu" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_edu" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_chance">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Chance (LUCK)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_chance" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Base</span>
+                                    <input type="number" id="stat_chance" min="0" max="100" value="50" class="stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="blocCompetencesStats" class="space-y-2 border-t border-slate-800 pt-4 hidden">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">Bonus de compétences appliqués (Basé sur le Score Actuel)</h3>
+                        <div id="listeCompetencesStats" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-2 pt-2 border-t border-slate-800 mt-4">
+                    <div class="p-3 bg-slate-950 rounded-lg flex flex-col sm:flex-row justify-between items-center text-xs border border-slate-800 gap-2 sm:gap-0">
+                        <div class="flex items-center gap-1.5"><span>Gestion des points de statistiques :</span> <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> <span class="text-slate-600 font-bold">/</span> <input type="number" id="stat_max_pts" min="0" value="300" class="w-16 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-0.5 font-mono"></div>
+                        <div id="statStatus" class="text-emerald-400 font-bold text-center">✓ Total valide</div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-2 text-xs">
+                        <div class="flex-grow sm:w-2/3 p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
+                            <div class="flex items-center space-x-4">
+                                <label class="text-slate-400 font-bold">Points de compétences initiales :</label>
+                                <input type="number" id="pc_max" value="25" class="w-16 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
+                            </div>
+                            <div class="ml-6 pl-4 border-l border-slate-800 text-right whitespace-nowrap">points restant : <span id="pc_restants_global" class="font-mono font-bold text-emerald-400 ml-1">25</span> PC</div>
+                        </div>
+                        <div class="flex-shrink-0 sm:w-1/3 p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
+                            <label class="text-slate-400 font-bold">Points de Déduction:</label>
+                            <input type="number" id="pts_deduction" value="0" class="w-14 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1 ml-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
+                <h2 class="text-xl font-bold text-emerald-400">Seuils & États de Santé</h2>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-slate-950 p-2 rounded border border-slate-800">
+                        <span class="text-slate-400 block">Courage :</span>
+                        <span id="val_courage" class="text-fuchsia-400 font-bold text-sm font-mono">-</span>
+                    </div>
+                    <div class="bg-slate-950 p-2 rounded border border-slate-800">
+                        <span class="text-slate-400 block">Résistance :</span>
+                        <span id="val_resistance" class="text-orange-500 font-bold text-sm font-mono">-</span>
+                    </div>
+                </div>
+
+                <div class="p-3 rounded-lg border border-purple-900 bg-purple-950/25 shadow-md">
+                    <label class="block text-xs font-black text-purple-400 uppercase tracking-wider mb-2">MENTALE (Chocs mentaux)</label>
+                    <div class="space-y-1 text-xs">
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Aucune instabilité" checked class="accent-purple-500"> <span class="text-white font-bold">Aucune instabilité</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Légère" class="accent-purple-500"> <span>Instabilité Légère</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Modérée" class="accent-purple-500"> <span>Instabilité Modérée</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Lourde" class="accent-purple-500"> <span>Instabilité Lourde</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Instabilité Grave" class="accent-purple-500"> <span>Instabilité Grave</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_mentale" value="Folie" class="accent-purple-500"><span class="text-fuchsia-400 font-bold tracking-wide">Folie</span></label>
+                    </div>
+                </div>
+
+                <div class="p-3 rounded-lg border border-orange-800 bg-orange-950/25 shadow-md">
+                    <label class="block text-xs font-black text-orange-500 uppercase tracking-wider mb-2">Physique (Blessures)</label>
+                    <div class="space-y-1 text-xs">
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Aucune blessure" checked class="accent-orange-500"> <span class="text-white font-bold">Aucune blessure</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Légère(s)" class="accent-orange-500"> <span>Blessure(s) Légère(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Modérée(s)" class="accent-orange-500"> <span>Blessure(s) Modérée(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Lourde(s)" class="accent-orange-500"> <span>Blessure(s) Lourde(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Grave(s)" class="accent-orange-500"> <span>Blessure(s) Grave(s)</span></label>
+                        <label class="flex items-center space-x-2 p-1.5 bg-slate-950 rounded cursor-pointer border border-slate-800"><input type="radio" name="san_physique" value="Blessure(s) Mortelle(s)" class="accent-orange-500"><span class="text-orange-400 font-bold tracking-wide">Blessure(s) Mortelle(s)</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
+            <h2 class="text-xl font-bold text-emerald-400">Afflictions du Personnage (3 max)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <select id="selectAffliction" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none focus:border-red-500 transition">
+                        <option value="">-- Sélectionner une affliction --</option>
+                    </select>
+                    <div id="afflictionDetailPanel" class="bg-slate-950 p-4 rounded-lg border border-slate-800 hidden space-y-3">
+                        <h3 id="afflictionNom" class="text-lg font-bold text-red-400"></h3>
+                        <p id="afflictionDef" class="text-xs text-slate-400 italic"></p>
+                        <div id="afflictionStadesList" class="space-y-2"></div>
+                    </div>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Afflictions Actives</h3>
+                            <span class="text-xs font-mono bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                                <span id="aff_count_display" class="text-red-400 font-bold">0</span> / 3 Max
+                            </span>
+                        </div>
+                        <div id="panierAfflictions" class="space-y-3">
+                            <p class="italic text-slate-600 text-xs">Aucune affliction sélectionnée pour le moment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b border-slate-800 pb-2 gap-2">
+                <h2 class="text-xl font-bold text-emerald-400">Gestion des Inventaires</h2>
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
+                        <label class="text-xs font-bold text-emerald-400 uppercase">Argent local :</label>
+                        <input type="text" id="inv_money" placeholder="Ex: 150$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">
+                        <label class="text-xs font-bold text-emerald-400 uppercase">Argent global :</label>
+                        <input type="text" id="inv_money_global" placeholder="Ex: 500$" class="bg-transparent text-sm font-mono text-white font-bold w-20 outline-none text-right">
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Personnel (Sur soi) [Entrée pour ajouter]</label>
+                        <button onclick="ajouterLigneInventaire('container_perso', 'Objet sur soi...')" class="bg-emerald-600 text-white font-bold px-2 rounded text-xs">+</button>
+                    </div>
+                    <div id="container_perso" class="space-y-1.5"></div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase">Inventaire Global (Coffre, Planque) [Entrée pour ajouter]</label>
+                        <button onclick="ajouterLigneInventaire('container_global', 'Objet global...')" class="bg-emerald-600 text-white font-bold px-2 rounded text-xs">+</button>
+                    </div>
+                    <div id="container_global" class="space-y-1.5"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h2 class="text-xl font-bold text-emerald-400 mb-2">Compétences</h2>
+                <div class="flex items-center space-x-4 mb-4 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
+                    <label class="text-slate-400 font-bold">Nombre de compétences max autorisé par le MJ :</label>
+                    <input type="number" id="comp_max_limit" value="2" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
+                </div>
+                <select id="selectCompetence" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none">
+                    <option value="">-- Sélectionner la compétence --</option>
+                </select>
+                <div id="details" class="bg-slate-950 p-4 rounded-lg border border-slate-800 hidden space-y-3">
+                    <div>
+                        <h3 id="compNom" class="text-lg font-bold text-yellow-200"></h3>
+                        <p id="compStats" class="text-xs text-emerald-400 font-mono"></p>
+                    </div>
+                    <div id="niveauxList" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Compétences Sélectionnées</h3>
+                        <div class="flex space-x-2 text-[11px] font-mono">
+                            <div class="bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                                Quota : <span id="comp_count" class="text-emerald-400 font-bold">0</span> / <span id="comp_max_display" class="text-slate-400 font-bold">2</span>
+                            </div>
+                            <div class="bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                                points restant : <span id="pc_panier_restants" class="text-emerald-400 font-bold">25</span> PC
+                            </div>
+                        </div>
+                    </div>
+                    <div id="panierList" class="space-y-2 text-sm">
+                        <p class="italic text-slate-600 text-xs">Aucune compétence ajoutée pour le moment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-xl font-bold text-purple-400 tracking-wider mb-2">Peurs Profondes</label>
+                <input type="text" id="lore_peurs" placeholder="L'isolement..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+            <div>
+                <label class="block text-xl font-bold text-emerald-400 tracking-wider mb-2">Motivations</label>
+                <input type="text" id="lore_vaillance" placeholder="Peur surmontée..." class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+        </div>
+
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-2">
+            <label class="block text-xl font-bold text-emerald-400 tracking-wider">Background (Histoire complète de l'enquêteur - Min 15 lignes)</label>
+            <textarea id="lore_background" rows="8" placeholder="Écrivez votre histoire..." class="w-full bg-slate-950 border border-slate-800 p-3 rounded text-sm text-white outline-none resize-none"></textarea>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pb-12">
+            <button id="btnGenererPrompt" class="bg-emerald-600 hover:bg-emerald-500 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
+                GÉNÉRER MA FICHE
+            </button>
+            <button id="btnExporterPDF" onclick="exporterPDF()" class="bg-slate-700 hover:bg-slate-600 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
+                TÉLÉCHARGER LE PDF
+            </button>
+            <button id="btnRoll20" onclick="copierRoll20()" class="bg-slate-700 hover:bg-slate-600 font-mono tracking-wide text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition duration-200 w-full sm:w-auto text-base uppercase">
+                COPIER POUR ROLL20
+            </button>
+        </div>
+
+        <div id="outputContainer" class="hidden text-left bg-slate-900 p-4 rounded-xl border border-emerald-950 space-y-2">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">Fiche générée</h3>
+                <button onclick="copierPrompt()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1 rounded text-xs font-mono uppercase tracking-wide">Copier</button>
+            </div>
+            <textarea id="promptOutput" rows="14" class="w-full bg-slate-950 p-3 rounded text-xs text-slate-300 font-mono focus:outline-none" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        let competencesChoisies = [];
+        let afflictionsChoisies = [];
+        let indexCompetencesData = {};
+        let indexAfflictionsData = {};
+        let indexPretiresData = {};
+
+        const statMapping = {
+            "Force": "stat_force", "Dextérité": "stat_dex", "Charisme": "stat_cha", "Perception": "stat_per", "Éducation": "stat_edu", "Chance": "stat_chance"
+        };
+        
+        const displayMapping = {
+            "Force": "display_force", "Dextérité": "display_dex", "Charisme": "display_cha", "Perception": "display_per", "Éducation": "display_edu", "Chance": "display_chance"
+        };
+
+        // Libellés complets identiques à la section Statistiques principales (réutilisés dans la répartition d'affliction)
+        const statLabelMapping = {
+            "Force": "Force (STR)", "Dextérité": "Dextérité (DEX)", "Charisme": "Charisme (CHA)", "Perception": "Perception (PER)", "Éducation": "Éducation (EDU)", "Chance": "Chance (LUCK)"
+        };
+
+        // Conditions de sortie des afflictions : toujours "Stat < N" -> { stat, seuil }
+        function parseCondition(cond) {
+            if (!cond || typeof cond !== 'string') return null;
+            const m = cond.match(/^\s*(.+?)\s*<\s*(\d+)\s*$/);
+            if (!m) return null;
+            return { stat: m[1].trim(), seuil: parseInt(m[2]) };
+        }
+        // Seuil le plus contraignant (le plus bas) imposé sur une stat par les afflictions actives, ou null
+        function seuilAfflictionPourStat(statKey) {
+            let n = null;
+            afflictionsChoisies.forEach(a => {
+                const c = parseCondition(a.condition);
+                if (c && c.stat === statKey) n = (n === null) ? c.seuil : Math.min(n, c.seuil);
+            });
+            return n;
+        }
+        // Affichage du prérequis : on note « ≤ » (le seuil est inclus : ACTUEL doit rester ≤ N)
+        function prereqAffichage(cond) {
+            return cond ? cond.replace('<', '≤') : '';
+        }
+        
+        document.querySelectorAll('.stat-input').forEach(input => {
+            const nomStat = () => Object.keys(statMapping).find(k => statMapping[k] === input.id) || "Cette statistique";
+            // Bornes stockées à chaque rendu :
+            //  - data-floor : malus d'affliction cumulé (pour que le score ACTUEL reste ≥ 0)
+            //  - data-ceilaff : plafond mou imposé par une condition d'affliction (N + malus), '' si aucun
+            const plancher = () => parseInt(input.dataset.floor) || 0;
+            const plafondAff = () => (input.dataset.ceilaff === '' || input.dataset.ceilaff == null) ? null : parseInt(input.dataset.ceilaff);
+
+            // Applique plancher / plafond 100 / plafond d'affliction et notifie. Renvoie true si corrigé.
+            // old = valeur avant l'interaction (capturée au focus) : on ne fait jamais redescendre la Base
+            // existante, on bloque seulement les augmentations qui feraient repasser l'ACTUEL au-dessus de N.
+            function appliquerBornes() {
+                let v = parseInt(input.value);
+                if (isNaN(v)) return false;
+                const prev = parseInt(input.dataset.prev);
+                const old = isNaN(prev) ? v : prev;
+                const fl = plancher();
+                const ca = plafondAff();
+                // Plafond effectif unifié : le plafond dur (100) ET le plafond d'affliction sont pris en
+                // compte ensemble. On ne dépasse pas max(ca, old) — on ne force jamais à redescendre une
+                // Base déjà au-dessus — le tout borné à 100. (Bug corrigé : avant, v > 100 court-circuitait
+                // la vérification du plafond d'affliction et l'ACTUEL pouvait repasser au-dessus de N.)
+                const plafondAffEffectif = (ca != null) ? Math.max(ca, old) : Infinity;
+                const plafondEffectif = Math.min(100, plafondAffEffectif);
+
+                let corrige = true;
+                if (v < fl) {
+                    input.value = fl;
+                    toast(nomStat() + " ne peut pas descendre sous 0.", "error");
+                } else if (v > plafondEffectif) {
+                    input.value = plafondEffectif;
+                    if (ca != null && plafondAffEffectif < 100) {
+                        toast("Vos afflictions actuelles ne permettent pas d'augmenter cette valeur.", "error");
+                    } else {
+                        toast(nomStat() + " ne peut pas dépasser 100.", "error");
+                    }
+                } else {
+                    corrige = false;
+                }
+                input.dataset.prev = input.value;
+                return corrige;
+            }
+
+            input.addEventListener('focus', () => { input.dataset.prev = input.value; });
+            input.addEventListener('input', (e) => {
+                // Un "step" (flèche clavier OU clic sur le spinner souris) émet un event input SANS inputType :
+                // on applique les bornes immédiatement. La frappe (inputType défini) reste libre jusqu'au blur.
+                if (e.inputType == null) appliquerBornes();
+                travaillerCalculsEtRendu();
+            });
+            input.addEventListener('change', () => {
+                if (appliquerBornes()) travaillerCalculsEtRendu();
+            });
+        });
+
+        document.getElementById('pc_max').addEventListener('input', travaillerCalculsEtRendu);
+        document.getElementById('comp_max_limit').addEventListener('input', travaillerCalculsEtRendu);
+        document.getElementById('stat_max_pts').addEventListener('input', travaillerCalculsEtRendu);
+
+        const LS_KEY = 'azpartam_fiche_v1';
+
+        // Chargement des deux bases JSON, PUIS initialisation de la fiche
+        // (l'init a besoin des bases pour reconstruire compétences/afflictions depuis une URL ou le localStorage)
+        Promise.all([
+            fetch('competences.json').then(res => res.json()),
+            fetch('afflictions.json').then(res => res.json())
+        ]).then(([dataComp, dataAff]) => {
+            indexCompetencesData = dataComp;
+            const selectComp = document.getElementById('selectCompetence');
+            Object.keys(dataComp).forEach(key => {
+                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; selectComp.appendChild(opt);
+            });
+            selectComp.addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
+
+            indexAfflictionsData = dataAff;
+            const selectAff = document.getElementById('selectAffliction');
+            Object.keys(dataAff).forEach(key => {
+                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; selectAff.appendChild(opt);
+            });
+            selectAff.addEventListener('change', (e) => chargerDetailsAffliction(e.target.value));
+
+            initialiserFiche();
+
+            // Pré-tirés (optionnel) : peuple le menu déroulant si le fichier existe
+            fetch('pretires.json').then(r => r.json()).then(p => {
+                indexPretiresData = p;
+                const selP = document.getElementById('selectPretire');
+                Object.keys(p).forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = k; selP.appendChild(o); });
+            }).catch(() => { /* pré-tirés indisponibles : le tirage aléatoire reste utilisable */ });
+        }).catch(err => {
+            console.error(err);
+            toast("Impossible de charger les bases (competences.json / afflictions.json). Ouvrez la page via un serveur local.", "error", 8000);
+            // Mode dégradé : on permet quand même de remplir les stats et le lore
+            ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
+            ajouterLigneInventaire('container_global', 'Objet global 1...');
+            travaillerCalculsEtRendu();
+        });
+
+        function chargerDetailsCompetence(nomComp) {
+            document.getElementById('selectCompetence').value = nomComp;
+            const comp = indexCompetencesData[nomComp];
+            if (!comp) { document.getElementById('details').classList.add('hidden'); return; }
+            document.getElementById('details').classList.remove('hidden');
+            document.getElementById('compNom').textContent = comp.nom;
+            document.getElementById('compStats').textContent = "Stats liées : " + comp.stats;
+
+            const container = document.getElementById('niveauxList'); container.innerHTML = '';
+            const ordreNiveaux = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"];
+            let descriptionRapportee = "";
+
+            ordreNiveaux.forEach(nomNiveau => {
+                if (comp.niveaux && comp.niveaux[nomNiveau]) {
+                    const d = comp.niveaux[nomNiveau];
+                    if (d.description !== undefined && d.description !== null && d.description !== "") {
+                        descriptionRapportee = d.description;
+                    } else if (nomNiveau === "Basique") {
+                        descriptionRapportee = "";
+                    }
+
+                    const div = document.createElement('div');
+                    div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
+
+                    let htmlContenu = '<div><div class="font-bold text-white">' + nomNiveau + '</div>';
+                    htmlContenu += '<div class="text-orange-400 text-[10px]">Coût: ' + d.cout + ' PC</div>';
+                    if (d.bonus) htmlContenu += '<div class="text-emerald-400 text-[10px]">Bonus : +' + d.bonus + '</div>';
+                    if (descriptionRapportee) htmlContenu += '<div class="text-slate-400 italic mt-1 text-[11px]">' + descriptionRapportee + '</div>';
+                    htmlContenu += '</div>';
+                    
+                    div.innerHTML = htmlContenu;
+
+                    const btn = document.createElement('button');
+                    btn.textContent = "Associer"; btn.className = "bg-emerald-600 text-white font-bold px-2.5 py-1 rounded text-[10px] ml-4 shrink-0";
+                    btn.onclick = () => ajouterComp(comp.nom, nomNiveau, d.bonus || 0, d.cout, comp.stats, descriptionRapportee);
+                    
+                    div.appendChild(btn);
+                    container.appendChild(div);
+                }
+            });
+        }
+
+        function chargerDetailsAffliction(nomAff) {
+            document.getElementById('selectAffliction').value = nomAff;
+            const aff = indexAfflictionsData[nomAff];
+            if (!aff) { document.getElementById('afflictionDetailPanel').classList.add('hidden'); return; }
+            document.getElementById('afflictionDetailPanel').classList.remove('hidden');
+            document.getElementById('afflictionNom').textContent = aff.nom;
+            document.getElementById('afflictionDef').textContent = aff.definition;
+
+            const container = document.getElementById('afflictionStadesList'); container.innerHTML = '';
+            for (const [nomStade, d] of Object.entries(aff.niveaux)) {
+                const div = document.createElement('div');
+                div.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-start text-xs";
+                div.innerHTML = '<div><div class="font-bold text-white">' + nomStade + '</div>' +
+                               (d.condition ? '<div class="text-[10px] text-orange-400">Prérequis : ' + prereqAffichage(d.condition) + '</div>' : '') +
+                               '<div class="text-[10px] text-red-400">Coût : ' + d.cout_ps + ' PS</div>' +
+                               '<div class="text-[10px] text-emerald-400">Gain : +' + d.gain_pc + ' PC</div>' +
+                               '<div class="text-purple-400 text-[10px]">Points de Compétence bonus : +' + (d.bonus_comp || 0) + '</div></div>';
+                const btn = document.createElement('button');
+                btn.textContent = "Appliquer"; btn.className = "bg-red-700 text-white font-bold px-2.5 py-1 rounded text-[10px] ml-4 shrink-0";
+                btn.onclick = () => ajouterAffliction(aff.nom, nomStade, d.cout_ps, d.gain_pc, d.bonus_comp || 0, d.condition, aff.definition);
+                div.appendChild(btn); container.appendChild(div);
+            }
+        }
+
+        function ajouterComp(nom, niveau, bonus, cout, stringStats, descRapportee) {
+            let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
+            let pcInitialMax = parseInt(document.getElementById('pc_max').value) || 25;
+            if (competencesChoisies.filter(i => i.nom !== nom).reduce((s, i) => s + i.cout, 0) + cout > (pcInitialMax + totalGainPC)) {
+                toast("Budget de PC insuffisant !", "error"); return;
+            }
+            let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
+            if (!competencesChoisies.some(i => i.nom === nom) && competencesChoisies.length >= ((parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp)) {
+                toast("Nombre de compétences actives max atteint (règle MJ).", "error"); return;
+            }
+            competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
+            
+            let statLaPlusHaute = null; 
+            let scoreMax = -1;
+            
+            for (const key of Object.keys(statMapping)) {
+                if (stringStats.includes(key)) {
+                    let displayEl = document.getElementById(displayMapping[key]);
+                    let valeurStatCalculée = displayEl ? parseInt(displayEl.textContent) : 50;
+                    if (valeurStatCalculée > scoreMax) { 
+                        scoreMax = valeurStatCalculée; 
+                        statLaPlusHaute = key; 
+                    }
+                }
+            }
+            if(!statLaPlusHaute) statLaPlusHaute = Object.keys(statMapping).find(k => stringStats.includes(k)) || "Force";
+
+            competencesChoisies.push({ nom, niveau, bonus, cout, stringStats, statChoisie: statLaPlusHaute, description: descRapportee });
+            travaillerCalculsEtRendu();
+        }
+
+        function ajouterAffliction(nom, stade, cout_ps, gain_pc, bonus_comp, condition, definition) {
+            if (!afflictionsChoisies.some(i => i.nom === nom) && afflictionsChoisies.length >= 3) {
+                toast("Maximum de 3 afflictions atteint.", "error"); return;
+            }
+            
+            let repartition = { "Force": 0, "Dextérité": 0, "Charisme": 0, "Perception": 0, "Éducation": 0, "Chance": 0 };
+            let ancienne = afflictionsChoisies.find(i => i.nom === nom);
+            if (ancienne && ancienne.repartition) {
+                repartition = ancienne.repartition;
+            }
+
+            afflictionsChoisies = afflictionsChoisies.filter(item => item.nom !== nom);
+
+            // Auto-remplissage selon la condition de sortie (ex : « Éducation < 55 ») :
+            // si le score ACTUEL de la stat dépasse le seuil N, on pré-répartit les PS de cette
+            // affliction sur cette stat pour ramener l'ACTUEL exactement à N (borné par le budget PS).
+            const cond = parseCondition(condition);
+            if (cond && (cond.stat in repartition)) {
+                const inputStat = document.getElementById(statMapping[cond.stat]);
+                const baseStat = inputStat ? (parseInt(inputStat.value) || 0) : 0;
+                const autresPS = afflictionsChoisies.reduce((s, a) => s + ((a.repartition && a.repartition[cond.stat]) || 0), 0);
+                const besoin = baseStat - autresPS - cond.seuil; // PS à poser ici pour ACTUEL = N
+                if (besoin > 0) {
+                    const psAilleurs = Object.keys(repartition).reduce((s, k) => s + (k !== cond.stat ? (repartition[k] || 0) : 0), 0);
+                    const budget = Math.max(0, cout_ps - psAilleurs);
+                    repartition[cond.stat] = Math.min(besoin, budget);
+                }
+            }
+
+            afflictionsChoisies.push({ nom, stade, cout_ps, gain_pc, bonus_comp, condition, definition, repartition: repartition });
+            travaillerCalculsEtRendu();
+        }
+
+        function supprimerAffliction(nom) {
+            afflictionsChoisies = afflictionsChoisies.filter(item => item.nom !== nom);
+            travaillerCalculsEtRendu();
+        }
+
+        function actionModifierAffStat(nomAff, statKey, action, valDirecte = null) {
+            let aff = afflictionsChoisies.find(item => item.nom === nomAff);
+            if (!aff) return;
+
+            let valActuelle = aff.repartition[statKey] || 0;
+            let totalRepartiAilleurs = Object.keys(aff.repartition)
+                .filter(k => k !== statKey)
+                .reduce((s, k) => s + (aff.repartition[k] || 0), 0);
+            
+            let resteMaximumPossible = aff.cout_ps - totalRepartiAilleurs;
+
+            // Plancher : la répartition ne doit jamais faire descendre le score actuel de la stat sous 0
+            let displayEl = document.getElementById(displayMapping[statKey]);
+            let scoreActuel = displayEl ? (parseInt(displayEl.textContent) || 0) : 0;
+            let plafondStat = valActuelle + Math.max(0, scoreActuel);
+
+            // Prérequis : si cette stat porte la condition de l'affliction, on ne peut pas réduire ses PS
+            // sous le minimum qui maintient l'ACTUEL ≤ N (sinon le prérequis n'est plus respecté).
+            let minPSCondition = 0;
+            const condAff = parseCondition(aff.condition);
+            if (condAff && condAff.stat === statKey) {
+                const inputStat = document.getElementById(statMapping[statKey]);
+                const baseStat = inputStat ? (parseInt(inputStat.value) || 0) : 0;
+                const autresAffPS = afflictionsChoisies
+                    .filter(a => a !== aff)
+                    .reduce((s, a) => s + ((a.repartition && a.repartition[statKey]) || 0), 0);
+                minPSCondition = Math.max(0, baseStat - condAff.seuil - autresAffPS);
+            }
+
+            if (valDirecte !== null) {
+                let nVal = Math.max(0, Math.min(resteMaximumPossible, parseInt(valDirecte) || 0));
+                if (nVal > plafondStat) {
+                    toast(statKey + " ne peut pas descendre sous 0.", "error");
+                    nVal = plafondStat;
+                }
+                if (nVal < minPSCondition) {
+                    toast("Il faut respecter le prérequis de l'affliction.", "error");
+                    nVal = minPSCondition;
+                }
+                aff.repartition[statKey] = nVal;
+            } else if (action === 'plus') {
+                if (valActuelle + 1 > plafondStat) {
+                    toast(statKey + " ne peut pas descendre sous 0.", "error");
+                } else if (valActuelle < resteMaximumPossible) {
+                    aff.repartition[statKey] += 1;
+                }
+            } else if (action === 'moins') {
+                if (valActuelle - 1 < minPSCondition) {
+                    toast("Il faut respecter le prérequis de l'affliction.", "error");
+                } else if (valActuelle > 0) {
+                    aff.repartition[statKey] -= 1;
+                }
+            } else if (action === 'max') {
+                if (resteMaximumPossible > plafondStat) {
+                    toast("Répartition limitée : " + statKey + " ne peut pas descendre sous 0.", "error");
+                }
+                aff.repartition[statKey] = Math.min(resteMaximumPossible, plafondStat);
+            } else if (action === 'reset') {
+                if (minPSCondition > 0) {
+                    toast("Il faut respecter le prérequis de l'affliction.", "error");
+                }
+                aff.repartition[statKey] = minPSCondition;
+            }
+
+            travaillerCalculsEtRendu();
+        }
+
+        function changerStatAssociee(nomComp, nouvelleStat) {
+            let comp = competencesChoisies.find(item => item.nom === nomComp);
+            if (comp) { comp.statChoisie = nouvelleStat; travaillerCalculsEtRendu(); }
+        }
+
+        function supprimerComp(nom) {
+            competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
+            travaillerCalculsEtRendu();
+        }
+
+        function travaillerCalculsEtRendu() {
+            let totalSaisi = 0;
+            let malusCumules = { "Force": 0, "Dextérité": 0, "Charisme": 0, "Perception": 0, "Éducation": 0, "Chance": 0 };
+            
+            afflictionsChoisies.forEach(a => {
+                if (a.repartition) {
+                    Object.keys(a.repartition).forEach(k => {
+                        malusCumules[k] += (a.repartition[k] || 0);
+                    });
+                }
+            });
+
+            // Repère visuel : sous 10 ou au-dessus de 70, le score s'affiche en orange ;
+            // dès qu'une affliction modifie la stat, le score ACTUEL passe en rouge quoi qu'il arrive.
+            const couleurZone = v => (v < 10 || v > 70) ? "text-orange-400" : null;
+
+            Object.keys(statMapping).forEach(key => {
+                let inputEl = document.getElementById(statMapping[key]);
+                let wrapperEl = document.getElementById("wrapper_" + statMapping[key]);
+                let displayEl = document.getElementById(displayMapping[key]);
+
+                let baseSaisie = parseInt(inputEl.value) || 0;
+
+                // Bornes : on retire `min`/`max` natifs (sinon un step au bord est un no-op silencieux,
+                // sans notification possible). Tout est appliqué dans les écouteurs via dataset.
+                //  - floor   : malus d'affliction cumulé (score ACTUEL ≥ 0)
+                //  - ceilaff : plafond mou d'une condition d'affliction = N + malus (ACTUEL ≤ N), '' si aucun
+                const minSaisie = malusCumules[key];
+                const seuilCond = seuilAfflictionPourStat(key);
+                inputEl.removeAttribute('min');
+                inputEl.removeAttribute('max');
+                inputEl.dataset.floor = minSaisie;
+                inputEl.dataset.ceilaff = (seuilCond === null) ? '' : (seuilCond + malusCumules[key]);
+
+                // Clamp des bornes DURES pour une valeur chargée/générée hors focus (plancher + plafond 100).
+                // Le plafond d'affliction est "mou" : on ne fait jamais redescendre la Base existante.
+                if (document.activeElement !== inputEl) {
+                    if (baseSaisie < minSaisie) {
+                        baseSaisie = minSaisie; inputEl.value = minSaisie;
+                        toast(key + " ne peut pas descendre sous 0.", "error");
+                    } else if (baseSaisie > 100) {
+                        baseSaisie = 100; inputEl.value = 100;
+                        toast(key + " ne peut pas dépasser 100.", "error");
+                    }
+                    inputEl.dataset.prev = inputEl.value;
+                }
+
+                totalSaisi += baseSaisie;
+
+                let scoreCalculeFinal = baseSaisie - malusCumules[key];
+                if (displayEl) displayEl.textContent = scoreCalculeFinal;
+
+                // Cases toujours agrandies (même échelle avec ou sans affliction) ; seules
+                // la couleur et la bordure changent. Le wrapper garde sa disposition centrée.
+                const wrapBase = "bg-slate-950 p-3 rounded-lg border flex flex-col items-center justify-center";
+                const dispBase = "font-black text-lg bg-slate-900 px-2.5 py-1 rounded border";
+                if (malusCumules[key] > 0) {
+                    if (displayEl) displayEl.className = "text-red-500 " + dispBase + " border-red-700";
+                    if (wrapperEl) wrapperEl.className = wrapBase + " border-red-900/60 shadow-inner";
+                } else {
+                    const zoneScore = couleurZone(scoreCalculeFinal);
+                    if (displayEl) displayEl.className = (zoneScore || "text-white") + " " + dispBase + " border-slate-800";
+                    if (wrapperEl) wrapperEl.className = wrapBase + " border-slate-800";
+                }
+
+                if (inputEl) inputEl.className = "stat-input w-24 shrink-0 bg-slate-900 text-center font-black text-lg " + (couleurZone(baseSaisie) || "text-white") + " rounded border border-slate-700 outline-none p-1";
+            });
+
+            document.getElementById('totalPoints').textContent = totalSaisi;
+            const status = document.getElementById('statStatus');
+            const maxPts = parseInt(document.getElementById('stat_max_pts').value) || 0;
+
+            if (totalSaisi === maxPts) {
+                status.textContent = "✓ Total valide";
+                status.className = "text-emerald-400 font-bold text-center";
+            } else if (totalSaisi > maxPts) {
+                let trop = totalSaisi - maxPts;
+                status.textContent = "⚠ Invalide (vous avez " + trop + " point" + (trop > 1 ? 's' : '') + " en trop)";
+                status.className = "text-red-400 font-bold text-center";
+            } else {
+                let manque = maxPts - totalSaisi;
+                status.textContent = "⚠ Invalide (il vous manque " + manque + " point" + (manque > 1 ? 's' : '') + " à répartir)";
+                status.className = "text-red-400 font-bold text-center";
+            }
+
+            const force = parseInt(document.getElementById('display_force').textContent) || 0;
+            const dex = parseInt(document.getElementById('display_dex').textContent) || 0;
+            const cha = parseInt(document.getElementById('display_cha').textContent) || 0;
+            const per = parseInt(document.getElementById('display_per').textContent) || 0;
+            const edu = parseInt(document.getElementById('display_edu').textContent) || 0;
+            const luck = parseInt(document.getElementById('display_chance').textContent) || 0;
+
+            document.getElementById('val_courage').textContent = Math.ceil((cha + per + edu) / 3) || 0;
+            document.getElementById('val_resistance').textContent = Math.ceil((force + dex + luck) / 3) || 0;
+
+            let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
+            let pcInitialMax = parseInt(document.getElementById('pc_max').value) || 25;
+            let pcRestantsFinaux = (pcInitialMax + totalGainPC) - competencesChoisies.reduce((sum, item) => sum + item.cout, 0);
+            
+            document.getElementById('pc_restants_global').textContent = pcRestantsFinaux;
+            document.getElementById('pc_panier_restants').textContent = pcRestantsFinaux;
+
+            document.getElementById('pc_restants_global').className = pcRestantsFinaux < 0 ? "font-mono font-bold text-red-400 ml-1" : "font-mono font-bold text-emerald-400 ml-1";
+            document.getElementById('pc_panier_restants').className = pcRestantsFinaux < 0 ? "text-red-400 font-bold" : "text-emerald-400 font-bold";
+
+            let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
+            document.getElementById('comp_count').textContent = competencesChoisies.length;
+            document.getElementById('comp_max_display').textContent = (parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp;
+            document.getElementById('aff_count_display').textContent = afflictionsChoisies.length;
+
+            // RENDU PANIER COMPÉTENCES À DROITE
+            const panierContainer = document.getElementById('panierList');
+            if (competencesChoisies.length === 0) {
+                panierContainer.innerHTML = '<p class="italic text-slate-600 text-xs">Aucune compétence ajoutée.</p>';
+            } else {
+                panierContainer.innerHTML = competencesChoisies.map(item => {
+                    let escName = item.nom.replace(/'/g, "\\'");
+                    let descHtml = item.description 
+                        ? `<p class="text-[11px] text-slate-400 italic mt-1 bg-slate-950 p-1.5 rounded border border-slate-800/40">${item.description}</p>` 
+                        : '';
+                    return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2.5 rounded border border-slate-800 flex flex-col cursor-pointer hover:bg-slate-800 transition">' +
+                           '<div class="flex justify-between items-center w-full">' +
+                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ') · <span class="text-orange-400">' + item.cout + ' PC</span>]</span></div>' +
+                           '<button onclick="event.stopPropagation(); supprimerComp(\'' + escName + '\')" class="text-red-400 font-bold text-xs px-2">✕</button></div>' +
+                           descHtml +
+                           '</div>';
+                }).join('');
+            }
+
+            // RENDU PANIER AFFLICTIONS ACTIVES
+            const panierAffContainer = document.getElementById('panierAfflictions');
+            if (afflictionsChoisies.length === 0) {
+                panierAffContainer.innerHTML = '<p class="italic text-slate-600 text-xs">Aucune affliction active.</p>';
+            } else {
+                panierAffContainer.innerHTML = afflictionsChoisies.map(item => {
+                    let escName = item.nom.replace(/'/g, "\\'");
+                    
+                    let rep = item.repartition || {};
+                    let totalReparti = Object.values(rep).reduce((a, b) => a + b, 0);
+                    let reste = item.cout_ps - totalReparti;
+                    
+                    let repartitionHtml = '<div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-red-900/40">';
+                    Object.keys(statMapping).forEach(stat => {
+                        let val = rep[stat] || 0;
+                        let statLabel = statLabelMapping[stat] || stat;
+                        repartitionHtml += `
+                            <div class="flex flex-col items-center bg-slate-900 rounded border border-slate-800 p-2" onclick="event.stopPropagation()">
+                                <span class="text-[10px] text-slate-300 font-bold mb-1 text-center leading-tight" title="${statLabel}">${statLabel}</span>
+                                <div class="flex items-center space-x-1">
+                                    <button onclick="actionModifierAffStat('${escName}', '${stat}', 'moins')" class="bg-slate-950 hover:bg-slate-800 text-red-400 font-bold text-xs w-5 h-5 flex items-center justify-center rounded border border-slate-700">-</button>
+                                    <input type="number" min="0" value="${val}" onchange="actionModifierAffStat('${escName}', '${stat}', 'direct', this.value)" class="no-spinners w-7 bg-slate-950 text-red-400 font-mono text-xs text-center rounded border border-slate-700 outline-none py-0.5">
+                                    <button onclick="actionModifierAffStat('${escName}', '${stat}', 'plus')" class="bg-slate-950 hover:bg-slate-800 text-red-400 font-bold text-xs w-5 h-5 flex items-center justify-center rounded border border-slate-700">+</button>
+                                </div>
+                                <div class="flex items-center space-x-1 mt-1 w-full justify-center">
+                                    <button onclick="actionModifierAffStat('${escName}', '${stat}', 'max')" class="w-1/2 bg-red-950/40 hover:bg-red-900 text-red-300 font-mono text-[9px] py-0.5 rounded border border-red-900 uppercase">Max</button>
+                                    <button onclick="actionModifierAffStat('${escName}', '${stat}', 'reset')" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-400 font-mono text-[9px] py-0.5 rounded border border-slate-700">RaZ</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    repartitionHtml += '</div>';
+                    
+                    let resteHtml = reste === 0 
+                        ? `<span class="text-emerald-400 font-bold text-xs font-mono">Répartition complète ✓</span>` 
+                        : `<span class="text-red-500 font-bold text-xs font-mono animate-pulse">⚠️ À répartir : ${reste} PS</span>`;
+
+                    // Amélioration et intégration sur une seule ligne ordonnée et équilibrée
+                    let bonusCompHtml = item.bonus_comp > 0
+                        ? `<div class="text-purple-400 font-bold text-[11px] bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/60">+${item.bonus_comp} Slot Compétence</div>`
+                        : '';
+
+                    return '<div class="bg-slate-950 p-4 rounded-lg border border-red-950 flex flex-col space-y-2 cursor-pointer hover:border-red-900 transition" onclick="chargerDetailsAffliction(\'' + escName + '\')">' +
+                           '<div class="flex justify-between items-center"><div><span class="font-bold text-red-400 text-sm">' + item.nom + '</span><span class="text-purple-400 text-xs"> [' + item.stade + ']</span>' + (item.condition ? '<span class="text-orange-400 text-[11px] ml-2 font-mono">' + prereqAffichage(item.condition) + '</span>' : '') + '</div>' +
+                           '<button onclick="event.stopPropagation(); supprimerAffliction(\'' + escName + '\')" class="text-red-400 font-bold px-1">✕</button></div>' +
+                           '<p class="text-[11px] text-slate-400 italic font-sans leading-relaxed">' + (item.definition || "Pas de définition.") + '</p>' +
+                           '<div class="flex items-center justify-between gap-1 text-[11px] font-mono mt-1">' +
+                           '<div>Gain : <span class="text-emerald-400 font-bold">+' + item.gain_pc + ' PC</span></div>' +
+                           bonusCompHtml +
+                           '<div>Malus : <span class="text-red-400 font-bold">-' + item.cout_ps + ' PS</span></div>' +
+                           '</div>' +
+                           '<div class="text-center mt-1.5">' + resteHtml + '</div>' +
+                           repartitionHtml +
+                           '</div>';
+                }).join('');
+            }
+
+            // RENDU DU BLOC COMPÉTENCES AU BAS DES STATISTIQUES PRINCIPALES
+            const statsBlock = document.getElementById('blocCompetencesStats');
+            const listeContainer = document.getElementById('listeCompetencesStats');
+            if (competencesChoisies.length === 0) { 
+                statsBlock.classList.add('hidden'); 
+            } else {
+                statsBlock.classList.remove('hidden');
+                listeContainer.innerHTML = competencesChoisies.map(item => {
+                    let optionsHtml = Object.keys(statMapping)
+                        .filter(k => item.stringStats.includes(k))
+                        .map(k => '<option value="' + k + '" ' + (item.statChoisie === k ? "selected" : "") + '>' + k + '</option>')
+                        .join('');
+                        
+                    let keyElementId = displayMapping[item.statChoisie];
+                    let valBaseCalculée = parseInt(document.getElementById(keyElementId).textContent) || 0;
+                    let totalScore = valBaseCalculée + item.bonus;
+                    let escName = item.nom.replace(/'/g, "\\'");
+                    
+                    let couleurTotal = (totalScore > 70 || totalScore < 10) ? 'text-orange-400 font-black' : 'text-emerald-400';
+                    return '<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
+                           '<div class="font-bold text-white truncate">' + item.nom + '</div>' +
+                           '<div class="flex items-center justify-between gap-2"><select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
+                           '<div class="flex items-center gap-1.5 font-mono">' +
+                           '<span class="text-slate-400 text-[11px]">' + valBaseCalculée + ' + ' + item.bonus + '</span>' +
+                           '<span class="text-slate-500 text-[10px]">(Stats+Bonus)</span>' +
+                           '<span class="' + couleurTotal + '">Total = ' + totalScore + '</span>' +
+                           '</div></div></div>';
+                }).join('');
+            }
+
+            persisterLocalDebounce();
+        }
+
+        // Ajout d'une ligne d'inventaire avec écouteur de touche pour "Entrée"
+        function ajouterLigneInventaire(containerId, placeholderText, valeurInitiale = "") {
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            div.className = "flex items-center space-x-2 item-ligne-inv";
+            div.innerHTML = `<input type="text" placeholder="${placeholderText}" value="${valeurInitiale}" class="w-full bg-slate-950 border border-slate-800 p-2 rounded text-sm text-white focus:outline-none">` +
+                            '<button onclick="this.parentElement.remove()" class="text-red-400 font-bold px-2">✕</button>';
+            
+            const inputElement = div.querySelector('input');
+            inputElement.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const nouvelleLigne = ajouterLigneInventaire(containerId, placeholderText);
+                    nouvelleLigne.focus();
+                }
+            });
+
+            container.appendChild(div);
+            return inputElement;
+        }
+
+        function collecterInventaire(containerId) {
+            const inputs = document.querySelectorAll('#' + containerId + ' input');
+            let items = []; inputs.forEach(i => { if(i.value.trim() !== "") items.push(i.value.trim()); });
+            return items.length > 0 ? items.map(it => "- " + it).join('\n') : "Aucun objet.";
+        }
+
+        function stockerInventaireTableau(containerId) {
+            const inputs = document.querySelectorAll('#' + containerId + ' input');
+            let items = []; inputs.forEach(i => { if(i.value.trim() !== "") items.push(i.value.trim()); });
+            return items;
+        }
+
+        function mt_getRadioValue(name) {
+            const rads = document.getElementsByName(name);
+            for (let i = 0; i < rads.length; i++) { if (rads[i].checked) return rads[i].value; }
+            return "Aucun";
+        }
+
+        // --- SAUVEGARDER LA FICHE (format IDENTIQUE à pretires.json) ---
+        // Même structure, même ordre de clés, stats en nombres, compétences/afflictions
+        // au format minimal -> il suffit de copier-coller l'objet dans pretires.json sous une clé.
+        function sauvegarderFiche() {
+            const num = id => { const v = parseInt((document.getElementById(id) || {}).value, 10); return isNaN(v) ? 0 : v; };
+            const data = {
+                nom: val('char_name'),
+                profession: val('char_profession'),
+                sexe: val('char_sexe'),
+                age: val('char_age'),
+                avatar: val('char_avatar'),
+                stats: {
+                    force: num('stat_force'), dex: num('stat_dex'), cha: num('stat_cha'),
+                    per: num('stat_per'), edu: num('stat_edu'), chance: num('stat_chance')
+                },
+                competences: competencesChoisies.map(c => ({ nom: c.nom, niveau: c.niveau, statChoisie: c.statChoisie })),
+                afflictions: afflictionsChoisies.map(a => ({ nom: a.nom, stade: a.stade, repartition: a.repartition })),
+                inventaires: {
+                    monnaie: val('inv_money'),
+                    monnaieGlobal: val('inv_money_global'),
+                    personnel: stockerInventaireTableau('container_perso'),
+                    global: stockerInventaireTableau('container_global')
+                },
+                lore: {
+                    peurs: val('lore_peurs'),
+                    vaillance: val('lore_vaillance'),
+                    background: val('lore_background')
+                },
+                etats: {
+                    mentale: mt_getRadioValue('san_mentale'),
+                    physique: mt_getRadioValue('san_physique')
+                },
+                regles: {
+                    pc_max: val('pc_max'),
+                    comp_max_limit: val('comp_max_limit'),
+                    pts_deduction: val('pts_deduction'),
+                    stat_max_pts: val('stat_max_pts')
+                }
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Sauvegarde_${(data.nom || 'Enqueteur').replace(/[^a-z0-9]/gi, '_') || 'Enqueteur'}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // --- IMPORTER LA FICHE (Restauration complète) ---
+        function importerFiche(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    appliquerEtatFiche(data);
+                    persisterLocal();
+                    toast("Fiche d'enquêteur restaurée avec succès.", "success");
+                } catch (err) {
+                    toast("Erreur d'importation : format de fichier non reconnu.", "error");
+                    console.error(err);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ""; // permet de ré-importer le même fichier ensuite
+        }
+
+        document.getElementById('btnGenererPrompt').addEventListener('click', () => {
+            try {
+                const invGlobalListText = collecterInventaire('container_global');
+                const invPersoListText = collecterInventaire('container_perso');
+                const valCourage = document.getElementById('val_courage').textContent;
+                const valResistance = document.getElementById('val_resistance').textContent;
+                const stateMentale = mt_getRadioValue('san_mentale');
+                const statePhysique = mt_getRadioValue('san_physique');
+                
+                const charName = document.getElementById('char_name').value || "[Sans Nom]";
+                const charProfession = document.getElementById('char_profession').value || "Inconnue";
+                const charAvatar = document.getElementById('char_avatar').value || "Aucun";
+                const charSexe = document.getElementById('char_sexe').value || "Non précisé";
+                const charAge = document.getElementById('char_age').value || "Non précisé";
+                
+                const stringStats = "Force (STR): " + document.getElementById('display_force').textContent + 
+                                    ", Dextérité (DEX): " + document.getElementById('display_dex').textContent + 
+                                    ", Charisme (CHA): " + document.getElementById('display_cha').textContent + 
+                                    ", Perception (PER): " + document.getElementById('display_per').textContent + 
+                                    ", Éducation (EDU): " + document.getElementById('display_edu').textContent + 
+                                    ", Chance (LUCK): " + document.getElementById('display_chance').textContent;
+
+                let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
+                const pcMaxInitial = document.getElementById('pc_max').value;
+                const pcRestant = document.getElementById('pc_restants_global').textContent;
+                const compCount = competencesChoisies.length;
+                let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
+                let totalQuotaMaxAutorise = parseInt(document.getElementById('comp_max_limit').value) + totalBonusComp;
+                const deductions = document.getElementById('pts_deduction').value;
+                const monnaie = document.getElementById('inv_money').value || "0$";
+                const monnaieGlobal = document.getElementById('inv_money_global').value || "0$";
+                const peurs = document.getElementById('lore_peurs').value || "Aucune";
+                const vaillance = document.getElementById('lore_vaillance').value || "Aucune";
+                const bg = document.getElementById('lore_background').value || "Non rédigé";
+
+                // Calcul et formatage enrichi des compétences pour le prompt
+                let compText = competencesChoisies.map(c => {
+                    let keyElementId = displayMapping[c.statChoisie];
+                    let valBaseCalculée = parseInt(document.getElementById(keyElementId).textContent) || 0;
+                    let totalCumule = valBaseCalculée + c.bonus;
+                    return "- " + c.nom + " [" + c.niveau + "] : Bonus +" + c.bonus + " sur " + c.statChoisie + " | Stat actuelle : " + valBaseCalculée + " | Total avec competence : " + totalCumule;
+                }).join('\n');
+                
+                let affText = afflictionsChoisies.map(a => {
+                    let repStr = Object.entries(a.repartition).filter(([k,v]) => v > 0).map(([k,v]) => `-${v} sur ${k}`).join(', ');
+                    return "- " + a.nom + " [" + a.stade + "] : Malus -" + a.cout_ps + " PS réparti (" + (repStr || "Non réparti") + ") | Gain : +" + a.gain_pc + " PC | PC bonus: +" + a.bonus_comp + " | Déf: " + a.definition;
+                }).join('\n');
+
+                const separateur = "--------------------------------------------------";
+                const superPrompt = "Voici mon enquêteur Cthulhu, merci de faire ma fiche personnage complète en développant la partie background (15 lignes minimum). :\n" + separateur + "\n" +
+                    "Nom de l'Enquêteur : " + charName + "\nSexe : " + charSexe + " | Âge : " + charAge + "\nProfession : " + charProfession + " | Avatar URL : " + charAvatar + "\n" +
+                    "Caractéristiques modifiées : " + stringStats + "\n" +
+                    "Courage calculé : " + valCourage + " | Résistance calculée : " + valResistance + "\n" +
+                    "Points de déductions (MJ) : " + deductions + "\n\n" +
+                    "Peurs Profondes : " + peurs + "\nMotivations : " + vaillance + "\n\n" +
+                    "STATUT SANTE MENTALE : " + stateMentale + "\n" +
+                    "STATUT BLESSURES PHYSIQUES : " + statePhysique + "\n" + separateur + "\n" +
+                    "Compétences Actives configurées :\n" + (compText || "Aucune compétence rattachée.") + "\n\n" +
+                    "Points de Compétences : Réserve " + pcMaxInitial + " PC (+" + totalGainPC + " généré par Afflictions) | Solde disponible : " + pcRestant + " PC\n" +
+                    "Nombre de compétences : " + compCount + " utilisées / " + totalQuotaMaxAutorise + " autorisées au maximum\n\n" +
+                    "Afflictions Actives enregistrées :\n" + (affText || "Aucune affliction active.") + "\n" + separateur + "\n" +
+                    "Argent local : " + monnaie + " | Argent global : " + monnaieGlobal + "\n\n" +
+                    "Inventaire Global :\n" + invGlobalListText + "\n\nInventaire Personnel :\n" + invPersoListText + "\n" + separateur + "\n" +
+                    "Background : \n" + bg;
+
+                document.getElementById('promptOutput').value = superPrompt;
+                document.getElementById('outputContainer').classList.remove('hidden');
+                navigator.clipboard.writeText(superPrompt);
+                toast("Fiche générée et copiée dans le presse-papier.", "success");
+            } catch (err) {
+                toast("Erreur technique lors de la génération (voir console).", "error");
+                console.error(err);
+            }
+        });
+
+        // ============================================================
+        //  EXPORT PDF — Fiche imprimable simple (fond blanc, texte noir)
+        // ============================================================
+        async function exporterPDF() {
+            if (!window.PDFLib) {
+                toast("Librairie PDF non chargée (vérifiez votre connexion internet).", "error", 6000);
+                return;
+            }
+            try {
+                toast("Génération du PDF éditable…", "info", 2000);
+                const bytes = await construirePDFEditable();
+                const blob = new Blob([bytes], { type: 'application/pdf' });
+                const nomBrut = (document.getElementById('char_name').value || 'Enqueteur').trim();
+                const nomFichier = 'Fiche_' + (nomBrut.replace(/[^a-z0-9]/gi, '_') || 'Enqueteur') + '.pdf';
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = nomFichier;
+                document.body.appendChild(a); a.click(); a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1500);
+                toast("PDF éditable téléchargé.", "success");
+            } catch (err) {
+                console.error(err);
+                toast("Erreur lors de la génération du PDF (voir console).", "error", 6000);
+            }
+        }
+
+        // Collecte toutes les valeurs courantes de la fiche (réutilisé par PDF + Roll20).
+        function collecterFichePourSortie() {
+            const txt = id => { const e = document.getElementById(id); return e ? (e.textContent || '').trim() : ''; };
+            const val = id => { const e = document.getElementById(id); return e ? (e.value || '').trim() : ''; };
+            const stats = [
+                ['Force (STR)', 'display_force', 'stat_force'],
+                ['Dextérité (DEX)', 'display_dex', 'stat_dex'],
+                ['Charisme (CHA)', 'display_cha', 'stat_cha'],
+                ['Perception (PER)', 'display_per', 'stat_per'],
+                ['Éducation (EDU)', 'display_edu', 'stat_edu'],
+                ['Chance (LUCK)', 'display_chance', 'stat_chance']
+            ].map(([lib, d, s]) => ({ lib, actuel: txt(d), saisie: val(s) }));
+            const comp = (typeof competencesChoisies !== 'undefined' ? competencesChoisies : []).map(c => {
+                const baseId = (typeof displayMapping !== 'undefined') ? displayMapping[c.statChoisie] : null;
+                const el = baseId ? document.getElementById(baseId) : null;
+                const base = el ? (parseInt(el.textContent) || 0) : 0;
+                return { nom: c.nom || '', niveau: c.niveau || '', stat: c.statChoisie || '', bonus: (c.bonus || 0), total: base + (c.bonus || 0) };
+            });
+            const abrevStat = { "Force": "For", "Dextérité": "Dex", "Charisme": "Char", "Perception": "Per", "Éducation": "Édu", "Chance": "Chance" };
+            const aff = (typeof afflictionsChoisies !== 'undefined' ? afflictionsChoisies : []).map(a => {
+                const ents = Object.entries(a.repartition || {}).filter(([k, v]) => v > 0);
+                const rep = ents.map(([k, v]) => `-${v} ${k}`).join(', ');
+                const repCourt = ents.map(([k, v]) => `${abrevStat[k] || k} -${v}`).join('  ');
+                return { nom: a.nom || '', stade: a.stade || '', malus: (a.cout_ps != null ? a.cout_ps : ''), gain: (a.gain_pc != null ? a.gain_pc : ''), bonus: (a.bonus_comp != null ? a.bonus_comp : ''), rep: rep || '—', repCourt: repCourt || '—' };
+            });
+            return {
+                nom: val('char_name'), sexe: val('char_sexe'), age: val('char_age'), profession: val('char_profession'),
+                pcMax: val('pc_max'), pcRest: txt('pc_restants_global'), deductions: val('pts_deduction'), totalPts: txt('totalPoints'), statMax: (val('stat_max_pts') || '300'),
+                stats, courage: txt('val_courage'), resistance: txt('val_resistance'),
+                selMentale: mt_getRadioValue('san_mentale'), selPhysique: mt_getRadioValue('san_physique'),
+                compMax: val('comp_max_limit'), comp, aff,
+                monnaie: val('inv_money'), monnaieGlobal: val('inv_money_global'),
+                invPerso: Array.from(document.querySelectorAll('#container_perso input')).map(i => i.value.trim()).filter(Boolean),
+                invGlobal: Array.from(document.querySelectorAll('#container_global input')).map(i => i.value.trim()).filter(Boolean),
+                peurs: val('lore_peurs'), vaillance: val('lore_vaillance'), background: val('lore_background')
+            };
+        }
+
+        // Construit un VRAI PDF éditable (champs saisissables + cases à cocher) via pdf-lib.
+        // pdf-lib génère les apparences -> les valeurs sont visibles dans TOUS les lecteurs.
+        async function construirePDFEditable() {
+            const { PDFDocument, StandardFonts, rgb } = window.PDFLib;
+            const D = collecterFichePourSortie();
+            const doc = await PDFDocument.create();
+            const fN = await doc.embedFont(StandardFonts.Helvetica);
+            const fB = await doc.embedFont(StandardFonts.HelveticaBold);
+            const form = doc.getForm();
+
+            const MM = 2.834645;
+            const PW = 210 * MM, PH = 297 * MM;
+            const M = 12, W = 186, BOT = 285;
+            const BLACK = rgb(0, 0, 0), GREY = rgb(0.925, 0.925, 0.925), HEADG = rgb(0.96, 0.96, 0.96);
+            let page = doc.addPage([PW, PH]);
+            let y = M, fc = 0;
+            const mentaleOpts = ['Aucune instabilité', 'Instabilité Légère', 'Instabilité Modérée', 'Instabilité Lourde', 'Instabilité Grave', 'Folie'];
+            const physiqueOpts = ['Aucune blessure', 'Blessure(s) Légère(s)', 'Blessure(s) Modérée(s)', 'Blessure(s) Lourde(s)', 'Blessure(s) Grave(s)', 'Blessure(s) Mortelle(s)'];
+            const mm = v => v * MM;
+            const safe = s => String(s == null ? '' : s).replace(/[^ -~ -ÿ–—‘’“”…€Œœ\n\t]/g, '');
+
+            function need(h) { if (y + h > BOT) { page = doc.addPage([PW, PH]); y = M; } }
+            function rect(x, yt, w, h, fill) {
+                page.drawRectangle({ x: mm(x), y: PH - mm(yt + h), width: mm(w), height: mm(h), borderColor: BLACK, borderWidth: 0.5, color: fill || undefined });
+            }
+            function text(t, x, ytBase, size, font, maxW) {
+                page.drawText(safe(t), { x: mm(x), y: PH - mm(ytBase), size, font: font || fN, color: BLACK, maxWidth: maxW ? mm(maxW) : undefined, lineHeight: size * 1.15 });
+            }
+            // Texte sur UNE seule ligne : réduit la police si besoin pour tenir dans maxWmm (pas de débordement).
+            function textFit(t, x, ytBase, maxSize, font, maxWmm) {
+                const ft = font || fN, ss = safe(t); let size = maxSize; const mw = mm(maxWmm);
+                while (size > 4.5 && ft.widthOfTextAtSize(ss, size) > mw) size -= 0.25;
+                page.drawText(ss, { x: mm(x), y: PH - mm(ytBase), size, font: ft, color: BLACK });
+            }
+            function textCenter(t, ytBase, size, font) {
+                const ft = font || fN, s = safe(t), w = ft.widthOfTextAtSize(s, size);
+                page.drawText(s, { x: (PW - w) / 2, y: PH - mm(ytBase), size, font: ft, color: BLACK });
+            }
+            // Pré-découpe un texte multiligne en insérant les retours à la ligne nous-mêmes (passage O(n)).
+            // pdf-lib n'a alors plus qu'à respecter ces \n au lieu de chercher les coupures sur tout le
+            // paragraphe — ce qui était quadratique et faisait planter le navigateur sur les longs textes.
+            function preWrap(value, ft, size, maxWmm) {
+                const mw = mm(maxWmm), lignes = [];
+                for (const para of String(value == null ? '' : value).split('\n')) {
+                    let cur = '';
+                    for (const mot of para.split(' ')) {
+                        const test = cur ? cur + ' ' + mot : mot;
+                        if (cur && ft.widthOfTextAtSize(test, size) > mw) { lignes.push(cur); cur = mot; }
+                        else cur = test;
+                    }
+                    lignes.push(cur);
+                }
+                return lignes.join('\n');
+            }
+            function band(t) { need(9); rect(M, y, W, 7, GREY); text(t.toUpperCase(), M + 2, y + 4.9, 10.5, fB); y += 7; }
+            function label(x, yt, w, h, t, size) { rect(x, yt, w, h); textFit(t, x + 2, yt + h / 2 + 1.2, size || 8.5, fB, w - 3.5); }
+            function head(x, yt, w, h, t) { rect(x, yt, w, h, HEADG); textFit(t, x + 2, yt + h / 2 + 1.2, 8.5, fB, w - 3.5); }
+            function field(x, yt, w, h, value, opts) {
+                opts = opts || {};
+                rect(x, yt, w, h);
+                const f = form.createTextField('f' + (fc++));
+                const taille = opts.fontSize || 9;
+                let contenu = safe(value);
+                // Champs multilignes (background…) : on pré-découpe le texte pour éviter le word-wrap
+                // quadratique de pdf-lib qui faisait planter le navigateur sur les longs textes.
+                if (opts.multiline) { f.enableMultiline(); contenu = preWrap(contenu, fN, taille, w - 4); }
+                // Espace de tête : petite marge avant le texte dans la zone de saisie (le widget reste aligné sur la case)
+                f.setText(' ' + contenu);
+                f.addToPage(page, { x: mm(x), y: PH - mm(yt + h), width: mm(w), height: mm(h), font: fN, borderWidth: 0, backgroundColor: undefined });
+                try { f.setFontSize(taille); } catch (e) {}
+            }
+            // Deux champs éditables séparés par un « / » (une case par valeur, ex : 23 / 25).
+            function fieldPair(x, yt, w, h, v1, v2, opts) {
+                const sep = 4, fw = (w - sep) / 2;
+                field(x, yt, fw, h, v1, opts);
+                text('/', x + fw + sep / 2 - 0.7, yt + h / 2 + 1.6, 10, fB);
+                field(x + fw + sep, yt, fw, h, v2, opts);
+            }
+            function check(x, yt, sz, checked) {
+                const cb = form.createCheckBox('c' + (fc++));
+                cb.addToPage(page, { x: mm(x), y: PH - mm(yt + sz), width: mm(sz), height: mm(sz), borderColor: BLACK, borderWidth: 0.5 });
+                if (checked) cb.check(); else cb.uncheck();
+            }
+
+            // ----- Titre + sous-titre -----
+            textCenter('FICHE DE PERSONNAGE', y + 6, 18, fB);
+            textCenter('Système JDR Custom basé sur Cthulhu Dark — Pensé et conçu par Azpartam — Développé par Vinthos', y + 11, 7.5, fN);
+            y += 16;
+
+            // ----- INFORMATIONS GÉNÉRALES -----
+            band('Informations générales');
+            const h1 = 8; need(h1);
+            let x = M;
+            const wNomL = 14, wNomF = 56, wAgeL = 11, wAgeF = 46, wSexeL = 13, wSexeF = W - (wNomL + wNomF + wAgeL + wAgeF + wSexeL);
+            label(x, y, wNomL, h1, 'Nom'); x += wNomL; field(x, y, wNomF, h1, D.nom); x += wNomF;
+            label(x, y, wAgeL, h1, 'Âge'); x += wAgeL; field(x, y, wAgeF, h1, D.age); x += wAgeF;
+            label(x, y, wSexeL, h1, 'Sexe'); x += wSexeL; field(x, y, wSexeF, h1, D.sexe);
+            y += h1;
+            need(h1); const wProfL = 36; label(M, y, wProfL, h1, 'Fonction / Profession'); field(M + wProfL, y, W - wProfL, h1, D.profession); y += h1;
+            need(h1); const half = W / 2;
+            label(M, y, 44, h1, 'Points de compétences'); fieldPair(M + 44, y, half - 44, h1, D.pcRest, D.pcMax);
+            label(M + half, y, 40, h1, 'Points de déduction'); field(M + half + 40, y, half - 40, h1, D.deductions); y += h1;
+
+            // ----- STATISTIQUES -----
+            band('Statistiques');
+            const rs = 6.2;
+            const bw = W / 2, sc1 = bw * 0.5, sc2 = bw * 0.25, sc3 = bw - sc1 - sc2;
+            need(rs);
+            head(M, y, sc1, rs, 'Statistique'); head(M + sc1, y, sc2, rs, 'Actuel'); head(M + sc1 + sc2, y, sc3, rs, 'Base');
+            head(M + bw, y, sc1, rs, 'Statistique'); head(M + bw + sc1, y, sc2, rs, 'Actuel'); head(M + bw + sc1 + sc2, y, sc3, rs, 'Base');
+            y += rs;
+            for (let i = 0; i < 3; i++) {
+                const sg = D.stats[i * 2], sd = D.stats[i * 2 + 1]; need(rs);
+                label(M, y, sc1, rs, sg.lib, 8.5); field(M + sc1, y, sc2, rs, sg.actuel); field(M + sc1 + sc2, y, sc3, rs, sg.saisie);
+                if (sd) { label(M + bw, y, sc1, rs, sd.lib, 8.5); field(M + bw + sc1, y, sc2, rs, sd.actuel); field(M + bw + sc1 + sc2, y, sc3, rs, sd.saisie); }
+                y += rs;
+            }
+            need(rs); label(M, y, sc1, rs, 'Total des points'); fieldPair(M + sc1, y, sc2 + sc3, rs, D.totalPts, D.statMax); y += rs;
+
+            // ----- SANTÉ MENTALE & PHYSIQUE -----
+            band('Santé mentale & physique');
+            const hw = W / 2; need(h1);
+            label(M, y, 24, h1, 'Courage'); field(M + 24, y, hw - 24, h1, D.courage);
+            label(M + hw, y, 26, h1, 'Résistance'); field(M + hw + 26, y, hw - 26, h1, D.resistance); y += h1;
+            need(6); head(M, y, hw, 6, 'État mental'); head(M + hw, y, hw, 6, 'Blessures physiques'); y += 6;
+            for (let i = 0; i < 6; i++) {
+                const rh = 6.4; need(rh);
+                rect(M, y, hw, rh); rect(M + hw, y, hw, rh);
+                check(M + 2, y + (rh - 3.6) / 2, 3.6, mentaleOpts[i] === D.selMentale);
+                check(M + hw + 2, y + (rh - 3.6) / 2, 3.6, physiqueOpts[i] === D.selPhysique);
+                text(mentaleOpts[i], M + 7.5, y + rh / 2 + 1.1, 8.5, fN);
+                text(physiqueOpts[i], M + hw + 7.5, y + rh / 2 + 1.1, 8.5, fN);
+                y += rh;
+            }
+
+            // ----- COMPÉTENCES (avant les afflictions : page la plus utilisée en jeu) -----
+            band('Compétences (' + (D.compMax || '—') + ' max autorisées par le MJ)');
+            const k1 = W * 0.34, k2 = W * 0.18, k3 = W * 0.22, k4 = W * 0.13, k5 = W - k1 - k2 - k3 - k4;
+            need(rs); head(M, y, k1, rs, 'Compétence'); head(M + k1, y, k2, rs, 'Niveau'); head(M + k1 + k2, y, k3, rs, 'Statistique'); head(M + k1 + k2 + k3, y, k4, rs, 'Bonus'); head(M + k1 + k2 + k3 + k4, y, k5, rs, 'Total'); y += rs;
+            // 9 lignes fixes ici ; les compétences au-delà partent en « Compétences supplémentaires » après l'inventaire.
+            for (let i = 0; i < 9; i++) {
+                const c = D.comp[i]; need(rs);
+                field(M, y, k1, rs, c ? c.nom : '');
+                field(M + k1, y, k2, rs, c ? c.niveau : '');
+                field(M + k1 + k2, y, k3, rs, c ? c.stat : '');
+                field(M + k1 + k2 + k3, y, k4, rs, c ? ('+' + c.bonus) : '');
+                field(M + k1 + k2 + k3 + k4, y, k5, rs, c ? String(c.total) : '');
+                y += rs;
+            }
+
+            // ----- AFFLICTIONS -----
+            band('Afflictions (3 max)');
+            const a1 = W * 0.20, a2 = W * 0.12, a3 = W * 0.09, a4 = W * 0.09, a5 = W * 0.07, a6 = W - a1 - a2 - a3 - a4 - a5;
+            need(rs); head(M, y, a1, rs, 'Affliction'); head(M + a1, y, a2, rs, 'Stade'); head(M + a1 + a2, y, a3, rs, 'Perte PS'); head(M + a1 + a2 + a3, y, a4, rs, 'Gain PC'); head(M + a1 + a2 + a3 + a4, y, a5, rs, 'Comp'); head(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, 'Répartition de perte de PS (For/Dex/Char/Per/Édu/Chance)'); y += rs;
+            for (let i = 0; i < Math.max(D.aff.length, 3); i++) {
+                const a = D.aff[i]; need(rs);
+                field(M, y, a1, rs, a ? a.nom : '', { fontSize: 8 });
+                field(M + a1, y, a2, rs, a ? a.stade : '', { fontSize: 8 });
+                field(M + a1 + a2, y, a3, rs, a ? String(a.malus) : '');
+                field(M + a1 + a2 + a3, y, a4, rs, a ? ('+' + a.gain) : '');
+                field(M + a1 + a2 + a3 + a4, y, a5, rs, a ? ('+' + a.bonus) : '');
+                field(M + a1 + a2 + a3 + a4 + a5, y, a6, rs, a ? a.repCourt : '', { fontSize: 7.5 });
+                y += rs;
+            }
+            // Consigne SOUS le tableau, précédée d'une étoile.
+            const consignes = "*  Choisissez jusqu'à trois afflictions initiales en accord avec votre personnage. Cela impacte vos statistiques et le nombre de compétences/points de compétence (maximum 5 compétences au total). PS=Points de statistique, PC=Points de compétence, Comp=Nombre de compétences supplémentaires.";
+            const cw = (() => { const words = consignes.split(' '); const lines = []; let cur = ''; for (const wd of words) { const t = cur ? cur + ' ' + wd : wd; if (fN.widthOfTextAtSize(safe(t), 7.5) > mm(W) && cur) { lines.push(cur); cur = wd; } else cur = t; } if (cur) lines.push(cur); return lines; })();
+            need(cw.length * 3.3 + 3);
+            cw.forEach((ln, i) => text(ln, M, y + 3 + i * 3.3, 7.5, fN));
+            y += cw.length * 3.3 + 3;
+
+            // ----- INVENTAIRE (forcé en haut d'une nouvelle page : plus propre) -----
+            page = doc.addPage([PW, PH]); y = M;
+            band('Inventaire');
+            need(h1);
+            label(M, y, 24, h1, 'Argent local'); field(M + 24, y, hw - 24, h1, D.monnaie);
+            label(M + hw, y, 24, h1, 'Argent global'); field(M + hw + 24, y, hw - 24, h1, D.monnaieGlobal); y += h1;
+            need(6); head(M, y, hw, 6, 'Sur soi (Locale)'); head(M + hw, y, hw, 6, 'Coffre / Planque (Global)'); y += 6;
+            for (let i = 0; i < Math.max(D.invPerso.length, D.invGlobal.length, 9); i++) {
+                need(rs); field(M, y, hw, rs, D.invPerso[i] || ''); field(M + hw, y, hw, rs, D.invGlobal[i] || ''); y += rs;
+            }
+
+            // ----- COMPÉTENCES SUPPLÉMENTAIRES (celles qui dépassent les 9 lignes de la page 1) -----
+            if (D.comp.length > 9) {
+                y += 4;
+                band('Compétences supplémentaires');
+                need(rs); head(M, y, k1, rs, 'Compétence'); head(M + k1, y, k2, rs, 'Niveau'); head(M + k1 + k2, y, k3, rs, 'Statistique'); head(M + k1 + k2 + k3, y, k4, rs, 'Bonus'); head(M + k1 + k2 + k3 + k4, y, k5, rs, 'Total'); y += rs;
+                for (let i = 9; i < D.comp.length; i++) {
+                    const c = D.comp[i]; need(rs);
+                    field(M, y, k1, rs, c.nom);
+                    field(M + k1, y, k2, rs, c.niveau);
+                    field(M + k1 + k2, y, k3, rs, c.stat);
+                    field(M + k1 + k2 + k3, y, k4, rs, '+' + c.bonus);
+                    field(M + k1 + k2 + k3 + k4, y, k5, rs, String(c.total));
+                    y += rs;
+                }
+            }
+
+            // ----- HISTOIRE (forcée sur sa propre dernière page) -----
+            page = doc.addPage([PW, PH]); y = M;
+            band('Histoire du personnage');
+            need(h1); label(M, y, 30, h1, 'Peurs profondes'); field(M + 30, y, W - 30, h1, D.peurs); y += h1;
+            need(h1); label(M, y, 30, h1, 'Motivations'); field(M + 30, y, W - 30, h1, D.vaillance); y += h1;
+
+            // ----- Background : texte complet dans une CASE bordée extensible sur plusieurs pages -----
+            // (lisible et imprimable dans TOUS les lecteurs ; non éditable — choix validé). Le texte est
+            // dessiné ligne par ligne ; un cadre est tracé sur chaque page occupée par la case.
+            if (D.background) {
+                const sizeBg = 9;
+                const asc = sizeBg * 0.72 / MM;   // position de la baseline (mm) depuis le haut de la ligne
+                const lhMm = sizeBg * 1.2 / MM;   // interligne (mm)
+                const pad = 2.2;                   // marge intérieure de la case (mm)
+                const lignesBg = preWrap(safe(D.background), fN, sizeBg, W - 2 * pad - 1).split('\n');
+                y += 1.5;                          // petit espace après « Motivations »
+                let caseTop = y;                   // haut de la case sur la page courante
+                y += pad;                          // marge intérieure haute
+                for (const ligne of lignesBg) {
+                    if (y + lhMm + pad > BOT) {
+                        rect(M, caseTop, W, (y + pad) - caseTop);   // ferme la case sur cette page
+                        page = doc.addPage([PW, PH]); y = M;
+                        caseTop = y; y += pad;
+                    }
+                    text(ligne, M + pad, y + asc, sizeBg, fN);
+                    y += lhMm;
+                }
+                rect(M, caseTop, W, (y + pad) - caseTop);           // ferme la dernière portion de case
+                y += pad;
+            }
+
+            return await doc.save();
+        }
+
+        // Copie la fiche (HTML riche + texte) dans le presse-papier pour coller dans Roll20 (Bio & Info).
+        function copierRoll20() {
+            const D = collecterFichePourSortie();
+            const esc = s => String(s == null ? '' : s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+            const TB = 'border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse"';
+            const kv = (a, b) => `<tr><td><strong>${esc(a)}</strong></td><td>${esc(b)}</td></tr>`;
+            // Mise en page calquée sur le PDF : mêmes sections, mêmes intitulés de colonnes
+            let h = `<h2>${esc(D.nom || 'Sans nom')}</h2>`;
+            h += `<h3>Informations générales</h3>`;
+            h += `<table ${TB}>${kv('Âge', D.age)}${kv('Sexe', D.sexe)}${kv('Fonction / Profession', D.profession)}${kv('Points de compétences (restants / initiaux)', (D.pcRest || '') + ' / ' + (D.pcMax || ''))}${kv('Points de déduction', D.deductions)}</table>`;
+            h += `<h3>Statistiques</h3><table ${TB}><tr><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Base</strong></td><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Base</strong></td></tr>`;
+            for (let i = 0; i < D.stats.length; i += 2) {
+                const sg = D.stats[i], sd = D.stats[i + 1];
+                h += `<tr><td>${esc(sg.lib)}</td><td>${esc(sg.actuel)}</td><td>${esc(sg.saisie)}</td>` +
+                     (sd ? `<td>${esc(sd.lib)}</td><td>${esc(sd.actuel)}</td><td>${esc(sd.saisie)}</td>` : `<td></td><td></td><td></td>`) + `</tr>`;
+            }
+            h += `<tr><td><strong>Total des points</strong></td><td colspan="5">${esc((D.totalPts || '') + ' / ' + D.statMax)}</td></tr></table>`;
+            h += `<h3>Santé mentale &amp; physique</h3><table ${TB}>`;
+            h += `<tr><td><strong>Courage</strong></td><td>${esc(D.courage)}</td><td><strong>Résistance</strong></td><td>${esc(D.resistance)}</td></tr>`;
+            h += `<tr><td><strong>État mental</strong></td><td>${esc(D.selMentale)}</td><td><strong>Blessures physiques</strong></td><td>${esc(D.selPhysique)}</td></tr></table>`;
+            h += `<h3>Compétences (${esc(D.compMax || '—')} max autorisées par le MJ)</h3><table ${TB}><tr><td><strong>Compétence</strong></td><td><strong>Niveau</strong></td><td><strong>Statistique</strong></td><td><strong>Bonus</strong></td><td><strong>Total</strong></td></tr>`;
+            if (D.comp.length) D.comp.forEach(c => h += `<tr><td>${esc(c.nom)}</td><td>${esc(c.niveau)}</td><td>${esc(c.stat)}</td><td>+${esc(c.bonus)}</td><td><strong>${esc(c.total)}</strong></td></tr>`);
+            else h += `<tr><td colspan="5"><em>Aucune</em></td></tr>`;
+            h += `</table>`;
+            h += `<h3>Afflictions (3 max)</h3>`;
+            if (D.aff.length) {
+                h += `<table ${TB}><tr><td><strong>Affliction</strong></td><td><strong>Stade</strong></td><td><strong>Perte PS</strong></td><td><strong>Gain PC</strong></td><td><strong>Comp</strong></td><td><strong>Répartition de perte de PS</strong></td></tr>`;
+                D.aff.forEach(a => h += `<tr><td>${esc(a.nom)}</td><td>${esc(a.stade)}</td><td>-${esc(a.malus)}</td><td>+${esc(a.gain)}</td><td>+${esc(a.bonus)}</td><td>${esc(a.rep)}</td></tr>`);
+                h += `</table>`;
+            } else h += `<p><em>Aucune</em></p>`;
+            h += `<h3>Inventaire</h3><table ${TB}><tr><td><strong>Argent local</strong></td><td>${esc(D.monnaie)}</td><td><strong>Argent global</strong></td><td>${esc(D.monnaieGlobal)}</td></tr></table>`;
+            h += `<table ${TB}><tr><td><strong>Sur soi (Locale)</strong></td><td><strong>Coffre / Planque (Global)</strong></td></tr>`;
+            const ni = Math.max(D.invPerso.length, D.invGlobal.length, 1);
+            for (let i = 0; i < ni; i++) h += `<tr><td>${esc(D.invPerso[i] || '')}</td><td>${esc(D.invGlobal[i] || '')}</td></tr>`;
+            h += `</table>`;
+            h += `<h3>Histoire du personnage</h3><table ${TB}>${kv('Peurs profondes', D.peurs)}${kv('Motivations', D.vaillance)}`;
+            if (D.background) h += `<tr><td colspan="2">${esc(D.background).replace(/\n/g, '<br>')}</td></tr>`;
+            h += `</table>`;
+
+            const sep = '----------------------------------------';
+            let t = (D.nom || 'Sans nom') + '\n' + sep + '\n';
+            t += 'INFORMATIONS GÉNÉRALES\n';
+            t += '- Âge : ' + D.age + ' | Sexe : ' + D.sexe + '\n- Fonction / Profession : ' + D.profession + '\n';
+            t += '- Points de compétences (restants / initiaux) : ' + D.pcRest + ' / ' + D.pcMax + '\n- Points de déduction : ' + D.deductions + '\n' + sep + '\n';
+            t += 'STATISTIQUES (Actuel / Base)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\n- Total des points : ' + D.totalPts + ' / ' + D.statMax + '\n' + sep + '\n';
+            t += 'SANTÉ MENTALE & PHYSIQUE\n- Courage : ' + D.courage + ' | Résistance : ' + D.resistance + '\n- État mental : ' + D.selMentale + '\n- Blessures physiques : ' + D.selPhysique + '\n' + sep + '\n';
+            t += 'COMPÉTENCES (' + (D.compMax || '—') + ' max autorisées par le MJ)\n' + (D.comp.length ? D.comp.map(c => '- ' + c.nom + ' [' + c.niveau + '] ' + c.stat + ' +' + c.bonus + ' = ' + c.total).join('\n') : 'Aucune') + '\n' + sep + '\n';
+            t += 'AFFLICTIONS (3 max)\n' + (D.aff.length ? D.aff.map(a => '- ' + a.nom + ' [' + a.stade + '] perte ' + a.malus + ' PS, gain +' + a.gain + ' PC, +' + a.bonus + ' compétence(s) — répartition : ' + a.rep).join('\n') : 'Aucune') + '\n' + sep + '\n';
+            t += 'INVENTAIRE\n- Argent local : ' + D.monnaie + ' | Argent global : ' + D.monnaieGlobal + '\n- Sur soi (Locale) : ' + (D.invPerso.join(', ') || '—') + '\n- Coffre / Planque (Global) : ' + (D.invGlobal.join(', ') || '—') + '\n' + sep + '\n';
+            t += 'HISTOIRE DU PERSONNAGE\n- Peurs profondes : ' + D.peurs + '\n- Motivations : ' + D.vaillance + (D.background ? '\n\n' + D.background : '');
+
+            const okMsg = () => toast("Mise en page copiée ! Collez-la dans Roll20 → onglet « Bio & Info ».", "success", 6000);
+            const fallback = () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); okMsg(); } catch (e) { toast("Copie impossible.", "error"); } ta.remove(); };
+            if (navigator.clipboard && window.ClipboardItem) {
+                try {
+                    navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([h], { type: 'text/html' }), 'text/plain': new Blob([t], { type: 'text/plain' }) })])
+                        .then(okMsg).catch(() => fallback());
+                } catch (e) { fallback(); }
+            } else fallback();
+        }
+
+        // ============================================================
+        //  NOTIFICATIONS (toasts)
+        // ============================================================
+        function toast(message, type = 'success', duree = 3200) {
+            const zone = document.getElementById('toastZone');
+            if (!zone) return;
+            const el = document.createElement('div');
+            el.className = 'toast toast-' + type;
+            const icones = { success: '✓', error: '⚠', info: 'ℹ' };
+            const ico = document.createElement('span');
+            ico.className = 'toast-ico';
+            ico.textContent = icones[type] || '•';
+            const txt = document.createElement('span');
+            txt.textContent = message;
+            el.appendChild(ico); el.appendChild(txt);
+            zone.appendChild(el);
+            requestAnimationFrame(() => el.classList.add('show'));
+            setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 320); }, duree);
+        }
+
+        // ============================================================
+        //  PETITS UTILITAIRES
+        // ============================================================
+        function val(id) { const e = document.getElementById(id); return e ? e.value : ''; }
+
+        function rafraichirApercuAvatar() {
+            const url = val('char_avatar').trim();
+            const wrap = document.getElementById('avatarPreviewWrap');
+            const img = document.getElementById('avatarPreview');
+            if (url) { img.src = url; wrap.classList.remove('hidden'); }
+            else { img.removeAttribute('src'); wrap.classList.add('hidden'); }
+        }
+
+        function copierPrompt() {
+            const txt = document.getElementById('promptOutput').value;
+            if (!txt) return;
+            navigator.clipboard.writeText(txt)
+                .then(() => toast("Fiche copiée dans le presse-papier.", "success"))
+                .catch(() => toast("Copie impossible (presse-papier non autorisé).", "error"));
+        }
+
+        // ============================================================
+        //  SÉRIALISATION DE L'ÉTAT (format compact)
+        //  Les compétences/afflictions ne stockent que l'essentiel ;
+        //  le reste (coûts, bonus, définitions) est reconstruit via les JSON.
+        // ============================================================
+        function collecterEtatFiche(inclureBackground) {
+            return {
+                avatar: val('char_avatar'),
+                nom: val('char_name'),
+                profession: val('char_profession'),
+                sexe: val('char_sexe'),
+                age: val('char_age'),
+                stats: {
+                    force: val('stat_force'), dex: val('stat_dex'), cha: val('stat_cha'),
+                    per: val('stat_per'), edu: val('stat_edu'), chance: val('stat_chance')
+                },
+                competences: competencesChoisies.map(c => ({ nom: c.nom, niveau: c.niveau, statChoisie: c.statChoisie })),
+                afflictions: afflictionsChoisies.map(a => ({ nom: a.nom, stade: a.stade, repartition: a.repartition })),
+                inventaires: {
+                    monnaie: val('inv_money'),
+                    monnaieGlobal: val('inv_money_global'),
+                    personnel: stockerInventaireTableau('container_perso'),
+                    global: stockerInventaireTableau('container_global')
+                },
+                lore: {
+                    peurs: val('lore_peurs'),
+                    vaillance: val('lore_vaillance'),
+                    background: inclureBackground ? val('lore_background') : ''
+                },
+                etats: { mentale: mt_getRadioValue('san_mentale'), physique: mt_getRadioValue('san_physique') },
+                regles: { pc_max: val('pc_max'), comp_max_limit: val('comp_max_limit'), pts_deduction: val('pts_deduction'), stat_max_pts: val('stat_max_pts') }
+            };
+        }
+
+        // Reconstruit une compétence complète à partir de {nom, niveau, statChoisie}
+        function reconstruireCompetence(item) {
+            const comp = indexCompetencesData[item.nom];
+            if (!comp || !comp.niveaux) return null;
+            const ordre = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"];
+            let desc = "", niveauData = null;
+            for (const n of ordre) {
+                if (comp.niveaux[n]) {
+                    if (comp.niveaux[n].description) desc = comp.niveaux[n].description;
+                    if (n === item.niveau) { niveauData = comp.niveaux[n]; break; }
+                }
+            }
+            if (!niveauData) return null;
+            let stat = item.statChoisie;
+            if (!stat || !comp.stats.includes(stat)) {
+                stat = Object.keys(statMapping).find(k => comp.stats.includes(k)) || "Force";
+            }
+            return { nom: comp.nom, niveau: item.niveau, bonus: niveauData.bonus || 0, cout: niveauData.cout,
+                     stringStats: comp.stats, statChoisie: stat, description: desc };
+        }
+
+        // Reconstruit une affliction complète à partir de {nom, stade, repartition}
+        function reconstruireAffliction(item) {
+            const aff = indexAfflictionsData[item.nom];
+            if (!aff || !aff.niveaux || !aff.niveaux[item.stade]) return null;
+            const d = aff.niveaux[item.stade];
+            const repVide = { "Force": 0, "Dextérité": 0, "Charisme": 0, "Perception": 0, "Éducation": 0, "Chance": 0 };
+            return { nom: aff.nom, stade: item.stade, cout_ps: d.cout_ps, gain_pc: d.gain_pc,
+                     bonus_comp: d.bonus_comp || 0, condition: d.condition, definition: aff.definition,
+                     repartition: Object.assign({}, repVide, item.repartition || {}) };
+        }
+
+        // Applique un état (issu d'une URL, du localStorage ou d'un import JSON) à la fiche.
+        // Gère le format minimal (URL) ET le format complet (ancienne sauvegarde JSON).
+        function appliquerEtatFiche(data) {
+            if (!data) return;
+            document.getElementById('char_avatar').value = data.avatar || "";
+            document.getElementById('char_name').value = data.nom || "";
+            document.getElementById('char_profession').value = data.profession || "";
+            document.getElementById('char_sexe').value = data.sexe || "";
+            document.getElementById('char_age').value = data.age || "";
+            if (data.stats) {
+                document.getElementById('stat_force').value = data.stats.force || 50;
+                document.getElementById('stat_dex').value = data.stats.dex || 50;
+                document.getElementById('stat_cha').value = data.stats.cha || 50;
+                document.getElementById('stat_per').value = data.stats.per || 50;
+                document.getElementById('stat_edu').value = data.stats.edu || 50;
+                document.getElementById('stat_chance').value = data.stats.chance || 50;
+            }
+            if (data.regles) {
+                document.getElementById('pc_max').value = data.regles.pc_max || 25;
+                document.getElementById('comp_max_limit').value = data.regles.comp_max_limit || 2;
+                document.getElementById('pts_deduction').value = data.regles.pts_deduction || 0;
+                document.getElementById('stat_max_pts').value = data.regles.stat_max_pts || 300;
+            }
+            if (data.lore) {
+                document.getElementById('lore_peurs').value = data.lore.peurs || "";
+                document.getElementById('lore_vaillance').value = data.lore.vaillance || "";
+                document.getElementById('lore_background').value = data.lore.background || "";
+            }
+            document.getElementById('inv_money').value = (data.inventaires && data.inventaires.monnaie) || "";
+            document.getElementById('inv_money_global').value = (data.inventaires && data.inventaires.monnaieGlobal) || "";
+            const cPerso = document.getElementById('container_perso'); cPerso.innerHTML = "";
+            const itemsPerso = (data.inventaires && data.inventaires.personnel) || [];
+            itemsPerso.forEach(it => ajouterLigneInventaire('container_perso', 'Objet sur soi...', it));
+            if (itemsPerso.length === 0) ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
+            const cGlobal = document.getElementById('container_global'); cGlobal.innerHTML = "";
+            const itemsGlobal = (data.inventaires && data.inventaires.global) || [];
+            itemsGlobal.forEach(it => ajouterLigneInventaire('container_global', 'Objet global...', it));
+            if (itemsGlobal.length === 0) ajouterLigneInventaire('container_global', 'Objet global 1...');
+            if (data.etats) {
+                document.getElementsByName('san_mentale').forEach(r => r.checked = (r.value === data.etats.mentale));
+                document.getElementsByName('san_physique').forEach(r => r.checked = (r.value === data.etats.physique));
+            }
+            // stringStats présent => format complet ; sinon format minimal à reconstruire
+            competencesChoisies = (data.competences || []).map(c => c.stringStats ? c : reconstruireCompetence(c)).filter(Boolean);
+            afflictionsChoisies = (data.afflictions || []).map(a => a.definition ? a : reconstruireAffliction(a)).filter(Boolean);
+            rafraichirApercuAvatar();
+            travaillerCalculsEtRendu();
+        }
+
+        // ============================================================
+        //  PERSISTANCE LOCALE AUTOMATIQUE (localStorage)
+        // ============================================================
+        let _persistTimer = null;
+        function persisterLocal() {
+            try { localStorage.setItem(LS_KEY, JSON.stringify(collecterEtatFiche(true))); } catch (e) { /* quota / indisponible */ }
+        }
+        function persisterLocalDebounce() {
+            clearTimeout(_persistTimer);
+            _persistTimer = setTimeout(persisterLocal, 400);
+        }
+        // Couvre les champs texte/radio qui ne déclenchent pas travaillerCalculsEtRendu()
+        document.addEventListener('input', persisterLocalDebounce);
+        document.addEventListener('change', persisterLocalDebounce);
+
+        // ============================================================
+        //  PARTAGE PAR URL (compression LZ-String, sans le background)
+        // ============================================================
+        function encoderEtat(data) {
+            const json = JSON.stringify(data);
+            if (window.LZString) return 'c=' + LZString.compressToEncodedURIComponent(json);
+            return 'b=' + btoa(unescape(encodeURIComponent(json)));
+        }
+        function decoderHash(hash) {
+            try {
+                const h = hash.replace(/^#/, '');
+                if (h.startsWith('c=') && window.LZString) {
+                    const json = LZString.decompressFromEncodedURIComponent(h.slice(2));
+                    return json ? JSON.parse(json) : null;
+                }
+                if (h.startsWith('b=')) return JSON.parse(decodeURIComponent(escape(atob(h.slice(2)))));
+                return null;
+            } catch (e) { console.error(e); return null; }
+        }
+        function partagerParURL() {
+            const frag = encoderEtat(collecterEtatFiche(false)); // tout sauf le background
+            const base = location.href.split('#')[0];
+            const url = base + '#' + frag;
+            history.replaceState(null, '', '#' + frag);
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url)
+                    .then(() => toast("Lien de partage copié ! (le background n'est pas inclus)", "info", 4500))
+                    .catch(() => toast("Lien généré dans la barre d'adresse (copie auto impossible).", "info", 4500));
+            } else {
+                toast("Lien généré dans la barre d'adresse.", "info", 4500);
+            }
+        }
+
+        // ============================================================
+        //  RÉINITIALISATION (efface localStorage + repart à zéro)
+        // ============================================================
+        function reinitialiserFiche() {
+            if (!confirm("Réinitialiser la fiche ?\n\nLe personnage en cours (y compris la sauvegarde automatique) sera effacé et vous repartirez d'une feuille vierge.\n\nCette action est irréversible.")) return;
+            try { localStorage.removeItem(LS_KEY); } catch (e) {}
+            history.replaceState(null, '', location.pathname);
+            location.reload();
+        }
+
+        // ============================================================
+        //  INITIALISATION  —  priorité : URL  >  localStorage  >  vierge
+        // ============================================================
+        function initialiserFiche() {
+            const hash = location.hash || "";
+            const etatURL = hash.length > 3 ? decoderHash(hash) : null;
+            if (hash.length > 3 && !etatURL) toast("Lien de partage illisible ou corrompu.", "error", 5000);
+
+            let etatLocal = null;
+            try { const brut = localStorage.getItem(LS_KEY); if (brut) etatLocal = JSON.parse(brut); } catch (e) { etatLocal = null; }
+
+            if (etatURL) {
+                if (etatLocal && !confirm("Un personnage partagé a été détecté dans le lien.\n\nLe charger remplacera votre fiche en cours (sauvegardée automatiquement). Continuer ?")) {
+                    appliquerEtatFiche(etatLocal);
+                    toast("Fiche locale conservée.", "success");
+                } else {
+                    appliquerEtatFiche(etatURL);
+                    toast("Personnage partagé chargé.", "info");
+                }
+                // On nettoie le hash : au prochain rafraîchissement, c'est la fiche locale qui reprend la main
+                history.replaceState(null, '', location.href.split('#')[0]);
+                return;
+            }
+
+            if (etatLocal) {
+                appliquerEtatFiche(etatLocal);
+                toast("Fiche restaurée automatiquement.", "info", 2200);
+                return;
+            }
+
+            // Fiche vierge : lignes d'inventaire par défaut
+            ajouterLigneInventaire('container_perso', 'Objet personnel 1...');
+            ajouterLigneInventaire('container_global', 'Objet global 1...');
+            travaillerCalculsEtRendu();
+        }
+
+        // ============================================================
+        //  PRÉ-TIRÉS  &  GÉNÉRATEUR ALÉATOIRE
+        // ============================================================
+        function chargerPretire(cle) {
+            if (!cle) return;
+            const fiche = indexPretiresData[cle];
+            if (!fiche) { toast("Pré-tiré introuvable.", "error"); return; }
+            const dejaRempli = (val('char_name').trim() !== "" || competencesChoisies.length > 0);
+            if (dejaRempli && !confirm("Charger le pré-tiré « " + cle + " » ?\n\nCela remplacera la fiche en cours.")) {
+                document.getElementById('selectPretire').value = "";
+                return;
+            }
+            appliquerEtatFiche(JSON.parse(JSON.stringify(fiche))); // copie défensive
+            persisterLocal();
+            toast("Pré-tiré chargé : " + cle + ".", "info");
+            document.getElementById('selectPretire').value = "";
+        }
+
+        function _rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        // 6 stats dans [10,70] dont la somme vaut exactement le maximum configuré (300 par défaut).
+        // On part de 50/50/... (somme 300), on ajuste vers la cible, puis on brasse pour la variété.
+        function genererStatsAleatoires() {
+            const cles = ["force", "dex", "cha", "per", "edu", "chance"];
+            const LO = 10, HI = 70;
+            const cible = Math.max(cles.length * LO, Math.min(cles.length * HI,
+                parseInt(document.getElementById('stat_max_pts').value) || 300));
+            const s = { force: 50, dex: 50, cha: 50, per: 50, edu: 50, chance: 50 };
+            let somme = 300, secu = 0;
+            while (somme !== cible && secu++ < 5000) {
+                const a = _rand(cles);
+                if (somme < cible && s[a] < HI) { s[a]++; somme++; }
+                else if (somme > cible && s[a] > LO) { s[a]--; somme--; }
+            }
+            for (let i = 0; i < 400; i++) {
+                const a = _rand(cles), b = _rand(cles);
+                if (a !== b && s[a] < HI && s[b] > LO) { s[a]++; s[b]--; }
+            }
+            return s;
+        }
+
+        function genererAleatoire() {
+            if (!indexCompetencesData || Object.keys(indexCompetencesData).length === 0) {
+                toast("Bases de données non chargées.", "error"); return;
+            }
+            const dejaRempli = (val('char_name').trim() !== "" || competencesChoisies.length > 0);
+            if (dejaRempli && !confirm("Remplacer la fiche en cours par un enquêteur tiré au hasard ?")) return;
+
+            const prenomsH = ["Arthur","Howard","Walter","Edgar","Vincent","Oscar","Clarence","Ambrose","Silas"];
+            const prenomsF = ["Eleanor","Margaret","Iris","Cordelia","Beatrice","Lavinia","Agatha","Wilhelmina","Rosalind"];
+            const noms = ["Calloway","Ashcroft","Whateley","Marsh","Pickman","Derleth","Lowell","Carter","Blackwood","Thorne","Wexley","Harrow","Vance","Sallow","Gantry","Amherst"];
+            const professions = ["Journaliste","Antiquaire","Médecin","Professeur","Détective privé","Bibliothécaire","Archéologue","Marin au long cours","Prêtre défroqué","Occultiste","Photographe","Notaire","Infirmière","Explorateur"];
+            const peursL = ["L'obscurité totale","Les espaces clos","Les profondeurs marines","Être oublié de tous","Les murmures sans source","La folie héréditaire","Les miroirs au crépuscule","Le grand large"];
+            const vaillancesL = ["Protéger les innocents","Connaître la vérité coûte que coûte","Ne jamais reculer devant l'inconnu","Garder la foi malgré tout","Tenir sa parole jusqu'au bout"];
+
+            const stats = genererStatsAleatoires();
+            const courtParStat = { "Force": "force", "Dextérité": "dex", "Charisme": "cha", "Perception": "per", "Éducation": "edu", "Chance": "chance" };
+
+            // Compétences : TOUJOURS 3, en consommant au mieux le budget PC disponible
+            const niveauxAffichables = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"]; // ordre croissant de coût
+            const coutNiveau = (comp, niv) => (comp.niveaux[niv] ? comp.niveaux[niv].cout : Infinity);
+            const NB_CIBLE = 3;
+            const budgetTotal = parseInt(document.getElementById('pc_max').value) || 25;
+
+            // 1) Tirer NB_CIBLE compétences distinctes (ayant au moins un niveau affichable)
+            const clesComp = Object.keys(indexCompetencesData).filter(cle => {
+                const c = indexCompetencesData[cle];
+                return c && c.niveaux && niveauxAffichables.some(n => c.niveaux[n]);
+            });
+            for (let i = clesComp.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [clesComp[i], clesComp[j]] = [clesComp[j], clesComp[i]]; }
+            const choisies = [];
+            for (const cle of clesComp) {
+                if (choisies.length >= NB_CIBLE) break;
+                const comp = indexCompetencesData[cle];
+                const nivMin = niveauxAffichables.filter(n => comp.niveaux[n]).sort((a, b) => coutNiveau(comp, a) - coutNiveau(comp, b))[0];
+                choisies.push({ cle, comp, niveauIdx: niveauxAffichables.indexOf(nivMin) });
+            }
+
+            // 2) Monter les niveaux au hasard tant que le budget le permet (maximise l'usage des PC)
+            const coutCourant = () => choisies.reduce((s, x) => s + coutNiveau(x.comp, niveauxAffichables[x.niveauIdx]), 0);
+            let secu = 0;
+            while (secu++ < 300) {
+                const ameliorables = choisies.filter(x => {
+                    const nxt = niveauxAffichables[x.niveauIdx + 1];
+                    if (!nxt || !x.comp.niveaux[nxt]) return false;
+                    const delta = coutNiveau(x.comp, nxt) - coutNiveau(x.comp, niveauxAffichables[x.niveauIdx]);
+                    return coutCourant() + delta <= budgetTotal;
+                });
+                if (ameliorables.length === 0) break;
+                _rand(ameliorables).niveauIdx++;
+            }
+
+            // 3) Finaliser : statChoisie = stat liée la plus haute
+            const competences = choisies.map(x => {
+                const niveau = niveauxAffichables[x.niveauIdx];
+                let statChoisie = null, meilleur = -1;
+                Object.keys(statMapping).forEach(k => {
+                    if (x.comp.stats.includes(k)) {
+                        const v = stats[courtParStat[k]];
+                        if (v > meilleur) { meilleur = v; statChoisie = k; }
+                    }
+                });
+                if (!statChoisie) statChoisie = Object.keys(statMapping).find(k => x.comp.stats.includes(k)) || "Force";
+                return { nom: x.cle, niveau: niveau, statChoisie: statChoisie };
+            });
+
+            const estHomme = Math.random() < 0.5;
+            const prenom = _rand(estHomme ? prenomsH : prenomsF);
+            const ageNum = 22 + Math.floor(Math.random() * 34); // 22 à 55 ans
+            const ageStr = ageNum + " ans (" + (estHomme ? "né" : "née") + " en " + (1925 - ageNum) + ")";
+
+            const data = {
+                avatar: "",
+                nom: prenom + " " + _rand(noms),
+                sexe: estHomme ? "Homme" : "Femme",
+                age: ageStr,
+                profession: _rand(professions),
+                stats: stats,
+                competences: competences,
+                afflictions: [],
+                inventaires: { monnaie: (10 + Math.floor(Math.random() * 40) * 5) + "$", monnaieGlobal: (Math.floor(Math.random() * 20) * 50) + "$", personnel: [], global: [] },
+                lore: { peurs: _rand(peursL), vaillance: _rand(vaillancesL), background: "" },
+                etats: { mentale: "Aucune instabilité", physique: "Aucune blessure" },
+                regles: {
+                    pc_max: document.getElementById('pc_max').value,
+                    comp_max_limit: String(Math.max(3, parseInt(document.getElementById('comp_max_limit').value) || 2)),
+                    pts_deduction: document.getElementById('pts_deduction').value,
+                    stat_max_pts: document.getElementById('stat_max_pts').value
+                }
+            };
+            appliquerEtatFiche(data);
+            persisterLocal();
+            toast("Enquêteur tiré au hasard : " + data.nom + ".", "success");
+        }
+    </script>
+</body>
+</html>

@@ -395,10 +395,86 @@
             }
             .hdr-title, .hdr-subtitle, .hdr-rule-text { text-shadow: none; }
         }
+
+        /* ===== Modale création de compétence ===== */
+        .modale-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.8); z-index: 60; display: flex; align-items: flex-start; justify-content: center; padding: 4vh 1rem; overflow-y: auto; }
+        .modale-overlay.hidden { display: none; }
+        .modale-box { background: #0f172a; border: 1px solid #334155; border-radius: 0.75rem; padding: 1.5rem; width: 100%; max-width: 640px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+        .mc-table th { font-weight: 700; border-bottom: 1px solid #334155; }
+        .mc-table td { padding: 3px 4px; border-bottom: 1px solid #1e293b; }
+        .mc-table input[type=number], .mc-table input[type=text] { width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 3px 5px; color: #fff; outline: none; font-size: 12px; }
+        .mc-table .mc-niv-nom { color: #fde68a; font-weight: 700; white-space: nowrap; }
+
+        /* ===== Boutons dé ===== */
+        .btn-de { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #fbbf24; transition: transform 0.1s, color 0.1s; background: none; border: none; padding: 2px; }
+        .btn-de:hover { color: #fde68a; transform: scale(1.18) rotate(-12deg); }
+        .btn-de svg { width: 1.05rem; height: 1.05rem; }
+
+        /* ===== Panneau historique des jets ===== */
+        .panneau-des { position: fixed; bottom: 0; right: 1rem; width: 300px; max-width: calc(100vw - 2rem); background: #0f172a; border: 1px solid #334155; border-bottom: none; border-radius: 0.6rem 0.6rem 0 0; z-index: 55; box-shadow: 0 -8px 30px rgba(0,0,0,0.5); font-family: inherit; }
+        .panneau-des-tete { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; cursor: pointer; background: #1e293b; border-radius: 0.6rem 0.6rem 0 0; user-select: none; }
+        .panneau-des-tete:hover { background: #283548; }
+        .panneau-des-corps { padding: 0.5rem 0.75rem 0.75rem; max-height: 45vh; display: flex; flex-direction: column; }
+        .panneau-des.reduit .panneau-des-corps { display: none; }
+        .panneau-des.reduit #panneauDesToggle { transform: rotate(180deg); display: inline-block; }
+        .historique-liste { overflow-y: auto; display: flex; flex-direction: column-reverse; gap: 4px; }
+        .jet-ligne { background: #1e293b; border: 1px solid #334155; border-radius: 5px; padding: 4px 7px; font-size: 11px; line-height: 1.35; }
+        .jet-ligne .jet-nom { color: #e2e8f0; font-weight: 700; }
+        .jet-ligne .jet-detail { color: #94a3b8; font-family: ui-monospace, monospace; }
+        @media print { .panneau-des, .modale-overlay { display: none !important; } }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 p-4 md:p-8 font-sans">
     <div id="toastZone" aria-live="polite"></div>
+
+    <!-- ===== MODALE : Créer une compétence personnalisée ===== -->
+    <div id="modaleComp" class="modale-overlay hidden">
+        <div class="modale-box">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modaleCompTitre" class="text-lg font-bold text-emerald-400">Créer une compétence</h3>
+                <button onclick="fermerModaleComp()" class="text-slate-400 hover:text-white font-bold text-xl leading-none">✕</button>
+            </div>
+            <label class="block text-xs text-slate-400 font-bold mb-1">Nom de la compétence</label>
+            <input id="mc_nom" type="text" placeholder="Ex : Pilotage de dirigeable" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-white outline-none mb-3">
+
+            <label class="block text-xs text-slate-400 font-bold mb-1">Statistiques liées</label>
+            <div id="mc_stats" class="flex flex-wrap gap-2 mb-3 text-xs"></div>
+
+            <label class="flex items-center gap-2 mb-4 text-sm text-slate-200 cursor-pointer">
+                <input type="checkbox" id="mc_quota" checked class="accent-emerald-500 w-4 h-4">
+                Compte dans le quota MJ (nombre max de compétences)
+            </label>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs mc-table">
+                    <thead><tr class="text-slate-400">
+                        <th class="text-left p-1">Niveau</th><th class="p-1 w-16">Coût (PC)</th><th class="p-1 w-16">Bonus</th><th class="text-left p-1">Description</th>
+                    </tr></thead>
+                    <tbody id="mc_niveaux"></tbody>
+                </table>
+            </div>
+            <p class="text-[11px] text-slate-500 italic mt-2">Coût 0 = ne consomme aucun PC. Une description vide reprend automatiquement celle du niveau renseigné au-dessus.</p>
+            <p id="mc_erreur" class="text-red-400 text-xs font-bold mt-2 hidden"></p>
+
+            <div class="flex justify-end gap-2 mt-4">
+                <button onclick="fermerModaleComp()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-4 py-2 rounded text-sm">Annuler</button>
+                <button onclick="creerCompetence()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded text-sm">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PANNEAU : Historique des jets de dés ===== -->
+    <div id="panneauDes" class="panneau-des reduit">
+        <div class="panneau-des-tete" onclick="basculerHistoriqueDes()">
+            <span class="font-bold text-sm">🎲 Historique des jets</span>
+            <span id="panneauDesToggle" class="text-slate-400">▲</span>
+        </div>
+        <div class="panneau-des-corps">
+            <div id="historiqueDesListe" class="historique-liste"></div>
+            <button onclick="viderHistoriqueDes()" class="w-full mt-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-bold py-1 rounded">Vider l'historique</button>
+        </div>
+    </div>
+
     <div class="max-w-6xl mx-auto space-y-8">
         
         <div class="hdr-banner px-5 py-5 md:px-7 md:py-6">
@@ -702,9 +778,12 @@
                     <label class="text-slate-400 font-bold">Nombre de compétences max autorisé par le MJ :</label>
                     <input type="number" id="comp_max_limit" value="2" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
                 </div>
-                <select id="selectCompetence" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg text-white mb-4 outline-none">
-                    <option value="">-- Sélectionner la compétence --</option>
-                </select>
+                <div class="flex gap-2 mb-4">
+                    <select id="selectCompetence" class="flex-grow p-3 bg-slate-950 border border-slate-800 rounded-lg text-white outline-none">
+                        <option value="">-- Sélectionner la compétence --</option>
+                    </select>
+                    <button onclick="ouvrirModaleComp()" title="Créer une compétence personnalisée" class="shrink-0 bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-4 rounded-lg text-sm transition">+ Créer</button>
+                </div>
                 <div id="details" class="bg-slate-950 p-4 rounded-lg border border-slate-800 hidden space-y-3">
                     <div>
                         <h3 id="compNom" class="text-lg font-bold text-yellow-200"></h3>
@@ -880,11 +959,10 @@
             fetch('afflictions.json').then(res => res.json())
         ]).then(([dataComp, dataAff]) => {
             indexCompetencesData = dataComp;
-            const selectComp = document.getElementById('selectCompetence');
-            Object.keys(dataComp).forEach(key => {
-                const opt = document.createElement('option'); opt.value = key; opt.textContent = key; selectComp.appendChild(opt);
-            });
-            selectComp.addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
+            rafraichirListeCompetences();
+            document.getElementById('selectCompetence').addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
+            injecterBoutonsDeStats();
+            chargerHistoriqueDes();
 
             indexAfflictionsData = dataAff;
             const selectAff = document.getElementById('selectAffliction');
@@ -982,8 +1060,10 @@
             if (competencesChoisies.filter(i => i.nom !== nom).reduce((s, i) => s + i.cout, 0) + cout > (pcInitialMax + totalGainPC)) {
                 toast("Budget de PC insuffisant !", "error"); return;
             }
+            const compteQuota = !(indexCompetencesData[nom] && indexCompetencesData[nom].compteQuota === false);
             let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
-            if (!competencesChoisies.some(i => i.nom === nom) && competencesChoisies.length >= ((parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp)) {
+            let nbQuota = competencesChoisies.filter(i => i.nom !== nom && i.compteQuota !== false).length;
+            if (compteQuota && !competencesChoisies.some(i => i.nom === nom) && nbQuota >= ((parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp)) {
                 toast("Nombre de compétences actives max atteint (règle MJ).", "error"); return;
             }
             competencesChoisies = competencesChoisies.filter(item => item.nom !== nom);
@@ -1003,7 +1083,7 @@
             }
             if(!statLaPlusHaute) statLaPlusHaute = Object.keys(statMapping).find(k => stringStats.includes(k)) || "Force";
 
-            competencesChoisies.push({ nom, niveau, bonus, cout, stringStats, statChoisie: statLaPlusHaute, description: descRapportee });
+            competencesChoisies.push({ nom, niveau, bonus, cout, stringStats, statChoisie: statLaPlusHaute, description: descRapportee, compteQuota });
             travaillerCalculsEtRendu();
         }
 
@@ -1176,7 +1256,7 @@
 
                 // Cases toujours agrandies (même échelle avec ou sans affliction) ; seules
                 // la couleur et la bordure changent. Le wrapper garde sa disposition centrée.
-                const wrapBase = "bg-slate-950 p-3 rounded-lg border flex flex-col items-center justify-center";
+                const wrapBase = "relative bg-slate-950 p-3 rounded-lg border flex flex-col items-center justify-center";
                 const dispBase = "font-black text-lg bg-slate-900 px-2.5 py-1 rounded border";
                 if (malusCumules[key] > 0) {
                     if (displayEl) displayEl.className = "text-red-500 " + dispBase + " border-red-700";
@@ -1228,7 +1308,7 @@
             document.getElementById('pc_panier_restants').className = pcRestantsFinaux < 0 ? "text-red-400 font-bold" : "text-emerald-400 font-bold";
 
             let totalBonusComp = afflictionsChoisies.reduce((sum, item) => sum + item.bonus_comp, 0);
-            document.getElementById('comp_count').textContent = competencesChoisies.length;
+            document.getElementById('comp_count').textContent = competencesChoisies.filter(c => c.compteQuota !== false).length;
             document.getElementById('comp_max_display').textContent = (parseInt(document.getElementById('comp_max_limit').value) || 2) + totalBonusComp;
             document.getElementById('aff_count_display').textContent = afflictionsChoisies.length;
 
@@ -1239,13 +1319,22 @@
             } else {
                 panierContainer.innerHTML = competencesChoisies.map(item => {
                     let escName = item.nom.replace(/'/g, "\\'");
-                    let descHtml = item.description 
-                        ? `<p class="text-[11px] text-slate-400 italic mt-1 bg-slate-950 p-1.5 rounded border border-slate-800/40">${item.description}</p>` 
+                    const estPerso = !!competencesPerso[item.nom];
+                    let descHtml = item.description
+                        ? `<p class="text-[11px] text-slate-400 italic mt-1 bg-slate-950 p-1.5 rounded border border-slate-800/40">${item.description}</p>`
                         : '';
+                    const tagPerso = estPerso ? '<span class="text-emerald-400 font-bold">[+] </span>' : '';
+                    const horsQuota = item.compteQuota === false ? '<span class="text-slate-500 text-[10px]" title="Ne compte pas dans le quota MJ"> · hors quota</span>' : '';
+                    const fleches = '<div class="flex flex-col leading-none mr-1.5 shrink-0">' +
+                        '<button onclick="event.stopPropagation(); deplacerComp(\'' + escName + '\', -1)" class="text-slate-500 hover:text-white text-[10px]" title="Monter">▲</button>' +
+                        '<button onclick="event.stopPropagation(); deplacerComp(\'' + escName + '\', 1)" class="text-slate-500 hover:text-white text-[10px]" title="Descendre">▼</button></div>';
+                    const btnEdit = estPerso ? '<button onclick="event.stopPropagation(); ouvrirModaleComp(\'' + escName + '\')" class="text-sky-400 font-bold text-xs px-1" title="Modifier la compétence">✎</button>' : '';
                     return '<div onclick="chargerDetailsCompetence(\'' + escName + '\')" class="bg-slate-900 p-2.5 rounded border border-slate-800 flex flex-col cursor-pointer hover:bg-slate-800 transition">' +
                            '<div class="flex justify-between items-center w-full">' +
-                           '<div><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ') · <span class="text-orange-400">' + item.cout + ' PC</span>]</span></div>' +
-                           '<button onclick="event.stopPropagation(); supprimerComp(\'' + escName + '\')" class="text-red-400 font-bold text-xs px-2">✕</button></div>' +
+                           '<div class="flex items-center">' + fleches +
+                           '<div><span class="text-[11px]">' + tagPerso + '</span><span class="font-bold text-white text-xs">' + item.nom + '</span><span class="text-emerald-400 text-[11px]"> [' + item.niveau + ' (+' + item.bonus + ') · <span class="text-orange-400">' + item.cout + ' PC</span>]</span>' + horsQuota + '</div></div>' +
+                           '<div class="flex items-center gap-1 shrink-0">' + btnEdit +
+                           '<button onclick="event.stopPropagation(); supprimerComp(\'' + escName + '\')" class="text-red-400 font-bold text-xs px-2">✕</button></div></div>' +
                            descHtml +
                            '</div>';
                 }).join('');
@@ -1334,6 +1423,7 @@
                            '<span class="text-slate-400 text-[11px]">' + valBaseCalculée + ' + ' + item.bonus + '</span>' +
                            '<span class="text-slate-500 text-[10px]">(Stats+Bonus)</span>' +
                            '<span class="' + couleurTotal + '">Total = ' + totalScore + '</span>' +
+                           '<button onclick="lancerDe(\'' + escName + '\', ' + totalScore + ')" class="btn-de" title="Lancer 1d100 (' + escName + ')">' + DE_SVG + '</button>' +
                            '</div></div></div>';
                 }).join('');
             }
@@ -1396,6 +1486,7 @@
                     per: num('stat_per'), edu: num('stat_edu'), chance: num('stat_chance')
                 },
                 competences: competencesChoisies.map(c => ({ nom: c.nom, niveau: c.niveau, statChoisie: c.statChoisie })),
+                competencesPerso: competencesPerso,
                 afflictions: afflictionsChoisies.map(a => ({ nom: a.nom, stade: a.stade, repartition: a.repartition })),
                 inventaires: {
                     monnaie: val('inv_money'),
@@ -1937,6 +2028,7 @@
                     per: val('stat_per'), edu: val('stat_edu'), chance: val('stat_chance')
                 },
                 competences: competencesChoisies.map(c => ({ nom: c.nom, niveau: c.niveau, statChoisie: c.statChoisie })),
+                competencesPerso: competencesPerso,
                 afflictions: afflictionsChoisies.map(a => ({ nom: a.nom, stade: a.stade, repartition: a.repartition })),
                 inventaires: {
                     monnaie: val('inv_money'),
@@ -1972,7 +2064,7 @@
                 stat = Object.keys(statMapping).find(k => comp.stats.includes(k)) || "Force";
             }
             return { nom: comp.nom, niveau: item.niveau, bonus: niveauData.bonus || 0, cout: niveauData.cout,
-                     stringStats: comp.stats, statChoisie: stat, description: desc };
+                     stringStats: comp.stats, statChoisie: stat, description: desc, compteQuota: comp.compteQuota !== false };
         }
 
         // Reconstruit une affliction complète à partir de {nom, stade, repartition}
@@ -2028,11 +2120,175 @@
                 document.getElementsByName('san_mentale').forEach(r => r.checked = (r.value === data.etats.mentale));
                 document.getElementsByName('san_physique').forEach(r => r.checked = (r.value === data.etats.physique));
             }
+            // Compétences personnalisées : on les fusionne dans l'index AVANT de reconstruire le panier
+            competencesPerso = data.competencesPerso || {};
+            Object.keys(competencesPerso).forEach(n => { indexCompetencesData[n] = competencesPerso[n]; });
+            rafraichirListeCompetences();
             // stringStats présent => format complet ; sinon format minimal à reconstruire
             competencesChoisies = (data.competences || []).map(c => c.stringStats ? c : reconstruireCompetence(c)).filter(Boolean);
             afflictionsChoisies = (data.afflictions || []).map(a => a.definition ? a : reconstruireAffliction(a)).filter(Boolean);
             rafraichirApercuAvatar();
             travaillerCalculsEtRendu();
+        }
+
+        // ============================================================
+        //  COMPÉTENCES PERSONNALISÉES (création par le joueur)
+        // ============================================================
+        let competencesPerso = {};   // { nom: { nom, stats, niveaux, compteQuota, perso } }
+        const ORDRE_NIVEAUX = ["Basique", "Confirmé", "Avancé", "Expert", "Maître"];
+        const COUTS_DEFAUT = { "Basique": 1, "Confirmé": 3, "Avancé": 6, "Expert": 10, "Maître": 15 };
+        const BONUS_DEFAUT = { "Basique": 0, "Confirmé": 5, "Avancé": 10, "Expert": 15, "Maître": 25 };
+
+        function escapeHtml(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        // (Re)construit la liste déroulante : compétences perso en tête (tag [+]) puis celles du JSON.
+        function rafraichirListeCompetences() {
+            const sel = document.getElementById('selectCompetence');
+            if (!sel) return;
+            const courante = sel.value;
+            sel.innerHTML = '<option value="">-- Sélectionner la compétence --</option>';
+            Object.keys(competencesPerso).forEach(nom => {
+                const o = document.createElement('option'); o.value = nom; o.textContent = '[+] ' + nom; sel.appendChild(o);
+            });
+            Object.keys(indexCompetencesData).filter(n => !competencesPerso[n]).forEach(nom => {
+                const o = document.createElement('option'); o.value = nom; o.textContent = nom; sel.appendChild(o);
+            });
+            if (courante && indexCompetencesData[courante]) sel.value = courante;
+        }
+
+        // Ouvre la modale (vide pour créer, pré-remplie pour modifier une compétence perso existante).
+        function ouvrirModaleComp(nomEdit) {
+            const modale = document.getElementById('modaleComp');
+            document.getElementById('modaleCompTitre').textContent = nomEdit ? 'Modifier la compétence' : 'Créer une compétence';
+            document.getElementById('mc_erreur').classList.add('hidden');
+            document.getElementById('mc_stats').innerHTML = Object.keys(statMapping).map(s =>
+                `<label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" class="mc-stat accent-emerald-500 w-4 h-4" value="${s}"> ${statLabelMapping[s]}</label>`).join('');
+            document.getElementById('mc_niveaux').innerHTML = ORDRE_NIVEAUX.map(n =>
+                `<tr><td class="mc-niv-nom">${n}</td>` +
+                `<td><input type="number" min="0" class="mc-cout" data-niv="${n}" value="${COUTS_DEFAUT[n]}"></td>` +
+                `<td><input type="number" class="mc-bonus" data-niv="${n}" value="${BONUS_DEFAUT[n]}"></td>` +
+                `<td><input type="text" class="mc-desc" data-niv="${n}" placeholder="(optionnel)"></td></tr>`).join('');
+            document.getElementById('mc_nom').value = '';
+            document.getElementById('mc_quota').checked = true;
+            modale.dataset.edit = nomEdit || '';
+            if (nomEdit && competencesPerso[nomEdit]) {
+                const c = competencesPerso[nomEdit];
+                document.getElementById('mc_nom').value = c.nom;
+                document.getElementById('mc_quota').checked = c.compteQuota !== false;
+                const liees = (c.stats || '').split('/').map(s => s.trim());
+                document.querySelectorAll('.mc-stat').forEach(cb => { cb.checked = liees.includes(cb.value); });
+                ORDRE_NIVEAUX.forEach(n => {
+                    const d = (c.niveaux && c.niveaux[n]) || {};
+                    const q = cls => document.querySelector('.' + cls + '[data-niv="' + n + '"]');
+                    if (d.cout != null) q('mc-cout').value = d.cout;
+                    if (d.bonus != null) q('mc-bonus').value = d.bonus;
+                    q('mc-desc').value = d._descBrute || '';
+                });
+            }
+            modale.classList.remove('hidden');
+            document.getElementById('mc_nom').focus();
+        }
+        function fermerModaleComp() { document.getElementById('modaleComp').classList.add('hidden'); }
+
+        function creerCompetence() {
+            const err = m => { const e = document.getElementById('mc_erreur'); e.textContent = m; e.classList.remove('hidden'); };
+            const nom = document.getElementById('mc_nom').value.trim();
+            if (!nom) return err("Donne un nom à la compétence.");
+            const ancien = document.getElementById('modaleComp').dataset.edit;
+            if (nom !== ancien && indexCompetencesData[nom]) return err("Une compétence porte déjà ce nom.");
+            const stats = Array.from(document.querySelectorAll('.mc-stat:checked')).map(cb => cb.value);
+            if (!stats.length) return err("Sélectionne au moins une statistique liée.");
+
+            const niveaux = {}; let descHeritee = "";
+            ORDRE_NIVEAUX.forEach(n => {
+                const cout = parseInt(document.querySelector('.mc-cout[data-niv="' + n + '"]').value) || 0;
+                const bonus = parseInt(document.querySelector('.mc-bonus[data-niv="' + n + '"]').value) || 0;
+                const descBrute = document.querySelector('.mc-desc[data-niv="' + n + '"]').value.trim();
+                if (descBrute) descHeritee = descBrute;          // héritage : descend la dernière description renseignée
+                niveaux[n] = { cout, bonus, description: descHeritee, _descBrute: descBrute };
+            });
+
+            const def = { nom, stats: stats.join(' / '), niveaux, compteQuota: document.getElementById('mc_quota').checked, perso: true };
+            if (ancien && ancien !== nom) { delete competencesPerso[ancien]; delete indexCompetencesData[ancien]; }
+            competencesPerso[nom] = def;
+            indexCompetencesData[nom] = def;
+            rafraichirListeCompetences();
+            // resynchronise une éventuelle instance déjà dans le panier (édition)
+            competencesChoisies = competencesChoisies.map(it => {
+                if (it.nom === ancien || it.nom === nom) {
+                    const r = reconstruireCompetence({ nom, niveau: it.niveau, statChoisie: it.statChoisie });
+                    return r || it;
+                }
+                return it;
+            });
+            fermerModaleComp();
+            chargerDetailsCompetence(nom);
+            travaillerCalculsEtRendu();
+            toast(ancien ? "Compétence modifiée." : "Compétence « " + nom + " » créée.", "success");
+        }
+
+        // Réordonne une compétence du panier (l'ordre pilote la page 1 du PDF : les 9 premières).
+        function deplacerComp(nom, sens) {
+            const i = competencesChoisies.findIndex(c => c.nom === nom);
+            const j = i + sens;
+            if (i < 0 || j < 0 || j >= competencesChoisies.length) return;
+            const t = competencesChoisies[i]; competencesChoisies[i] = competencesChoisies[j]; competencesChoisies[j] = t;
+            travaillerCalculsEtRendu();
+        }
+
+        // ============================================================
+        //  JETS DE DÉS (1d100) + HISTORIQUE LOCAL
+        // ============================================================
+        let historiqueDes = [];
+        const DE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3 4a1.6 1.6 0 1 0 0 3.2A1.6 1.6 0 0 0 8 7zm8 0a1.6 1.6 0 1 0 0 3.2A1.6 1.6 0 0 0 16 7zm-4 4a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2zm-4 4a1.6 1.6 0 1 0 0 3.2A1.6 1.6 0 0 0 8 15zm8 0a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z"/></svg>';
+
+        function _heureJet() {
+            try { return new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; }
+        }
+        function lancerDe(nom, valeur) {
+            valeur = parseInt(valeur) || 0;
+            const jet = 1 + Math.floor(Math.random() * 100);
+            let res, cls, type;
+            if (jet <= 5) { res = "Succès critique"; cls = "text-emerald-300"; type = "success"; }
+            else if (jet >= 95) { res = "Échec critique"; cls = "text-red-400"; type = "error"; }
+            else if (jet <= valeur) { res = "Succès"; cls = "text-emerald-400"; type = "info"; }
+            else { res = "Échec"; cls = "text-red-300"; type = "info"; }
+            historiqueDes.push({ nom, jet, valeur, res, cls, t: _heureJet() });
+            if (historiqueDes.length > 100) historiqueDes.shift();
+            rendreHistoriqueDes();
+            const p = document.getElementById('panneauDes'); if (p) p.classList.remove('reduit');
+            persisterHistoriqueDes();
+            toast(nom + " — 🎲 " + jet + " / " + valeur + " → " + res, type, 3500);
+        }
+        function rendreHistoriqueDes() {
+            const liste = document.getElementById('historiqueDesListe');
+            if (!liste) return;
+            if (!historiqueDes.length) { liste.innerHTML = '<p class="text-slate-600 italic text-[11px]">Aucun jet pour le moment.</p>'; return; }
+            liste.innerHTML = historiqueDes.map(j =>
+                `<div class="jet-ligne"><span class="jet-nom">${escapeHtml(j.nom)}</span> — <span class="${j.cls} font-bold">${escapeHtml(j.res)}</span><br><span class="jet-detail">🎲 ${j.jet} / ${j.valeur}${j.t ? ' · ' + j.t : ''}</span></div>`
+            ).join('');
+        }
+        function viderHistoriqueDes() { historiqueDes = []; rendreHistoriqueDes(); persisterHistoriqueDes(); }
+        function basculerHistoriqueDes() { document.getElementById('panneauDes').classList.toggle('reduit'); }
+        function persisterHistoriqueDes() { try { localStorage.setItem('azpartam_des_v1', JSON.stringify(historiqueDes)); } catch (e) {} }
+        function chargerHistoriqueDes() {
+            try { const s = localStorage.getItem('azpartam_des_v1'); if (s) historiqueDes = JSON.parse(s) || []; } catch (e) {}
+            rendreHistoriqueDes();
+        }
+        // Ajoute un bouton dé en haut à droite de chaque carte de statistique (jet contre l'« Actuel »).
+        function injecterBoutonsDeStats() {
+            Object.keys(statMapping).forEach(stat => {
+                const wrapper = document.getElementById('wrapper_' + statMapping[stat]);
+                if (!wrapper || wrapper.querySelector('.btn-de')) return;
+                const btn = document.createElement('button');
+                btn.className = 'btn-de absolute top-2 right-2';
+                btn.title = 'Lancer 1d100 (' + statLabelMapping[stat] + ')';
+                btn.innerHTML = DE_SVG;
+                btn.onclick = () => lancerDe(statLabelMapping[stat], document.getElementById(displayMapping[stat]).textContent);
+                wrapper.appendChild(btn);
+            });
         }
 
         // ============================================================
