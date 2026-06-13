@@ -481,66 +481,90 @@
                     </p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" id="statsContainerGrid">
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_force">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-yellow-200">Force (STR)</span>
-                                <div class="text-sm font-mono flex items-center space-x-1.5">
-                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
-                                    <span id="display_force" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
-                                    <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_force" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_force">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Force (STR)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_force" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
                                 </div>
-                            </div>                        </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_dex">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-yellow-200">Dextérité (DEX)</span>
-                                <div class="text-sm font-mono flex items-center space-x-1.5">
-                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
-                                    <span id="display_dex" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
-                                    <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_dex" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
+                                    <input type="number" id="stat_force" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
-                            </div>                        </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_cha">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-yellow-200">Charisme (CHA)</span>
-                                <div class="text-sm font-mono flex items-center space-x-1.5">
-                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
-                                    <span id="display_cha" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
-                                    <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_cha" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_dex">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Dextérité (DEX)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_dex" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
                                 </div>
-                            </div>                        </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_per">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-yellow-200">Perception (PER)</span>
-                                <div class="text-sm font-mono flex items-center space-x-1.5">
-                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
-                                    <span id="display_per" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
-                                    <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_per" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
+                                    <input type="number" id="stat_dex" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
-                            </div>                        </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_edu">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-yellow-200">Éducation (EDU)</span>
-                                <div class="text-sm font-mono flex items-center space-x-1.5">
-                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
-                                    <span id="display_edu" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
-                                    <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_edu" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_cha">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Charisme (CHA)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_cha" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
                                 </div>
-                            </div>                        </div>
-                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800" id="wrapper_stat_chance">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-yellow-200">Chance (LUCK)</span>
-                                <div class="text-sm font-mono flex items-center space-x-1.5">
-                                    <span class="text-[10px] uppercase text-slate-500">Actuel</span>
-                                    <span id="display_chance" class="text-white font-black text-base px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">50</span>
-                                    <span class="text-slate-600 font-bold">/</span>
-                                    <input type="number" id="stat_chance" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-bold text-white rounded border border-slate-700 outline-none p-0.5">
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
+                                    <input type="number" id="stat_cha" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
                                 </div>
-                            </div>                        </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_per">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Perception (PER)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_per" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
+                                    <input type="number" id="stat_per" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_edu">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Éducation (EDU)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_edu" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
+                                    <input type="number" id="stat_edu" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col items-center justify-center" id="wrapper_stat_chance">
+                            <span class="text-sm font-bold text-yellow-200 text-center mb-2">Chance (LUCK)</span>
+                            <div class="flex items-end justify-center gap-3 font-mono w-full">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Actuel</span>
+                                    <span id="display_chance" class="text-white font-black text-lg px-2.5 py-1 rounded bg-slate-900 border border-slate-800">50</span>
+                                </div>
+                                <span class="text-slate-600 font-bold pb-1.5">/</span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[10px] uppercase text-slate-500 mb-1">Saisie</span>
+                                    <input type="number" id="stat_chance" min="0" max="100" value="50" class="stat-input w-16 bg-slate-900 text-center font-black text-lg text-white rounded border border-slate-700 outline-none p-1">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="blocCompetencesStats" class="space-y-2 border-t border-slate-800 pt-4 hidden">
@@ -551,7 +575,7 @@
 
                 <div class="space-y-2 pt-2 border-t border-slate-800 mt-4">
                     <div class="p-3 bg-slate-950 rounded-lg flex flex-col sm:flex-row justify-between items-center text-xs border border-slate-800 gap-2 sm:gap-0">
-                        <div><span>Gestion des points de statistiques :</span> <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> / 300</div>
+                        <div class="flex items-center gap-1.5"><span>Gestion des points de statistiques :</span> <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> <span class="text-slate-600 font-bold">/</span> <input type="number" id="stat_max_pts" min="0" value="300" class="w-16 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-0.5 font-mono"></div>
                         <div id="statStatus" class="text-emerald-400 font-bold text-center">✓ Total valide</div>
                     </div>
                     
@@ -761,18 +785,38 @@
         const displayMapping = {
             "Force": "display_force", "Dextérité": "display_dex", "Charisme": "display_cha", "Perception": "display_per", "Éducation": "display_edu", "Chance": "display_chance"
         };
+
+        // Libellés complets identiques à la section Statistiques principales (réutilisés dans la répartition d'affliction)
+        const statLabelMapping = {
+            "Force": "Force (STR)", "Dextérité": "Dextérité (DEX)", "Charisme": "Charisme (CHA)", "Perception": "Perception (PER)", "Éducation": "Éducation (EDU)", "Chance": "Chance (LUCK)"
+        };
         
         document.querySelectorAll('.stat-input').forEach(input => {
-            input.addEventListener('input', travaillerCalculsEtRendu);
-            // au blur/Entrée : applique le plancher si la saisie clavier est passée sous le malus
-            // d'affliction (re-rendu conditionnel pour ne pas avaler le clic qui suit le blur)
+            const nomStat = () => Object.keys(statMapping).find(k => statMapping[k] === input.id) || "Cette statistique";
+            // Plancher = malus d'affliction cumulé (stocké à chaque rendu), pour que le score ACTUEL reste ≥ 0.
+            const plancher = () => parseInt(input.dataset.floor) || 0;
+            input.addEventListener('input', (e) => {
+                // Un "step" (flèche clavier OU clic sur le spinner souris) émet un event input SANS inputType.
+                // À ce moment on applique le plancher et on prévient, exactement comme pour les afflictions.
+                if (e.inputType == null && (parseInt(input.value) || 0) < plancher()) {
+                    input.value = plancher();
+                    toast(nomStat() + " ne peut pas descendre sous 0.", "error");
+                }
+                travaillerCalculsEtRendu();
+            });
+            // Frappe clavier passée sous le plancher : corrigée + signalée à la sortie du champ
             input.addEventListener('change', () => {
-                if ((parseInt(input.value) || 0) < (parseInt(input.min) || 0)) travaillerCalculsEtRendu();
+                if ((parseInt(input.value) || 0) < plancher()) {
+                    input.value = plancher();
+                    toast(nomStat() + " ne peut pas descendre sous 0.", "error");
+                    travaillerCalculsEtRendu();
+                }
             });
         });
 
         document.getElementById('pc_max').addEventListener('input', travaillerCalculsEtRendu);
         document.getElementById('comp_max_limit').addEventListener('input', travaillerCalculsEtRendu);
+        document.getElementById('stat_max_pts').addEventListener('input', travaillerCalculsEtRendu);
 
         const LS_KEY = 'azpartam_fiche_v1';
 
@@ -1013,10 +1057,12 @@
                 let baseSaisie = parseInt(inputEl.value) || 0;
 
                 // Plancher : la saisie ne peut pas descendre sous le malus d'affliction,
-                // sinon le score actuel deviendrait négatif. Les flèches sont bloquées via min,
-                // la saisie clavier est corrigée une fois le champ quitté.
+                // sinon le score ACTUEL deviendrait négatif. On retire la borne native `min`
+                // (sinon le spinner au plancher est un no-op silencieux, sans notification possible) :
+                // le plancher est appliqué dans les écouteurs input/change via dataset.floor.
                 const minSaisie = malusCumules[key];
-                inputEl.min = minSaisie;
+                inputEl.removeAttribute('min');
+                inputEl.dataset.floor = minSaisie;
                 if (baseSaisie < minSaisie && document.activeElement !== inputEl) {
                     baseSaisie = minSaisie;
                     inputEl.value = minSaisie;
@@ -1028,30 +1074,35 @@
                 let scoreCalculeFinal = baseSaisie - malusCumules[key];
                 if (displayEl) displayEl.textContent = scoreCalculeFinal;
 
+                // Cases toujours agrandies (même échelle avec ou sans affliction) ; seules
+                // la couleur et la bordure changent. Le wrapper garde sa disposition centrée.
+                const wrapBase = "bg-slate-950 p-3 rounded-lg border flex flex-col items-center justify-center";
+                const dispBase = "font-black text-lg bg-slate-900 px-2.5 py-1 rounded border";
                 if (malusCumules[key] > 0) {
-                    if (displayEl) displayEl.className = "text-red-500 font-black text-lg bg-slate-900 border border-red-700 px-1.5 py-0.5 rounded";
-                    if (wrapperEl) wrapperEl.className = "bg-slate-950 p-3 rounded-lg border border-red-900/60 shadow-inner";
+                    if (displayEl) displayEl.className = "text-red-500 " + dispBase + " border-red-700";
+                    if (wrapperEl) wrapperEl.className = wrapBase + " border-red-900/60 shadow-inner";
                 } else {
                     const zoneScore = couleurZone(scoreCalculeFinal);
-                    if (displayEl) displayEl.className = (zoneScore ? zoneScore + " font-black" : "text-white font-bold") + " bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded";
-                    if (wrapperEl) wrapperEl.className = "bg-slate-950 p-3 rounded-lg border border-slate-800";
+                    if (displayEl) displayEl.className = (zoneScore || "text-white") + " " + dispBase + " border-slate-800";
+                    if (wrapperEl) wrapperEl.className = wrapBase + " border-slate-800";
                 }
 
-                if (inputEl) inputEl.className = "stat-input w-16 bg-slate-900 text-center font-bold " + (couleurZone(baseSaisie) || "text-white") + " rounded border border-slate-700 outline-none p-0.5";
+                if (inputEl) inputEl.className = "stat-input w-16 bg-slate-900 text-center font-black text-lg " + (couleurZone(baseSaisie) || "text-white") + " rounded border border-slate-700 outline-none p-1";
             });
 
             document.getElementById('totalPoints').textContent = totalSaisi;
             const status = document.getElementById('statStatus');
-            
-            if (totalSaisi === 300) {
+            const maxPts = parseInt(document.getElementById('stat_max_pts').value) || 0;
+
+            if (totalSaisi === maxPts) {
                 status.textContent = "✓ Total valide";
                 status.className = "text-emerald-400 font-bold text-center";
-            } else if (totalSaisi > 300) {
-                let trop = totalSaisi - 300;
+            } else if (totalSaisi > maxPts) {
+                let trop = totalSaisi - maxPts;
                 status.textContent = "⚠ Invalide (vous avez " + trop + " point" + (trop > 1 ? 's' : '') + " en trop)";
                 status.className = "text-red-400 font-bold text-center";
             } else {
-                let manque = 300 - totalSaisi;
+                let manque = maxPts - totalSaisi;
                 status.textContent = "⚠ Invalide (il vous manque " + manque + " point" + (manque > 1 ? 's' : '') + " à répartir)";
                 status.className = "text-red-400 font-bold text-center";
             }
@@ -1115,9 +1166,10 @@
                     let repartitionHtml = '<div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-red-900/40">';
                     Object.keys(statMapping).forEach(stat => {
                         let val = rep[stat] || 0;
+                        let statLabel = statLabelMapping[stat] || stat;
                         repartitionHtml += `
                             <div class="flex flex-col items-center bg-slate-900 rounded border border-slate-800 p-2" onclick="event.stopPropagation()">
-                                <span class="text-[11px] text-slate-300 font-bold mb-1 truncate max-w-full" title="${stat}">${stat}</span>
+                                <span class="text-[10px] text-slate-300 font-bold mb-1 text-center leading-tight" title="${statLabel}">${statLabel}</span>
                                 <div class="flex items-center space-x-1">
                                     <button onclick="actionModifierAffStat('${escName}', '${stat}', 'moins')" class="bg-slate-950 hover:bg-slate-800 text-red-400 font-bold text-xs w-5 h-5 flex items-center justify-center rounded border border-slate-700">-</button>
                                     <input type="number" min="0" value="${val}" onchange="actionModifierAffStat('${escName}', '${stat}', 'direct', this.value)" class="no-spinners w-7 bg-slate-950 text-red-400 font-mono text-xs text-center rounded border border-slate-700 outline-none py-0.5">
@@ -1125,7 +1177,7 @@
                                 </div>
                                 <div class="flex items-center space-x-1 mt-1 w-full justify-center">
                                     <button onclick="actionModifierAffStat('${escName}', '${stat}', 'max')" class="w-1/2 bg-red-950/40 hover:bg-red-900 text-red-300 font-mono text-[9px] py-0.5 rounded border border-red-900 uppercase">Max</button>
-                                    <button onclick="actionModifierAffStat('${escName}', '${stat}', 'reset')" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-400 font-mono text-[9px] py-0.5 rounded border border-slate-700">0</button>
+                                    <button onclick="actionModifierAffStat('${escName}', '${stat}', 'reset')" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-400 font-mono text-[9px] py-0.5 rounded border border-slate-700">RaZ</button>
                                 </div>
                             </div>
                         `;
@@ -1174,10 +1226,15 @@
                     let totalScore = valBaseCalculée + item.bonus;
                     let escName = item.nom.replace(/'/g, "\\'");
                     
+                    let couleurTotal = totalScore > 70 ? 'text-fuchsia-400 font-black' : (totalScore < 20 ? 'text-blue-400 font-black' : 'text-emerald-400');
                     return '<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
                            '<div class="font-bold text-white truncate">' + item.nom + '</div>' +
-                           '<div class="flex items-center justify-between"><select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
-                           '<div class="font-mono ' + (totalScore > 70 ? 'text-fuchsia-400 font-black' : (totalScore < 20 ? 'text-blue-400 font-black' : 'text-emerald-400')) + '">Total = ' + totalScore + '</div></div></div>';
+                           '<div class="flex items-center justify-between gap-2"><select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
+                           '<div class="flex items-center gap-1.5 font-mono">' +
+                           '<span class="text-slate-400 text-[11px]">' + valBaseCalculée + ' + ' + item.bonus + '</span>' +
+                           '<span class="text-slate-500 text-[10px]">(Stats+Bonus)</span>' +
+                           '<span class="' + couleurTotal + '">Total = ' + totalScore + '</span>' +
+                           '</div></div></div>';
                 }).join('');
             }
 
@@ -1258,7 +1315,8 @@
                 regles: {
                     pc_max: val('pc_max'),
                     comp_max_limit: val('comp_max_limit'),
-                    pts_deduction: val('pts_deduction')
+                    pts_deduction: val('pts_deduction'),
+                    stat_max_pts: val('stat_max_pts')
                 }
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1417,7 +1475,7 @@
             });
             return {
                 nom: val('char_name'), sexe: val('char_sexe'), age: val('char_age'), profession: val('char_profession'),
-                pcMax: val('pc_max'), pcRest: txt('pc_restants_global'), deductions: val('pts_deduction'), totalPts: txt('totalPoints'),
+                pcMax: val('pc_max'), pcRest: txt('pc_restants_global'), deductions: val('pts_deduction'), totalPts: txt('totalPoints'), statMax: (val('stat_max_pts') || '300'),
                 stats, courage: txt('val_courage'), resistance: txt('val_resistance'),
                 selMentale: mt_getRadioValue('san_mentale'), selPhysique: mt_getRadioValue('san_physique'),
                 compMax: val('comp_max_limit'), comp, aff,
@@ -1474,7 +1532,8 @@
                 rect(x, yt, w, h);
                 const f = form.createTextField('f' + (fc++));
                 if (opts.multiline) f.enableMultiline();
-                f.setText(safe(value));
+                // Espace de tête : petite marge avant le texte dans la zone de saisie (le widget reste aligné sur la case)
+                f.setText(' ' + safe(value));
                 f.addToPage(page, { x: mm(x), y: PH - mm(yt + h), width: mm(w), height: mm(h), font: fN, borderWidth: 0, backgroundColor: undefined });
                 try { f.setFontSize(opts.fontSize || 9); } catch (e) {}
             }
@@ -1524,7 +1583,7 @@
                 if (sd) { label(M + bw, y, sc1, rs, sd.lib, 8.5); field(M + bw + sc1, y, sc2, rs, sd.actuel); field(M + bw + sc1 + sc2, y, sc3, rs, sd.saisie); }
                 y += rs;
             }
-            need(rs); label(M, y, sc1, rs, 'Total des points'); fieldPair(M + sc1, y, sc2 + sc3, rs, D.totalPts, '300'); y += rs;
+            need(rs); label(M, y, sc1, rs, 'Total des points'); fieldPair(M + sc1, y, sc2 + sc3, rs, D.totalPts, D.statMax); y += rs;
 
             // ----- SANTÉ MENTALE & PHYSIQUE -----
             band('Santé mentale & physique');
@@ -1616,7 +1675,7 @@
                 h += `<tr><td>${esc(sg.lib)}</td><td>${esc(sg.actuel)}</td><td>${esc(sg.saisie)}</td>` +
                      (sd ? `<td>${esc(sd.lib)}</td><td>${esc(sd.actuel)}</td><td>${esc(sd.saisie)}</td>` : `<td></td><td></td><td></td>`) + `</tr>`;
             }
-            h += `<tr><td><strong>Total des points</strong></td><td colspan="5">${esc((D.totalPts || '') + ' / 300')}</td></tr></table>`;
+            h += `<tr><td><strong>Total des points</strong></td><td colspan="5">${esc((D.totalPts || '') + ' / ' + D.statMax)}</td></tr></table>`;
             h += `<h3>Santé mentale &amp; physique</h3><table ${TB}>`;
             h += `<tr><td><strong>Courage</strong></td><td>${esc(D.courage)}</td><td><strong>Résistance</strong></td><td>${esc(D.resistance)}</td></tr>`;
             h += `<tr><td><strong>État mental</strong></td><td>${esc(D.selMentale)}</td><td><strong>Blessures physiques</strong></td><td>${esc(D.selPhysique)}</td></tr></table>`;
@@ -1644,7 +1703,7 @@
             t += 'INFORMATIONS GÉNÉRALES\n';
             t += '- Âge : ' + D.age + ' | Sexe : ' + D.sexe + '\n- Fonction / Profession : ' + D.profession + '\n';
             t += '- Points de compétences (restants / initiaux) : ' + D.pcRest + ' / ' + D.pcMax + '\n- Points de déduction : ' + D.deductions + '\n' + sep + '\n';
-            t += 'STATISTIQUES (Actuel / Saisie)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\n- Total des points : ' + D.totalPts + ' / 300\n' + sep + '\n';
+            t += 'STATISTIQUES (Actuel / Saisie)\n' + D.stats.map(s => '- ' + s.lib + ' : ' + s.actuel + ' / ' + s.saisie).join('\n') + '\n- Total des points : ' + D.totalPts + ' / ' + D.statMax + '\n' + sep + '\n';
             t += 'SANTÉ MENTALE & PHYSIQUE\n- Courage : ' + D.courage + ' | Résistance : ' + D.resistance + '\n- État mental : ' + D.selMentale + '\n- Blessures physiques : ' + D.selPhysique + '\n' + sep + '\n';
             t += 'COMPÉTENCES (' + (D.compMax || '—') + ' max autorisées par le MJ)\n' + (D.comp.length ? D.comp.map(c => '- ' + c.nom + ' [' + c.niveau + '] ' + c.stat + ' +' + c.bonus + ' = ' + c.total).join('\n') : 'Aucune') + '\n' + sep + '\n';
             t += 'AFFLICTIONS (3 max)\n' + (D.aff.length ? D.aff.map(a => '- ' + a.nom + ' [' + a.stade + '] perte ' + a.malus + ' PS, gain +' + a.gain + ' PC, +' + a.bonus + ' compétence(s) — répartition : ' + a.rep).join('\n') : 'Aucune') + '\n' + sep + '\n';
@@ -1732,7 +1791,7 @@
                     background: inclureBackground ? val('lore_background') : ''
                 },
                 etats: { mentale: mt_getRadioValue('san_mentale'), physique: mt_getRadioValue('san_physique') },
-                regles: { pc_max: val('pc_max'), comp_max_limit: val('comp_max_limit'), pts_deduction: val('pts_deduction') }
+                regles: { pc_max: val('pc_max'), comp_max_limit: val('comp_max_limit'), pts_deduction: val('pts_deduction'), stat_max_pts: val('stat_max_pts') }
             };
         }
 
@@ -1789,6 +1848,7 @@
                 document.getElementById('pc_max').value = data.regles.pc_max || 25;
                 document.getElementById('comp_max_limit').value = data.regles.comp_max_limit || 2;
                 document.getElementById('pts_deduction').value = data.regles.pts_deduction || 0;
+                document.getElementById('stat_max_pts').value = data.regles.stat_max_pts || 300;
             }
             if (data.lore) {
                 document.getElementById('lore_peurs').value = data.lore.peurs || "";
@@ -1930,13 +1990,23 @@
 
         function _rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-        // 6 stats entre 20 et 70 dont la somme fait exactement 300 (transferts depuis 50/50/...)
+        // 6 stats dans [0,100] dont la somme vaut exactement le maximum configuré (300 par défaut).
+        // On part de 50/50/... (somme 300), on ajuste vers la cible, puis on brasse pour la variété.
         function genererStatsAleatoires() {
             const cles = ["force", "dex", "cha", "per", "edu", "chance"];
+            const LO = 0, HI = 100;
+            const cible = Math.max(cles.length * LO, Math.min(cles.length * HI,
+                parseInt(document.getElementById('stat_max_pts').value) || 300));
             const s = { force: 50, dex: 50, cha: 50, per: 50, edu: 50, chance: 50 };
+            let somme = 300, secu = 0;
+            while (somme !== cible && secu++ < 5000) {
+                const a = _rand(cles);
+                if (somme < cible && s[a] < HI) { s[a]++; somme++; }
+                else if (somme > cible && s[a] > LO) { s[a]--; somme--; }
+            }
             for (let i = 0; i < 400; i++) {
                 const a = _rand(cles), b = _rand(cles);
-                if (a !== b && s[a] < 70 && s[b] > 20) { s[a]++; s[b]--; }
+                if (a !== b && s[a] < HI && s[b] > LO) { s[a]++; s[b]--; }
             }
             return s;
         }
@@ -2026,7 +2096,8 @@
                 regles: {
                     pc_max: document.getElementById('pc_max').value,
                     comp_max_limit: String(Math.max(3, parseInt(document.getElementById('comp_max_limit').value) || 2)),
-                    pts_deduction: document.getElementById('pts_deduction').value
+                    pts_deduction: document.getElementById('pts_deduction').value,
+                    stat_max_pts: document.getElementById('stat_max_pts').value
                 }
             };
             appliquerEtatFiche(data);
