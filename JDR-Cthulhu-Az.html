@@ -1725,7 +1725,8 @@
             band('Compétences (' + (D.compMax || '—') + ' max autorisées par le MJ)');
             const k1 = W * 0.34, k2 = W * 0.18, k3 = W * 0.22, k4 = W * 0.13, k5 = W - k1 - k2 - k3 - k4;
             need(rs); head(M, y, k1, rs, 'Compétence'); head(M + k1, y, k2, rs, 'Niveau'); head(M + k1 + k2, y, k3, rs, 'Statistique'); head(M + k1 + k2 + k3, y, k4, rs, 'Bonus'); head(M + k1 + k2 + k3 + k4, y, k5, rs, 'Total'); y += rs;
-            for (let i = 0; i < Math.max(D.comp.length, 9); i++) {
+            // 9 lignes fixes ici ; les compétences au-delà partent en « Compétences supplémentaires » après l'inventaire.
+            for (let i = 0; i < 9; i++) {
                 const c = D.comp[i]; need(rs);
                 field(M, y, k1, rs, c ? c.nom : '');
                 field(M + k1, y, k2, rs, c ? c.niveau : '');
@@ -1767,14 +1768,52 @@
                 need(rs); field(M, y, hw, rs, D.invPerso[i] || ''); field(M + hw, y, hw, rs, D.invGlobal[i] || ''); y += rs;
             }
 
-            // ----- HISTOIRE -----
+            // ----- COMPÉTENCES SUPPLÉMENTAIRES (celles qui dépassent les 9 lignes de la page 1) -----
+            if (D.comp.length > 9) {
+                y += 4;
+                band('Compétences supplémentaires');
+                need(rs); head(M, y, k1, rs, 'Compétence'); head(M + k1, y, k2, rs, 'Niveau'); head(M + k1 + k2, y, k3, rs, 'Statistique'); head(M + k1 + k2 + k3, y, k4, rs, 'Bonus'); head(M + k1 + k2 + k3 + k4, y, k5, rs, 'Total'); y += rs;
+                for (let i = 9; i < D.comp.length; i++) {
+                    const c = D.comp[i]; need(rs);
+                    field(M, y, k1, rs, c.nom);
+                    field(M + k1, y, k2, rs, c.niveau);
+                    field(M + k1 + k2, y, k3, rs, c.stat);
+                    field(M + k1 + k2 + k3, y, k4, rs, '+' + c.bonus);
+                    field(M + k1 + k2 + k3 + k4, y, k5, rs, String(c.total));
+                    y += rs;
+                }
+            }
+
+            // ----- HISTOIRE (forcée sur sa propre dernière page) -----
+            page = doc.addPage([PW, PH]); y = M;
             band('Histoire du personnage');
             need(h1); label(M, y, 30, h1, 'Peurs profondes'); field(M + 30, y, W - 30, h1, D.peurs); y += h1;
             need(h1); label(M, y, 30, h1, 'Motivations'); field(M + 30, y, W - 30, h1, D.vaillance); y += h1;
-            need(45);
-            const bgH = Math.max(40, BOT - y);
-            field(M, y, W, bgH, D.background, { multiline: true, fontSize: 9 });
-            y += bgH;
+
+            // ----- Background : texte complet dans une CASE bordée extensible sur plusieurs pages -----
+            // (lisible et imprimable dans TOUS les lecteurs ; non éditable — choix validé). Le texte est
+            // dessiné ligne par ligne ; un cadre est tracé sur chaque page occupée par la case.
+            if (D.background) {
+                const sizeBg = 9;
+                const asc = sizeBg * 0.72 / MM;   // position de la baseline (mm) depuis le haut de la ligne
+                const lhMm = sizeBg * 1.2 / MM;   // interligne (mm)
+                const pad = 2.2;                   // marge intérieure de la case (mm)
+                const lignesBg = preWrap(safe(D.background), fN, sizeBg, W - 2 * pad - 1).split('\n');
+                y += 1.5;                          // petit espace après « Motivations »
+                let caseTop = y;                   // haut de la case sur la page courante
+                y += pad;                          // marge intérieure haute
+                for (const ligne of lignesBg) {
+                    if (y + lhMm + pad > BOT) {
+                        rect(M, caseTop, W, (y + pad) - caseTop);   // ferme la case sur cette page
+                        page = doc.addPage([PW, PH]); y = M;
+                        caseTop = y; y += pad;
+                    }
+                    text(ligne, M + pad, y + asc, sizeBg, fN);
+                    y += lhMm;
+                }
+                rect(M, caseTop, W, (y + pad) - caseTop);           // ferme la dernière portion de case
+                y += pad;
+            }
 
             return await doc.save();
         }
