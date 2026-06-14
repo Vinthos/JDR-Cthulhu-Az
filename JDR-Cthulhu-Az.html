@@ -396,10 +396,13 @@
             .hdr-title, .hdr-subtitle, .hdr-rule-text { text-shadow: none; }
         }
 
-        /* ===== Modale création de compétence ===== */
-        .modale-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.8); z-index: 60; display: flex; align-items: flex-start; justify-content: center; padding: 4vh 1rem; overflow-y: auto; }
+        /* ===== Modale création de compétence (thème Ocade vert) ===== */
+        .modale-overlay { position: fixed; inset: 0; background: rgba(2, 7, 10, 0.82); backdrop-filter: blur(2px); z-index: 60; display: flex; align-items: flex-start; justify-content: center; padding: 4vh 1rem; overflow-y: auto; }
         .modale-overlay.hidden { display: none; }
-        .modale-box { background: #0f172a; border: 1px solid #334155; border-radius: 0.75rem; padding: 1.5rem; width: 100%; max-width: 640px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+        .modale-box { background: linear-gradient(150deg, rgba(13, 22, 25, 0.98), rgba(4, 10, 12, 0.99)); border: 1px solid rgba(53, 196, 165, 0.42); border-radius: 0.75rem; padding: 0 1.5rem 1.5rem; width: 100%; max-width: 640px; box-shadow: 0 20px 60px rgba(0,0,0,0.65), inset 0 1px 0 rgba(53,196,165,0.12); overflow: hidden; }
+        .modale-box::before { content: ""; display: block; height: 4px; margin: 0 -1.5rem 1.25rem; background: linear-gradient(90deg, #126954, #2bb894, #126954); }
+        .mc-btn-ok { background: linear-gradient(135deg, #126954, #2bb894); border: 1px solid rgba(107, 236, 201, 0.42); }
+        .mc-btn-ok:hover { filter: brightness(1.12); }
         .mc-table th { font-weight: 700; border-bottom: 1px solid #334155; }
         .mc-table td { padding: 3px 4px; border-bottom: 1px solid #1e293b; }
         .mc-table input[type=number], .mc-table input[type=text] { width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 3px 5px; color: #fff; outline: none; font-size: 12px; }
@@ -410,17 +413,27 @@
         .btn-de:hover { color: #fde68a; transform: scale(1.18) rotate(-12deg); }
         .btn-de svg { width: 1.05rem; height: 1.05rem; }
 
-        /* ===== Panneau historique des jets ===== */
-        .panneau-des { position: fixed; bottom: 0; right: 1rem; width: 300px; max-width: calc(100vw - 2rem); background: #0f172a; border: 1px solid #334155; border-bottom: none; border-radius: 0.6rem 0.6rem 0 0; z-index: 55; box-shadow: 0 -8px 30px rgba(0,0,0,0.5); font-family: inherit; }
-        .panneau-des-tete { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; cursor: pointer; background: #1e293b; border-radius: 0.6rem 0.6rem 0 0; user-select: none; }
-        .panneau-des-tete:hover { background: #283548; }
+        /* ===== Panneau historique des jets (thème Ocade vert) ===== */
+        .panneau-des { position: fixed; bottom: 0; right: 1rem; width: 300px; max-width: calc(100vw - 2rem); background: linear-gradient(150deg, rgba(13, 22, 25, 0.98), rgba(4, 10, 12, 0.99)); border: 1px solid rgba(53, 196, 165, 0.42); border-bottom: none; border-radius: 0.6rem 0.6rem 0 0; z-index: 55; box-shadow: 0 -8px 30px rgba(0,0,0,0.55); font-family: inherit; }
+        .panneau-des-tete { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; cursor: pointer; background: linear-gradient(135deg, rgba(18, 105, 84, 0.6), rgba(43, 184, 148, 0.3)); border-radius: 0.55rem 0.55rem 0 0; user-select: none; color: #eafff7; }
+        .panneau-des-tete:hover { filter: brightness(1.15); }
         .panneau-des-corps { padding: 0.5rem 0.75rem 0.75rem; max-height: 45vh; display: flex; flex-direction: column; }
         .panneau-des.reduit .panneau-des-corps { display: none; }
         .panneau-des.reduit #panneauDesToggle { transform: rotate(180deg); display: inline-block; }
         .historique-liste { overflow-y: auto; display: flex; flex-direction: column-reverse; gap: 4px; }
-        .jet-ligne { background: #1e293b; border: 1px solid #334155; border-radius: 5px; padding: 4px 7px; font-size: 11px; line-height: 1.35; }
-        .jet-ligne .jet-nom { color: #e2e8f0; font-weight: 700; }
-        .jet-ligne .jet-detail { color: #94a3b8; font-family: ui-monospace, monospace; }
+        .jet-ligne { background: rgba(2, 7, 10, 0.55); border: 1px solid rgba(53, 196, 165, 0.18); border-radius: 5px; padding: 4px 7px; font-size: 11px; line-height: 1.35; }
+        .jet-ligne .jet-nom { color: #eafff7; font-weight: 700; }
+        .jet-ligne .jet-detail { color: #8fb3aa; font-family: ui-monospace, monospace; }
+        /* Mobile/tablette : réduit = pastille flottante 🎲 ; ouvert = plein écran */
+        @media (max-width: 640px) {
+            .panneau-des { left: 0; right: 0; top: 0; bottom: 0; width: 100%; max-width: 100%; border-radius: 0; border-left: none; border-right: none; }
+            .panneau-des-corps { max-height: none; flex: 1 1 auto; }
+            .historique-liste { flex: 1 1 auto; }
+            .panneau-des.reduit { left: auto; right: 1rem; bottom: 1rem; top: auto; width: 56px; height: 56px; border-radius: 50%; border: 1px solid rgba(53, 196, 165, 0.5); box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+            .panneau-des.reduit .panneau-des-tete { width: 56px; height: 56px; border-radius: 50%; justify-content: center; padding: 0; }
+            .panneau-des.reduit .panneau-des-tete > * { display: none; }
+            .panneau-des.reduit .panneau-des-tete::before { content: "🎲"; font-size: 1.6rem; display: block; }
+        }
         @media print { .panneau-des, .modale-overlay { display: none !important; } }
     </style>
 </head>
@@ -458,7 +471,7 @@
 
             <div class="flex justify-end gap-2 mt-4">
                 <button onclick="fermerModaleComp()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-4 py-2 rounded text-sm">Annuler</button>
-                <button onclick="creerCompetence()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded text-sm">Enregistrer</button>
+                <button onclick="creerCompetence()" class="mc-btn-ok text-white font-bold px-4 py-2 rounded text-sm">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -545,6 +558,20 @@
             <div>
                 <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Âge</label>
                 <input type="text" id="char_age" placeholder="Ex : 36 ans (né en 1955)" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-sm text-white outline-none">
+            </div>
+            <div>
+                <label class="block text-lg font-bold text-emerald-400 tracking-wider mb-2">Niveau du personnage</label>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button onclick="changerNiveau(niveauPerso - 1)" title="Niveau précédent" class="bg-purple-700 hover:bg-purple-600 text-white font-bold w-8 py-2 rounded shrink-0">▼</button>
+                    <select id="char_niveau" onchange="changerNiveau(parseInt(this.value))" class="bg-slate-950 border border-slate-800 rounded p-2 text-sm text-white outline-none shrink-0"></select>
+                    <button onclick="monterNiveauDe()" title="Niveau supérieur — lance 1d5" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-2.5 py-2 rounded shrink-0 flex items-center gap-1">▲ 🎲</button>
+                    <input type="number" id="saisie_gain_niveau" min="0" title="Gain du niveau sélectionné (modifiable)" class="flex-grow min-w-0 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-2">
+                    <button onclick="validerGainNiveau()" title="Valider cette valeur comme gain du niveau sélectionné" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-2.5 py-2 rounded shrink-0">✓</button>
+                </div>
+                <div class="flex items-center gap-1.5 text-xs mt-2">
+                    <span class="text-slate-400 font-bold">PC totaux acquis par les niveaux :</span>
+                    <input type="number" id="gain_pc_niveau" value="0" readonly tabindex="-1" class="w-12 bg-slate-950 border border-slate-800 text-center text-emerald-400 font-bold rounded p-1 cursor-default">
+                </div>
             </div>
         </div>
 
@@ -650,22 +677,21 @@
                 </div>
 
                 <div class="space-y-2 pt-2 border-t border-slate-800 mt-4">
-                    <div class="p-3 bg-slate-950 rounded-lg flex flex-col sm:flex-row justify-between items-center text-xs border border-slate-800 gap-2 sm:gap-0">
-                        <div class="flex items-center gap-1.5"><span>Gestion des points de statistiques :</span> <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> <span class="text-slate-600 font-bold">/</span> <input type="number" id="stat_max_pts" min="0" value="300" class="w-16 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-0.5 font-mono"></div>
-                        <div id="statStatus" class="text-emerald-400 font-bold text-center">✓ Total valide</div>
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row gap-2 text-xs">
-                        <div class="flex-grow sm:w-2/3 p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
-                            <div class="flex items-center space-x-4">
-                                <label class="text-slate-400 font-bold">Points de compétences initiales :</label>
-                                <input type="number" id="pc_max" value="25" class="w-16 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1">
-                            </div>
-                            <div class="ml-6 pl-4 border-l border-slate-800 text-right whitespace-nowrap">points restant : <span id="pc_restants_global" class="font-mono font-bold text-emerald-400 ml-1">25</span> PC</div>
+                    <div class="p-3 bg-slate-950 rounded-lg flex flex-wrap justify-between items-center text-xs border border-slate-800 gap-x-3 gap-y-2">
+                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                            <div class="flex items-center gap-1.5"><span>Gestion des points de statistiques :</span> <span id="totalPoints" class="font-mono text-emerald-400 font-bold">300</span> <span class="text-slate-600 font-bold">/</span> <input type="number" id="stat_max_pts" min="0" value="300" class="w-14 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-0.5 font-mono"></div>
+                            <div class="flex items-center gap-1.5 pl-3 border-l border-slate-700"><span class="text-slate-400 font-bold">Points de Déduction :</span> <input type="number" id="pts_deduction" value="0" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-0.5 font-mono"></div>
                         </div>
-                        <div class="flex-shrink-0 sm:w-1/3 p-3 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
-                            <label class="text-slate-400 font-bold">Points de Déduction:</label>
-                            <input type="number" id="pts_deduction" value="0" class="w-14 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1 ml-2">
+                        <div id="statStatus" class="text-emerald-400 font-bold text-center whitespace-nowrap">✓ Total valide</div>
+                    </div>
+
+                    <div class="flex flex-col gap-2 text-xs">
+                        <div class="p-3 bg-slate-950 rounded-lg border border-slate-800 flex flex-wrap items-center gap-x-4 gap-y-1">
+                            <span class="text-slate-400 font-bold">Points de compétences</span>
+                            <span class="flex items-center gap-2 pl-4 border-l border-slate-800 whitespace-nowrap">Initiales <input type="number" id="pc_max" value="25" class="w-12 bg-slate-900 border border-slate-700 text-center text-white font-bold rounded p-1"></span>
+                            <span class="flex items-center gap-1 pl-4 border-l border-slate-800 whitespace-nowrap">Totaux <span id="pc_total_display" class="font-mono font-bold text-emerald-400">25</span></span>
+                            <span class="flex items-center gap-1 pl-4 border-l border-slate-800 whitespace-nowrap">Restants <span id="pc_restants_global" class="font-mono font-bold text-emerald-400">25</span></span>
+                            <span class="flex items-center gap-1 pl-4 border-l border-slate-800 whitespace-nowrap">Acquis par les niveaux <span id="pc_niveau_display" class="font-mono font-bold text-amber-400">0</span></span>
                         </div>
                     </div>
                 </div>
@@ -962,6 +988,7 @@
             rafraichirListeCompetences();
             document.getElementById('selectCompetence').addEventListener('change', (e) => chargerDetailsCompetence(e.target.value));
             injecterBoutonsDeStats();
+            initNiveau();
             chargerHistoriqueDes();
 
             indexAfflictionsData = dataAff;
@@ -1057,7 +1084,7 @@
         function ajouterComp(nom, niveau, bonus, cout, stringStats, descRapportee) {
             let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
             let pcInitialMax = parseInt(document.getElementById('pc_max').value) || 25;
-            if (competencesChoisies.filter(i => i.nom !== nom).reduce((s, i) => s + i.cout, 0) + cout > (pcInitialMax + totalGainPC)) {
+            if (competencesChoisies.filter(i => i.nom !== nom).reduce((s, i) => s + i.cout, 0) + cout > (pcInitialMax + totalGainPC + gainPCNiveau())) {
                 toast("Budget de PC insuffisant !", "error"); return;
             }
             const compteQuota = !(indexCompetencesData[nom] && indexCompetencesData[nom].compteQuota === false);
@@ -1276,15 +1303,13 @@
 
             if (totalSaisi === maxPts) {
                 status.textContent = "✓ Total valide";
-                status.className = "text-emerald-400 font-bold text-center";
+                status.className = "text-emerald-400 font-bold text-center whitespace-nowrap";
             } else if (totalSaisi > maxPts) {
-                let trop = totalSaisi - maxPts;
-                status.textContent = "⚠ Invalide (vous avez " + trop + " point" + (trop > 1 ? 's' : '') + " en trop)";
-                status.className = "text-red-400 font-bold text-center";
+                status.textContent = "⚠ +" + (totalSaisi - maxPts) + " en trop";
+                status.className = "text-red-400 font-bold text-center whitespace-nowrap";
             } else {
-                let manque = maxPts - totalSaisi;
-                status.textContent = "⚠ Invalide (il vous manque " + manque + " point" + (manque > 1 ? 's' : '') + " à répartir)";
-                status.className = "text-red-400 font-bold text-center";
+                status.textContent = "⚠ −" + (maxPts - totalSaisi) + " à répartir";
+                status.className = "text-red-400 font-bold text-center whitespace-nowrap";
             }
 
             const force = parseInt(document.getElementById('display_force').textContent) || 0;
@@ -1299,8 +1324,11 @@
 
             let totalGainPC = afflictionsChoisies.reduce((sum, item) => sum + item.gain_pc, 0);
             let pcInitialMax = parseInt(document.getElementById('pc_max').value) || 25;
-            let pcRestantsFinaux = (pcInitialMax + totalGainPC) - competencesChoisies.reduce((sum, item) => sum + item.cout, 0);
-            
+            let gainNiveau = gainPCNiveau();
+            let pcRestantsFinaux = (pcInitialMax + totalGainPC + gainNiveau) - competencesChoisies.reduce((sum, item) => sum + item.cout, 0);
+
+            document.getElementById('pc_total_display').textContent = pcInitialMax + totalGainPC + gainNiveau;
+            document.getElementById('pc_niveau_display').textContent = gainNiveau;
             document.getElementById('pc_restants_global').textContent = pcRestantsFinaux;
             document.getElementById('pc_panier_restants').textContent = pcRestantsFinaux;
 
@@ -1416,14 +1444,14 @@
                     let escName = item.nom.replace(/'/g, "\\'");
                     
                     let couleurTotal = (totalScore > 70 || totalScore < 10) ? 'text-orange-400 font-black' : 'text-emerald-400';
-                    return '<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
-                           '<div class="font-bold text-white truncate">' + item.nom + '</div>' +
+                    return '<div class="relative bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-between space-y-2 text-xs">' +
+                           '<button onclick="lancerDe(\'' + escName + '\', ' + totalScore + ')" class="btn-de absolute top-2 right-2" title="Lancer 1d100 (' + escName + ')">' + DE_SVG + '</button>' +
+                           '<div class="font-bold text-white truncate pr-7">' + item.nom + '</div>' +
                            '<div class="flex items-center justify-between gap-2"><select onchange="changerStatAssociee(\'' + escName + '\', this.value)" class="bg-slate-900 text-slate-300 rounded p-1 text-[11px] outline-none">' + optionsHtml + '</select>' +
                            '<div class="flex items-center gap-1.5 font-mono">' +
                            '<span class="text-slate-400 text-[11px]">' + valBaseCalculée + ' + ' + item.bonus + '</span>' +
                            '<span class="text-slate-500 text-[10px]">(Stats+Bonus)</span>' +
                            '<span class="' + couleurTotal + '">Total = ' + totalScore + '</span>' +
-                           '<button onclick="lancerDe(\'' + escName + '\', ' + totalScore + ')" class="btn-de" title="Lancer 1d100 (' + escName + ')">' + DE_SVG + '</button>' +
                            '</div></div></div>';
                 }).join('');
             }
@@ -1507,7 +1535,10 @@
                     pc_max: val('pc_max'),
                     comp_max_limit: val('comp_max_limit'),
                     pts_deduction: val('pts_deduction'),
-                    stat_max_pts: val('stat_max_pts')
+                    stat_max_pts: val('stat_max_pts'),
+                    niveau: niveauPerso,
+                    gainsNiveau: gainsParNiveau,
+                    gainPC_niveau: val('gain_pc_niveau')
                 }
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1667,6 +1698,7 @@
             return {
                 nom: val('char_name'), sexe: val('char_sexe'), age: val('char_age'), profession: val('char_profession'),
                 pcMax: val('pc_max'), pcRest: txt('pc_restants_global'), deductions: val('pts_deduction'), totalPts: txt('totalPoints'), statMax: (val('stat_max_pts') || '300'),
+                niveau: (typeof niveauPerso !== 'undefined' ? niveauPerso : 1), pcNiveau: (val('gain_pc_niveau') || '0'),
                 stats, courage: txt('val_courage'), resistance: txt('val_resistance'),
                 selMentale: mt_getRadioValue('san_mentale'), selPhysique: mt_getRadioValue('san_physique'),
                 compMax: val('comp_max_limit'), comp, aff,
@@ -1775,7 +1807,14 @@
             label(x, y, wAgeL, h1, 'Âge'); x += wAgeL; field(x, y, wAgeF, h1, D.age); x += wAgeF;
             label(x, y, wSexeL, h1, 'Sexe'); x += wSexeL; field(x, y, wSexeF, h1, D.sexe);
             y += h1;
-            need(h1); const wProfL = 36; label(M, y, wProfL, h1, 'Fonction / Profession'); field(M + wProfL, y, W - wProfL, h1, D.profession); y += h1;
+            need(h1);
+            const wProfL = 32, wNivL = 15, wNivF = 12, wPcL = 30, wPcF = 14;
+            const wProfF = W - wProfL - wNivL - wNivF - wPcL - wPcF;
+            let xp = M;
+            label(xp, y, wProfL, h1, 'Fonction / Profession'); xp += wProfL; field(xp, y, wProfF, h1, D.profession); xp += wProfF;
+            label(xp, y, wNivL, h1, 'Niveau'); xp += wNivL; field(xp, y, wNivF, h1, String(D.niveau)); xp += wNivF;
+            label(xp, y, wPcL, h1, 'PC niveaux'); xp += wPcL; field(xp, y, wPcF, h1, String(D.pcNiveau));
+            y += h1;
             need(h1); const half = W / 2;
             label(M, y, 44, h1, 'Points de compétences'); fieldPair(M + 44, y, half - 44, h1, D.pcRest, D.pcMax);
             label(M + half, y, 40, h1, 'Points de déduction'); field(M + half + 40, y, half - 40, h1, D.deductions); y += h1;
@@ -1917,6 +1956,7 @@
             const kv = (a, b) => `<tr><td><strong>${esc(a)}</strong></td><td>${esc(b)}</td></tr>`;
             // Mise en page calquée sur le PDF : mêmes sections, mêmes intitulés de colonnes
             let h = `<h2>${esc(D.nom || 'Sans nom')}</h2>`;
+            h += `<table ${TB}>${kv('Niveau', D.niveau)}${kv('PC acquis par les niveaux', D.pcNiveau)}</table>`;
             h += `<h3>Informations générales</h3>`;
             h += `<table ${TB}>${kv('Âge', D.age)}${kv('Sexe', D.sexe)}${kv('Fonction / Profession', D.profession)}${kv('Points de compétences (restants / initiaux)', (D.pcRest || '') + ' / ' + (D.pcMax || ''))}${kv('Points de déduction', D.deductions)}</table>`;
             h += `<h3>Statistiques</h3><table ${TB}><tr><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Base</strong></td><td><strong>Statistique</strong></td><td><strong>Actuel</strong></td><td><strong>Base</strong></td></tr>`;
@@ -1950,6 +1990,7 @@
 
             const sep = '----------------------------------------';
             let t = (D.nom || 'Sans nom') + '\n' + sep + '\n';
+            t += 'Niveau : ' + D.niveau + ' | PC acquis par les niveaux : ' + D.pcNiveau + '\n' + sep + '\n';
             t += 'INFORMATIONS GÉNÉRALES\n';
             t += '- Âge : ' + D.age + ' | Sexe : ' + D.sexe + '\n- Fonction / Profession : ' + D.profession + '\n';
             t += '- Points de compétences (restants / initiaux) : ' + D.pcRest + ' / ' + D.pcMax + '\n- Points de déduction : ' + D.deductions + '\n' + sep + '\n';
@@ -2042,7 +2083,7 @@
                     background: inclureBackground ? val('lore_background') : ''
                 },
                 etats: { mentale: mt_getRadioValue('san_mentale'), physique: mt_getRadioValue('san_physique') },
-                regles: { pc_max: val('pc_max'), comp_max_limit: val('comp_max_limit'), pts_deduction: val('pts_deduction'), stat_max_pts: val('stat_max_pts') }
+                regles: { pc_max: val('pc_max'), comp_max_limit: val('comp_max_limit'), pts_deduction: val('pts_deduction'), stat_max_pts: val('stat_max_pts'), niveau: niveauPerso, gainsNiveau: gainsParNiveau, gainPC_niveau: val('gain_pc_niveau') }
             };
         }
 
@@ -2100,6 +2141,10 @@
                 document.getElementById('comp_max_limit').value = data.regles.comp_max_limit || 2;
                 document.getElementById('pts_deduction').value = data.regles.pts_deduction || 0;
                 document.getElementById('stat_max_pts').value = data.regles.stat_max_pts || 300;
+                niveauPerso = parseInt(data.regles.niveau) || 1;
+                gainsParNiveau = data.regles.gainsNiveau || {};
+                initNiveau();
+                appliquerNiveau();
             }
             if (data.lore) {
                 document.getElementById('lore_peurs').value = data.lore.peurs || "";
@@ -2266,9 +2311,10 @@
             const liste = document.getElementById('historiqueDesListe');
             if (!liste) return;
             if (!historiqueDes.length) { liste.innerHTML = '<p class="text-slate-600 italic text-[11px]">Aucun jet pour le moment.</p>'; return; }
-            liste.innerHTML = historiqueDes.map(j =>
-                `<div class="jet-ligne"><span class="jet-nom">${escapeHtml(j.nom)}</span> — <span class="${j.cls} font-bold">${escapeHtml(j.res)}</span><br><span class="jet-detail">🎲 ${j.jet} / ${j.valeur}${j.t ? ' · ' + j.t : ''}</span></div>`
-            ).join('');
+            liste.innerHTML = historiqueDes.map(j => {
+                const det = (j.valeur == null) ? (j.saisi ? ('✎ saisi = ' + j.jet) : ('🎲 1d5 = ' + j.jet)) : ('🎲 ' + j.jet + ' / ' + j.valeur);
+                return `<div class="jet-ligne"><span class="jet-nom">${escapeHtml(j.nom)}</span> — <span class="${j.cls} font-bold">${escapeHtml(j.res)}</span><br><span class="jet-detail">${det}${j.t ? ' · ' + j.t : ''}</span></div>`;
+            }).join('');
         }
         function viderHistoriqueDes() { historiqueDes = []; rendreHistoriqueDes(); persisterHistoriqueDes(); }
         function basculerHistoriqueDes() { document.getElementById('panneauDes').classList.toggle('reduit'); }
@@ -2289,6 +2335,64 @@
                 btn.onclick = () => lancerDe(statLabelMapping[stat], document.getElementById(displayMapping[stat]).textContent);
                 wrapper.appendChild(btn);
             });
+        }
+
+        // ===== NIVEAU DU PERSONNAGE (gain de PC cumulatif : 1d5 par niveau gagné) =====
+        let niveauPerso = 1;
+        let gainsParNiveau = {};   // { 2: 3, 3: 5, ... } gain tiré à chaque palier franchi
+
+        function initNiveau() {
+            const sel = document.getElementById('char_niveau');
+            if (sel && !sel.options.length) {
+                for (let i = 1; i <= 20; i++) { const o = document.createElement('option'); o.value = i; o.textContent = 'Niveau ' + i; sel.appendChild(o); }
+            }
+            if (sel) sel.value = niveauPerso;
+        }
+        function gainPCNiveau() { return parseInt((document.getElementById('gain_pc_niveau') || {}).value) || 0; }
+        // Cumul des gains de tous les paliers ≤ niveau actuel. Les gains restent mémorisés même si on
+        // redescend, donc remonter ne relance jamais un dé déjà tiré pour ce niveau.
+        function cumulNiveau() {
+            return Object.keys(gainsParNiveau).reduce((s, k) => s + (parseInt(k) <= niveauPerso ? (parseInt(gainsParNiveau[k]) || 0) : 0), 0);
+        }
+        function appliquerNiveau() {
+            document.getElementById('char_niveau').value = niveauPerso;
+            // La case à droite du dé affiche le gain du niveau actuellement sélectionné.
+            document.getElementById('saisie_gain_niveau').value = (gainsParNiveau[niveauPerso] != null) ? gainsParNiveau[niveauPerso] : 0;
+            document.getElementById('gain_pc_niveau').value = cumulNiveau();   // total cumulé, lecture seule
+            travaillerCalculsEtRendu();
+        }
+        function changerNiveau(nouveau) {
+            nouveau = Math.max(1, Math.min(20, parseInt(nouveau) || 1));
+            if (nouveau > niveauPerso) {
+                for (let k = niveauPerso + 1; k <= nouveau; k++) {
+                    if (gainsParNiveau[k] == null) {   // dé pas encore tiré pour ce palier -> on tire
+                        const jet = 1 + Math.floor(Math.random() * 5);
+                        gainsParNiveau[k] = jet;
+                        ajouterJetGain("Passage niveau " + k, jet, false);
+                    }
+                }
+            }
+            // en descendant : on ne supprime rien (gains conservés)
+            niveauPerso = nouveau;
+            appliquerNiveau();
+        }
+        function monterNiveauDe() { changerNiveau(niveauPerso + 1); }
+        // Fixe manuellement le gain du niveau ACTUELLEMENT sélectionné (corrige le dé).
+        function validerGainNiveau() {
+            const val = Math.max(0, parseInt(document.getElementById('saisie_gain_niveau').value) || 0);
+            const ancien = gainsParNiveau[niveauPerso];
+            gainsParNiveau[niveauPerso] = val;
+            appliquerNiveau();
+            if (ancien !== val) toast("Niveau " + niveauPerso + " : gain fixé à " + val + " PC.", "success", 2500);
+        }
+        // Gain de PC consigné dans l'historique (1d5 ou valeur saisie). Pas un test de réussite.
+        function ajouterJetGain(nom, jet, saisi) {
+            historiqueDes.push({ nom, jet, valeur: null, res: "Gain +" + jet + " PC", cls: "text-amber-400", t: _heureJet(), saisi: !!saisi });
+            if (historiqueDes.length > 100) historiqueDes.shift();
+            rendreHistoriqueDes();
+            const p = document.getElementById('panneauDes'); if (p) p.classList.remove('reduit');
+            persisterHistoriqueDes();
+            toast(nom + " — " + (saisi ? "saisi" : "🎲 1d5") + " = " + jet + " (+" + jet + " PC)", "info", 3000);
         }
 
         // ============================================================
